@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Home</title>
+        <title>Home | Mild-R HBD 2025</title>
       </Helmet>
 
       <HomePageView />

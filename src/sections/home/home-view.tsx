@@ -1,17 +1,15 @@
-import { Box } from '@mui/material'
-
-import CountdownComponent from './components/countdown'
-
 export default function HomePageView() {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      className="h-[100vh]"
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: "url('/assets/background/honey_pattern.png')",
+      }}
     >
-      <CountdownComponent />
-    </Box>
+      {/* กรอบกลาง */}
+      <div className="mx-auto h-screen max-w-[1150px] bg-[#f5f5fa] px-4 py-8">
+        content in components
+      </div>
+    </div>
   )
 }

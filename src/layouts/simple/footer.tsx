@@ -1,56 +1,44 @@
-import { useTranslation } from 'react-i18next'
-
-// import { FaPhone } from 'react-icons/fa6'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
-  const { t } = useTranslation()
-
   return (
-    <>
-      <footer className="bg-[#1E1E1E] py-4 text-white">
-        <div className="mx-auto block max-w-screen-xl flex-wrap items-center justify-center p-4 md:flex md:items-start md:justify-between">
-          <div className="mb-[25px] text-center text-[16px] font-bold md:mb-0 md:text-left">
-            © Copyright 2024 XXXX. All Rights Reserved.
-          </div>
-          <div className="mb-[25px] text-center text-[16px] md:mb-0 md:text-left">
-            <span className="font-bold">
-              {t('footer.contact-address-title')}
-            </span>
-          </div>
-          <div className="mb-[25px] text-center text-[16px] md:mb-0 md:text-left">
-            <span className="font-bold">{t('footer.contact-phone-title')}</span>
-            <br />
-            <span className="font-bold">{t('footer.contact-other-title')}</span>
-            <div className="my-[10px] flex flex-nowrap items-center justify-center gap-[10px] md:justify-start">
-              {/* <Link
-                to="/"
-                className="block w-[20px] h-[20px] hover:text-[#28A745]"
-              >
-                <img src="/assets/images/mdi_youtube.svg" alt="youtube-icon" />
-              </Link> */}
-              {/* <Link to="/" className="block w-[20px] h-[20px]">
-                <img
-                  src="/assets/images/ic_baseline-facebook.svg"
-                  alt="facebook-icon"
-                  className="footer-btn"
-                />
-              </Link> */}
-              {/* <Link
-                to=""
-                className="block h-[20px] w-[20px]"
-                target="_blank"
-              >
-                <img
-                  src="/assets/images/line-logo-svgrepo-com-1.svg"
-                  alt="line-icon"
-                  className="footer-btn"
-                />
-              </Link> */}
-            </div>
-          </div>
+    <footer className="bg-[#0f1720] text-gray-400">
+      <div className="mx-auto max-w-[100%] px-4 py-3">
+        <div className="flex flex-col items-center justify-between gap-2 sm:flex-row sm:gap-4">
+          {/* Left links */}
+          <nav
+            aria-label="footer-links"
+            className="flex flex-wrap items-center gap-4 text-sm"
+          >
+            <Link to="/terms" className="transition-colors hover:text-white">
+              Terms &amp; Conditions
+            </Link>
+            <span className="opacity-40">|</span>
+
+            <Link to="/privacy" className="transition-colors hover:text-white">
+              Privacy
+            </Link>
+            <span className="opacity-40">|</span>
+
+            <Link
+              to="/complaints"
+              className="transition-colors hover:text-white"
+            >
+              Complaints
+            </Link>
+          </nav>
+
+          {/* Desktop text */}
+          <p className="hidden text-right text-sm sm:block">
+            © Copyright 2025 XXXX. All Rights Reserved.
+          </p>
+
+          {/* Mobile text */}
+          <p className="w-full text-center text-sm sm:hidden">
+            © Copyright 2025 XXXX. All Rights Reserved.
+          </p>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   )
 }
