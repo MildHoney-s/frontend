@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "react-image-gallery/styles/css/image-gallery.css";
+@import "./gallery.scss";
 
 :root {
   --base-font-family: 'Noto Sans Thai';

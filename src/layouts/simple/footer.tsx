@@ -13,11 +13,11 @@ export default function Footer() {
             <Link to="/credits" className="transition-colors hover:text-white">
               Credits
             </Link>
-            <span className="opacity-40">|</span>
+            {/* <span className="opacity-40">|</span>
 
             <Link to="/privacy" className="transition-colors hover:text-white">
               Privacy
-            </Link>
+            </Link> */}
             {/* <span className="opacity-40">|</span>
 
             <Link
