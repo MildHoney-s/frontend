@@ -1,3 +1,5 @@
+import { ChapterOne } from './components'
+
 export default function HomePageView() {
   return (
     <div
@@ -8,7 +10,7 @@ export default function HomePageView() {
     >
       {/* กรอบกลาง */}
       <div className="mx-auto h-screen max-w-[1150px] bg-[#f5f5fa] px-4 py-8">
-        content in components
+        <ChapterOne />
       </div>
     </div>
   )

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@gsap/react':
+        specifier: ^2.1.2
+        version: 2.1.2(gsap@3.13.0)(react@18.2.0)
       '@iconify-icons/eva':
         specifier: 1.2.6
         version: 1.2.6
@@ -38,6 +41,9 @@ importers:
       react-icons:
         specifier: 4.12.0
         version: 4.12.0(react@18.2.0)
+      react-image-gallery:
+        specifier: ^1.4.0
+        version: 1.4.0(react@18.2.0)
       react-lottie-player:
         specifier: 1.5.5
         version: 1.5.5(react@18.2.0)
@@ -63,6 +69,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.15
         version: 18.2.15
+      '@types/react-image-gallery':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@types/react-measure':
         specifier: 2.0.12
         version: 2.0.12
@@ -394,6 +403,12 @@ packages:
     resolution: {integrity: sha512-Kn7K8dx/5U6+cT1yEhpX1w4PCSg0M+XyRILPgvwcEBjerFWCwQj5sbr3/VmxqV0JGHCBCzyd6LxypEuehypY1w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@gsap/react@2.1.2':
+    resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
+    peerDependencies:
+      gsap: ^3.12.5
+      react: '>=17'
+
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
@@ -599,6 +614,9 @@ packages:
 
   '@types/react-dom@18.2.15':
     resolution: {integrity: sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==}
+
+  '@types/react-image-gallery@1.2.4':
+    resolution: {integrity: sha512-H0xpmT5rlSH0qiTvcUDCPDLRBi3J3Xa4COqaDqGb7ffLFpQoPAxpZdNuKCuThhFI0xJmNnMubZiD6B3kCBHtcw==}
 
   '@types/react-measure@2.0.12':
     resolution: {integrity: sha512-Y6V11CH6bU7RhqrIdENPwEUZlPXhfXNGylMNnGwq5TAEs2wDoBA3kSVVM/EQ8u72sz5r9ja+7W8M8PIVcS841Q==}
@@ -1386,6 +1404,11 @@ packages:
     peerDependencies:
       react: '*'
 
+  react-image-gallery@1.4.0:
+    resolution: {integrity: sha512-m7xLq7+g6/xh+BhVMAxvRU0132sNcEFglYsVsgthrnItl9VtLE7MuVvVWD9pvzcI+WBP5+p9HvnRwIiyhPkBDg==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   react-lottie-player@1.5.5:
     resolution: {integrity: sha512-cPO+s1DapaZ09Ux0RponZjuwJAJxyyt9nM7Gwth5frEMJrSTBWK4jO6nYXV6ussvvbVUVH1FE6o2Ha9c89amQQ==}
     engines: {node: '>=10'}
@@ -1906,6 +1929,11 @@ snapshots:
 
   '@eslint/js@8.53.0': {}
 
+  '@gsap/react@2.1.2(gsap@3.13.0)(react@18.2.0)':
+    dependencies:
+      gsap: 3.13.0
+      react: 18.2.0
+
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -2074,6 +2102,10 @@ snapshots:
   '@types/prop-types@15.7.15': {}
 
   '@types/react-dom@18.2.15':
+    dependencies:
+      '@types/react': 18.2.37
+
+  '@types/react-image-gallery@1.2.4':
     dependencies:
       '@types/react': 18.2.37
 
@@ -2806,6 +2838,10 @@ snapshots:
       shallowequal: 1.1.0
 
   react-icons@4.12.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+
+  react-image-gallery@1.4.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
