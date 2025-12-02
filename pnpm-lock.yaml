@@ -50,9 +50,6 @@ importers:
       react-router-dom:
         specifier: 6.20.1
         version: 6.20.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-scroll-to-top:
-        specifier: 3.0.0
-        version: 3.0.0(react@18.2.0)
       styled-components:
         specifier: 6.1.6
         version: 6.1.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1431,11 +1428,6 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
-
-  react-scroll-to-top@3.0.0:
-    resolution: {integrity: sha512-I/k45Ujai097du59tHBbzGxN7Lyc6K8Uc3IChq6HMXaBfB8N/rrfm055T5Yv0DWfVpf6pOFaBmhD3LOfH5unGw==}
-    peerDependencies:
-      react: ^16.8.0 || 17.x || ^18
 
   react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -2864,10 +2856,6 @@ snapshots:
   react-router@6.20.1(react@18.2.0):
     dependencies:
       '@remix-run/router': 1.13.1
-      react: 18.2.0
-
-  react-scroll-to-top@3.0.0(react@18.2.0):
-    dependencies:
       react: 18.2.0
 
   react@18.2.0:
