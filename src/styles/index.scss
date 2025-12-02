@@ -1,9 +1,9 @@
-@import 'simplebar-react/dist/simplebar.min.css';
-@import 'react-toastify/dist/ReactToastify.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "react-image-gallery/styles/css/image-gallery.css";
+@import "./gallery.scss";
 
 :root {
   --base-font-family: 'Noto Sans Thai';
@@ -11,42 +11,36 @@
   --toastify-toast-width: 400px;
 }
 
-.invert {
-  filter: invert(100%);
+.cus-scroll-to-top {
+  width: 48px;
+  height: 48px;
+  right: 20px;
+  bottom: 50px;
+  border-radius: 100%;
+  background-color: #e44b90;
 }
 
-.brightness-0 {
-  filter: brightness(0);
-}
-
-.brightness-100 {
-  filter: brightness(100);
-}
-
-.Toastify__close-button {
-  margin: auto 0;
-}
-
-.loading-icon {
-  animation: animate 2s infinite linear;
-}
-
-@keyframes animate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(720deg);
+@media (max-width: 640px) {
+  .cus-scroll-to-top {
+    bottom: 80px;
   }
 }
 
-.player-wrapper {
-  position: relative;
-  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
+.custom-scroll {
+  scrollbar-width: thin; /* firefox */
+  scrollbar-color: rgba(15,23,42,0.25) transparent;
 }
 
-.react-player {
-  position: absolute;
-  top: 0;
-  left: 0;
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.25);
+  border-radius: 9999px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }

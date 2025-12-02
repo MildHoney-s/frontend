@@ -1,20 +1,21 @@
 {
-  "name": "Feels",
-  "short_name": "Feels",
+  "name": "Mild-R HBD 2025",
+  "short_name": "Mild-R HBD 2025",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/favicon/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/favicon/web-app-manifest-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
   "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "background_color": "#90cdd4",
+  "display": "standalone"
 }

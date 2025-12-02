@@ -1,4 +1,6 @@
+# ---------------------
 # Logs
+# ---------------------
 logs
 *.log
 npm-debug.log*
@@ -7,20 +9,86 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ---------------------
+# Dependencies
+# ---------------------
+node_modules/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# ---------------------
+# Build outputs
+# ---------------------
+dist/
+dist-ssr/
+out/
+build/
+
+# Vite cache (ควร ignore)
+.vite/
+
+# ---------------------
+# OS / Editor / Temp
+# ---------------------
 .DS_Store
+Thumbs.db
+*.swp
+*.sw?
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.tmp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.orig
 
+# ---------------------
+# Environment / secrets
+# ---------------------
 .env
+.env.*
+!.env.example
+
+# ---------------------
+# Local configs
+# ---------------------
+*.local
+*.yaml
+!pnpm-lock.yaml
+*.yml
+package-lock.json
+yarn.lock
+
+# ---------------------
+# TypeScript / tooling caches
+# ---------------------
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ---------------------
+# Optional: test & coverage
+# ---------------------
+coverage/
+*.lcov
+
+# ---------------------
+# Optional: debugging & misc
+# ---------------------
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+*.pid
+*.seed
+.parcel-cache/
+
+# ---------------------
+# Images cache / generated assets
+# ---------------------
+.cache/
+.cache-loader/
+
+# ---------------------
+# Storybook / tools
+# ---------------------
+.storybook-out/
+storybook-static/
