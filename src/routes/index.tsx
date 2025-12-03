@@ -1,6 +1,7 @@
 import SimpleLayout from '@/layouts/simple'
 import CreditPage from '@/pages/credits'
 import HomePage from '@/pages/home'
+import Part2Page from '@/pages/Part2Page'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 // ----------------------------------------------------------------------
@@ -18,6 +19,7 @@ export default function Router() {
         { element: <Navigate to="/home" />, index: true },
         { path: 'home', element: <HomePage /> },
         { path: 'credits', element: <CreditPage /> },
+        { path: 'part2', element: <Part2Page /> },
       ],
     },
     {
