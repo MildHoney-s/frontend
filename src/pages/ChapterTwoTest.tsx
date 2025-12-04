@@ -1,16 +1,17 @@
-import Part2View from '@/sections/part2/view'
+
+import { ChapterTwo } from '@/sections/home/components'
 import { Helmet } from 'react-helmet-async'
 
 // ----------------------------------------------------------------------
 
-export default function Part2Page() {
+export default function ChapterTwoTestPage() {
   return (
     <>
       <Helmet>
         <title> Part 2: Training | Mild-R HBD 2025 </title>
       </Helmet>
 
-      <Part2View />
+      <ChapterTwo />
     </>
   )
 }
