@@ -1,7 +1,7 @@
 import SimpleLayout from '@/layouts/simple'
+import Part2Page from '@/pages/Part2Page'
 import CreditPage from '@/pages/credits'
 import HomePage from '@/pages/home'
-import Part2Page from '@/pages/Part2Page'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 // ----------------------------------------------------------------------

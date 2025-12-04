@@ -1,6 +1,7 @@
+import Part2View from '@/sections/part2/view'
+import { Helmet } from 'react-helmet-async'
 
-import { Helmet } from 'react-helmet-async';
-import Part2View from '@/sections/part2/view';
+// ----------------------------------------------------------------------
 
 export default function Part2Page() {
   return (
@@ -11,5 +12,5 @@ export default function Part2Page() {
 
       <Part2View />
     </>
-  );
+  )
 }

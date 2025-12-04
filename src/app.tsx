@@ -1,4 +1,4 @@
-import { useScrollToTop } from '@/hooks/use-scroll-to-top'
+import { useScrollToTop } from '@/hooks'
 import Router from '@/routes'
 import '@/styles/index.scss'
 

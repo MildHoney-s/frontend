@@ -6,7 +6,12 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        nithan: ['Nithan', 'sans-serif'],
+        prompt: ['Prompt', 'sans-serif'],
+      }
+    },
   },
   plugins: [
     function ({ addUtilities }) {
