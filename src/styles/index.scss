@@ -20,9 +20,11 @@
 }
 
 :root {
-  --base-font-family: 'Noto Sans Thai';
+  --base-font-family: 'Prompt', sans-serif;
   --toastify-font-family: var(--base-font-family);
   --toastify-toast-width: 400px;
+
+  font-family: var(--base-font-family);
 }
 
 .cus-scroll-to-top {
