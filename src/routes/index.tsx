@@ -1,7 +1,7 @@
 import SimpleLayout from '@/layouts/simple'
 import ChapterTwoTestPage from '@/pages/ChapterTwoTest'
-import CreditPage from '@/pages/credits'
-import HomePage from '@/pages/home'
+import CreditPage from '@/pages/Credits'
+import HomePage from '@/pages/Home'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 // ----------------------------------------------------------------------
