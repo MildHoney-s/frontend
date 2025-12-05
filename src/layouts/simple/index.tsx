@@ -10,7 +10,7 @@ interface SimpleLayoutT {
 export default function SimpleLayout({ children }: SimpleLayoutT) {
   return (
     <>
-      <div className="w-full">
+      <div className="w-full min-h-screen">
         {children}
         <Footer />
       </div>

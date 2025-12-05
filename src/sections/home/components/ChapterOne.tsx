@@ -1,68 +1,88 @@
-// import { Book } from '@/components/book'
-import BookScroll from '@/components/book/TestBook'
-import { Page } from '@/components/book/_mock/Example'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useRef } from 'react'
+import { useEffect, useState } from 'react'
+
+import {
+  BookOpenScene,
+  ClassroomScene,
+  MonsterEncounterScene,
+  RescueHomeScene,
+  TeaShopScene,
+  TrainingScene,
+} from './Chapter/One'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const STORYBOOK: Page[] = [
-  {
-    id: 'page-1',
-    front: (
-      <div className="flex h-full flex-col items-center justify-center bg-yellow-100 p-6 text-center font-nithan">
-        <h2 className=" text-2xl font-bold">
-          คุณเชื่อในพลังพิเศษ หรือ ปรากฏการณ์เหนือธรรมชาติรึเปล่า
-        </h2>
-        <p className="text-lg font-semibold">
-          นี่คือจุดเริ่มต้นของการเดินทางที่น่าตื่นเต้นของเรา
-        </p>
-      </div>
-    ),
-    back: (
-      <div className="flex h-full flex-col items-center justify-center bg-yellow-100 p-6 text-center font-nithan">
-        <p className="text-lg">
-          นี่คือจุดเริ่มต้นของการเดินทางที่น่าตื่นเต้นของเรา
-        </p>
-      </div>
-    ),
-  },
-]
+interface ChapterOneProps {
+  onComplete?: () => void
+}
 
-// ----------------------------------------------------------------------
+export default function ChapterOne({ onComplete }: ChapterOneProps) {
+  const [stage, setStage] = useState(0)
 
-export default function ChapterOne() {
-  const main = useRef<HTMLDivElement | null>(null)
+  // เมื่อ scroll จนถึงท้าย chapter ให้เรียก onComplete
+  useEffect(() => {
+    const trigger = ScrollTrigger.create({
+      trigger: '#chapter-one-root',
+      start: 'bottom bottom',
+      onEnter: () => {
+        onComplete?.()
+      },
+    })
 
-  // ถ้าคุณมี animation อื่น ๆ ให้แยก selector ให้ชัดเจน (ไม่ทำงานกับหนังสือ)
-  useGSAP(
-    () => {
-      const boxes = gsap.utils.toArray<HTMLElement>('.box')
-      boxes.forEach((box) => {
-        gsap.to(box, {
-          x: 150,
-          scrollTrigger: {
-            trigger: box,
-            start: 'bottom bottom',
-            end: 'top 20%',
-            scrub: true,
-            // markers: true,
-          },
-        })
-      })
-    },
-    { scope: main },
-  )
+    return () => trigger.kill()
+  }, [onComplete])
 
   return (
-    <div ref={main}>
-      <div className="mx-auto" id="book-wrapper">
-        {/* <Book pages={STORYBOOK} /> */}
-        <BookScroll pages={STORYBOOK} />
-      </div>
-      <div></div>
+    <div id="chapter-one-root" className="min-h-screen w-full bg-black text-white">
+      
+      {/* Stage 0: เปิดหนังสือ (Intro) */}
+      <BookOpenScene onComplete={() => setStage((prev) => Math.max(prev, 1))} />
+
+      {/* Stage 1 */}
+      {stage >= 1 && (
+        <div className="animate-in fade-in duration-700">
+          <ClassroomScene onComplete={() => setStage((prev) => Math.max(prev, 2))} />
+        </div>
+      )}
+
+      {/* Stage 2 */}
+      {stage >= 2 && (
+        <div className="animate-in fade-in duration-700">
+          <TeaShopScene onComplete={() => setStage((prev) => Math.max(prev, 3))} />
+        </div>
+      )}
+
+      {/* Stage 3 */}
+      {stage >= 3 && (
+        <div className="animate-in fade-in duration-700">
+          <TrainingScene onComplete={() => setStage((prev) => Math.max(prev, 4))} />
+        </div>
+      )}
+
+      {/* Stage 4 */}
+      {stage >= 4 && (
+        <div className="animate-in fade-in duration-700">
+          <MonsterEncounterScene onComplete={() => setStage((prev) => Math.max(prev, 5))} />
+        </div>
+      )}
+
+      {/* Stage 5 */}
+      {stage >= 5 && (
+        <div className="animate-in fade-in duration-700">
+          <RescueHomeScene onComplete={() => setStage((prev) => Math.max(prev, 6))} />
+        </div>
+      )}
+
+      {/* Stage 6: Ending */}
+      {stage >= 6 && (
+        <div className="animate-in fade-in duration-700">
+          <div className="mx-auto max-w-3xl p-10 text-center">
+            <h2 className="font-serif text-3xl text-yellow-300">บทที่ 1 เสร็จสิ้น</h2>
+            <p className="mt-4 text-gray-300">To be continued...</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

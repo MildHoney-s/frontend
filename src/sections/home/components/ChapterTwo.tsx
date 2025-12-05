@@ -9,6 +9,7 @@ import {
 } from './Chapter/Two'
 
 // ----------------------------------------------------------------------
+
 export default function ChapterTwo() {
   const [stage, setStage] = useState(0)
 

@@ -98,6 +98,14 @@ const TEAM: Member[] = [
     scores: { Developer: 94 },
     twitterUrl: 'https://x.com/Rinne66601642',
   },
+  {
+    id: '9',
+    name: 'H',
+    roles: ['Project Manager'],
+    bio: 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    scores: { 'Project Manager': 96 },
+    twitterUrl: 'https://x.com/Kitsuyahanabi',
+  },
 ]
 
 export { ROLES, type Role, type Member, TEAM }

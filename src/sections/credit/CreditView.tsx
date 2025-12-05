@@ -122,7 +122,7 @@ export default function CreditsViewPage() {
                       >
                         <div className="mb-4 h-24 w-24 flex-shrink-0 overflow-hidden rounded-full ring-1 ring-slate-700">
                           <img
-                            src={m.avatar ?? '/assets/team/placeholder.png'}
+                            src={m.avatar ?? '/assets/team/anonymous.png'}
                             alt={`${m.name} avatar`}
                             className="h-full w-full object-cover"
                           />
