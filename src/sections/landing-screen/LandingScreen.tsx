@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 interface LandingScreenProps {
   onStart: () => void
   coverSrc?: string
+  backCoverSrc?: string
   pageSrc?: string
   flipSfxSrc?: string
   tagSrc?: string
@@ -13,7 +14,8 @@ interface LandingScreenProps {
 export default function LandingScreenGSAP({
   onStart,
   coverSrc = '/assets/book/book-cover.png',
-  pageSrc = '/assets/book/book-back-cover.png',
+  backCoverSrc = '/assets/book/book-back-cover.png',
+  pageSrc = '/assets/book/paper.png',
   flipSfxSrc,
   tagSrc,
 }: LandingScreenProps) {
@@ -165,7 +167,7 @@ export default function LandingScreenGSAP({
     playSfx()
 
     // ensure preload of new cover/back images to reduce flicker
-    preload(pageSrc)
+    preload(backCoverSrc)
     preload('/assets/book/book-back-cover.png') // example - adapt if different
 
     // prepare 3D and will-change
@@ -317,7 +319,7 @@ export default function LandingScreenGSAP({
 
     // don't forget to return tl (not required but useful in debugging)
     return tl
-  }, [opening, pageSrc, playSfx, preload, finishAndStart])
+  }, [opening, backCoverSrc, playSfx, preload, finishAndStart])
 
   // cleanup on unmount
   useEffect(() => {
@@ -371,7 +373,7 @@ export default function LandingScreenGSAP({
                   position: 'absolute',
                   borderRadius: 18,
                   overflow: 'hidden',
-                  backgroundImage: `url(${pageSrc})`,
+                  backgroundImage: `url(${backCoverSrc})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.06)',
@@ -403,7 +405,9 @@ export default function LandingScreenGSAP({
                     height: '100%',
                     borderRadius: 12,
                     overflow: 'hidden',
-                    background: '#fff',
+                    backgroundImage: `url(${pageSrc})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                   }}
                 />
 
