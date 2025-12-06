@@ -67,6 +67,10 @@ const TEAM: Member[] = [
     roles: ['Copywriter', 'Artist'],
     avatar: '/assets/team/pMorhNeung.png',
     bio: 'ร่วมเขียนเรื่องและรับผิดชอบงานภาพประกอบ',
+    roleBios: {
+      Copywriter: 'เขียนบทและกำกับโทนเนื้อเรื่องของโปรเจกต์',
+      Artist: 'ออกแบบและวาดงานภาพประกอบของโปรเจกต์',
+    },
     scores: { Copywriter: 0, Artist: 1 },
     twitterUrl: 'https://x.com/DoctorGamer_1',
     gallery: ['/assets/gallery/OKITAO_art_a.png'],
@@ -105,6 +109,20 @@ const TEAM: Member[] = [
     bio: 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
     scores: { 'Project Manager': 96 },
     twitterUrl: 'https://x.com/Kitsuyahanabi',
+  },
+  {
+    id: '10',
+    name: 'ZAYZHIK',
+    roles: ['Copywriter', 'Artist', 'Developer'],
+    avatar: '/assets/team/ZAYZHIK.png',
+    bio: 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    roleBios: {
+      Copywriter: 'เขียนบทและกำกับโทนเนื้อเรื่องของโปรเจกต์',
+      Artist: 'ออกแบบและวาดงานภาพประกอบของโปรเจกต์',
+      Developer: 'พัฒนา Frontend ของโปรเจกต์',
+    },
+    scores: { Copywriter: 96, Artist: 89, Developer: 1 },
+    twitterUrl: 'https://x.com/ZAYZHIK_KungV2',
   },
 ]
 
