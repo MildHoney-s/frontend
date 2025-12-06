@@ -6,7 +6,7 @@ import { ChapterOne, ChapterTwo } from './components'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function HomePageView() {
+export default function StoryPageView() {
   const [chapterOneDone, setChapterOneDone] = useState(false)
   const chapterTwoRef = useRef<HTMLDivElement | null>(null)
 

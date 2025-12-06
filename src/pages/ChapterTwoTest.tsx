@@ -1,5 +1,5 @@
 
-import { ChapterTwo } from '@/sections/home/components'
+import { ChapterTwo } from '@/sections/story/components'
 import { Helmet } from 'react-helmet-async'
 
 // ----------------------------------------------------------------------

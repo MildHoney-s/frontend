@@ -1,7 +1,8 @@
 import SimpleLayout from '@/layouts/simple'
 import ChapterTwoTestPage from '@/pages/ChapterTwoTest'
 import CreditPage from '@/pages/Credits'
-import HomePage from '@/pages/Home'
+import LandingPage from '@/pages/Landing'
+import StoryPage from '@/pages/Story'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 // ----------------------------------------------------------------------
@@ -16,15 +17,15 @@ export default function Router() {
         </SimpleLayout>
       ),
       children: [
-        { element: <Navigate to="/home" />, index: true },
-        { path: 'home', element: <HomePage /> },
+        { index: true, element: <LandingPage /> },
+        { path: 'story', element: <StoryPage /> },
         { path: 'credits', element: <CreditPage /> },
         { path: 'part2', element: <ChapterTwoTestPage /> },
       ],
     },
     {
       path: '*',
-      element: <Navigate to="/home" replace />,
+      element: <Navigate to="/" replace />,
     },
   ])
 
