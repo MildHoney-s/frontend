@@ -1,9 +1,12 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
+
 gsap.registerPlugin(ScrollTrigger)
 
-interface Props { onComplete: () => void }
+interface Props {
+  onComplete: () => void
+}
 
 export default function TrainingScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -36,10 +39,20 @@ export default function TrainingScene({ onComplete }: Props) {
   return (
     <div ref={containerRef} className="relative h-[360vh] w-full bg-black">
       <div className="sticky top-0 h-screen">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/assets/ch1/training_field.png')" }} />
-        <img src="/assets/ch1/mind_char.png" className="mind-char absolute bottom-16 left-12 w-64" />
-        <div className="magic-fail absolute top-28 right-28 text-6xl text-red-400 opacity-0 scale-75">ไม่สำเร็จ!</div>
-        <div className="absolute bottom-10 left-6 text-gray-300">มายด์พยายามร่ายลูกไฟ แต่ลิ้นพันทำให้เวทไม่สมบูรณ์</div>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/assets/ch1/training_field.png')" }}
+        />
+        <img
+          src="/assets/ch1/mind_char.png"
+          className="mind-char absolute bottom-16 left-12 w-64"
+        />
+        <div className="magic-fail absolute right-28 top-28 scale-75 text-6xl text-red-400 opacity-0">
+          ไม่สำเร็จ!
+        </div>
+        <div className="absolute bottom-10 left-6 text-gray-300">
+          มายด์พยายามร่ายลูกไฟ แต่ลิ้นพันทำให้เวทไม่สมบูรณ์
+        </div>
       </div>
     </div>
   )

@@ -23,6 +23,7 @@ export default function LandingScreenGSAP({
   const [currentCoverSrc, setCurrentCoverSrc] = useState<string>(coverSrc)
 
   const rootRef = useRef<HTMLDivElement | null>(null)
+  const bookRef = useRef<HTMLDivElement | null>(null)
   const coverRef = useRef<HTMLDivElement | null>(null)
   const coverImageRef = useRef<HTMLDivElement | null>(null)
   const coverShadowRef = useRef<HTMLDivElement | null>(null)
@@ -89,6 +90,9 @@ export default function LandingScreenGSAP({
 
     const bookEl = coverRef.current
     const rootEl = rootRef.current
+
+    const isDesktop = window.innerWidth >= 1024
+
     if (!bookEl || !rootEl) {
       // fallback: ถ้าไม่เจอ element ก็ fade อย่างเดียว
       gsap.to(rootEl, {
@@ -102,6 +106,21 @@ export default function LandingScreenGSAP({
       })
       return
     }
+
+    if (!isDesktop) {
+      gsap.to(rootEl, {
+        autoAlpha: 0,
+        duration: 0.6,
+        ease: 'power1.inOut',
+        onComplete: () => {
+          setVisible(false)
+          onStart()
+        },
+      })
+      return
+    }
+
+    // ====== เฉพาะ Desktop เท่านั้นถึงจะเข้า zoom ======
 
     // 1) หาตำแหน่งของหนังสือใน viewport
     const rect = bookEl.getBoundingClientRect()
@@ -118,9 +137,9 @@ export default function LandingScreenGSAP({
 
     const tl = gsap.timeline()
 
-    // --- Zoom-in + move ---
+    // --- Zoom-in + move (Desktop เท่านั้น) ---
     tl.to(rootEl, {
-      scale: 1.4, // ขยายประมาณนี้กำลังสวย ปรับได้
+      scale: 1.4,
       x: offsetX,
       y: offsetY,
       duration: 0.9,
@@ -158,6 +177,8 @@ export default function LandingScreenGSAP({
       innerPageFoldRef.current,
     ].filter(Boolean) as HTMLElement[]
 
+    const isDesktop = window.innerWidth >= 1024
+
     gsap.set(els, {
       transformStyle: 'preserve-3d',
       force3D: true,
@@ -180,6 +201,12 @@ export default function LandingScreenGSAP({
 
     // kill previous tl if exists
     tlRef.current?.kill()
+
+    if (isDesktop) {
+      gsap.set(bookRef.current, {
+        left: '25%',
+      })
+    }
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -322,6 +349,7 @@ export default function LandingScreenGSAP({
             className="relative"
           >
             <div
+              ref={bookRef}
               style={{
                 width: '100%',
                 height: bookHeight + 40,
