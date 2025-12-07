@@ -1,0 +1,78 @@
+.bg-versus {
+  background-image: url('assets/background/chapter3/versus_bg/bg.png');
+
+  /* เปลี่ยนจาก cover เป็น contain หรือ 100% เพื่อให้เห็นครบ */
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+
+  width: 100%;
+
+  /* ลบ height: 100vh ออก! แล้วใส่ aspect-ratio แทน */
+  /* ตัวเลข 16/9 คือสัดส่วนรูป (เช่น 1920 / 1080) */
+  /* ถ้าไม่รู้ ให้ลองใส่ auto หรือใส่ขนาดจริงของรูปเช่น 1920/1080 */
+  aspect-ratio: 4 / 3;
+}
+
+.bg-versus-original {
+  background-image: url('/assets/background/chapter3/Versus_BG.png');
+
+  /* เปลี่ยนจาก cover เป็น contain หรือ 100% เพื่อให้เห็นครบ */
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+
+  width: 100%;
+
+  /* ลบ height: 100vh ออก! แล้วใส่ aspect-ratio แทน */
+  /* ตัวเลข 16/9 คือสัดส่วนรูป (เช่น 1920 / 1080) */
+  /* ถ้าไม่รู้ ให้ลองใส่ auto หรือใส่ขนาดจริงของรูปเช่น 1920/1080 */
+  aspect-ratio: 4 / 3;
+}
+
+
+
+.character-vs {
+  /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+  position: absolute;
+  /* ลอยอิสระ */
+  /* แกน X (แนวนอน) */
+  right: 20px;
+  height: 470px;
+  width: auto;
+}
+
+.character-vs-2 {
+  /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+  position: absolute;
+  /* ลอยอิสระ */
+  /* แกน X (แนวนอน) */
+  right: 20px;
+  height: 520px;
+  width: auto;
+}
+
+
+.versus-abs {
+  right: 20px;
+  position: absolute;
+  height: 90%;
+  width: auto;
+}
+
+.versus-text {
+  font-size: 80px;
+  font-weight: 900;
+  color: white;
+  
+  /* สร้างเงาซ้อนกัน 4 ทิศ เพื่อทำเป็นขอบ */
+  text-shadow: 
+    3px 0 0 #000, 
+    -3px 0 0 #000, 
+    0 3px 0 #000, 
+    0 -3px 0 #000,
+    3px 3px 0 #000,  /* มุมเฉียง */
+    -3px -3px 0 #000,
+    3px -3px 0 #000,
+    -3px 3px 0 #000;
+}

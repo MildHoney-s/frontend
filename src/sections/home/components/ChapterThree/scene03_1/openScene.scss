@@ -1,0 +1,37 @@
+/* แปลงจาก bgLiftBottomLeftStyle */
+.bg-lift-bottom-left {
+    object-fit: cover;
+    object-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+    
+    background-color: black;
+}
+
+/* ไฟล์ App.css */
+
+.bg-chapter3-01 {
+    /* 1. Path รูป (เช็คให้ชัวร์) */
+    background-image: url('/assets/background/chapter3/00.png');
+
+    /* 2. จัดการขนาดและการวางตำแหน่ง */
+    background-size: cover;
+    /* ให้รูปเต็มพื้นที่ */
+    background-position: top center;
+    /* ให้จุดโฟกัสอยู่ด้านบนตรงกลาง */
+    background-repeat: no-repeat;
+
+    /* 3. ความสูง (เลือกเอาค่าใดค่าหนึ่ง) */
+    height: 400px;
+    /* หรือ 100vh ตามดีไซน์ */
+    width: 100%;
+}
+
+.firework {
+    top: 20px;
+    /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+    position: absolute;
+    /* ลอยอิสระ */
+    /* แกน X (แนวนอน) */
+    right: 20px;
+    height: 200px;
+}
