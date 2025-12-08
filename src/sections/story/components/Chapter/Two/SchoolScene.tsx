@@ -38,7 +38,7 @@ export default function SchoolScene({ onComplete }: Props) {
       tl.fromTo(
         '.honey-character',
         { x: -100, opacity: 0 },
-        { x: 0, opacity: 1, duration: 1.5, ease: 'power2.out' },
+        { x: 0, opacity: 1, duration: 1.5, ease: 'power2.out' }
       )
 
       // Setup
@@ -51,6 +51,7 @@ export default function SchoolScene({ onComplete }: Props) {
       gsap.set('.face-normal', { autoAlpha: 1 })
       gsap.set('.arena-bg-img', { autoAlpha: 0 })
       gsap.set('.lost-text', { autoAlpha: 0, scale: 0.5 })
+      gsap.set('.black-overlay', { autoAlpha: 0 }) // เริ่มต้นซ่อนไว้
 
       // --- TRIGGER 1: WORRY ---
       ScrollTrigger.create({
@@ -273,25 +274,22 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- TRIGGER 4: EXIT SCENE (ออกจาก Arena -> มืดสนิท) ---
-      // ✅ เพิ่มส่วนนี้ครับ: เมื่อไถเกือบสุดทาง ให้ทุกอย่าง Fade Out เป็นสีดำ
+      // --- TRIGGER 4: EXIT SCENE (Fade To Black แบบเนียนๆ) ---
+      // ✅ ใช้ .black-overlay บังจอแทนการสั่งซ่อนรูป เพื่อความ Smooth
       ScrollTrigger.create({
         trigger: '.trigger-exit',
-        start: 'top 80%', // เริ่ม Fade Out ก่อนจบ Scene นิดหน่อย
+        start: 'top 80%',
         onEnter: () => {
-          // สั่งทุกอย่างให้หายไป
-          gsap.to(['.arena-bg-img', '.lost-text', '.honey-character'], {
-            autoAlpha: 0,
+          gsap.to('.black-overlay', {
+            autoAlpha: 1,
             duration: 1,
-            ease: 'power1.inOut',
-            overwrite: true, // บังคับให้หายไปเลย
+            overwrite: true,
           })
         },
         onLeaveBack: () => {
-          // ถ้าไถกลับขึ้นมา ให้โชว์กลับมา
-          gsap.to(['.arena-bg-img', '.lost-text', '.honey-character'], {
-            autoAlpha: 1,
-            duration: 0.5,
+          gsap.to('.black-overlay', {
+            autoAlpha: 0,
+            duration: 1,
             overwrite: true,
           })
         },
@@ -340,7 +338,6 @@ export default function SchoolScene({ onComplete }: Props) {
   }, [onComplete])
 
   return (
-    // เพิ่มความสูงอีกนิดเป็น 480vh เพื่อเผื่อที่ให้ Fade Out ตอนจบ
     <div ref={containerRef} className="relative h-[480vh] w-full bg-black">
       <div className="sticky left-0 top-0 h-screen w-full overflow-hidden">
         {/* Backgrounds */}
@@ -429,6 +426,9 @@ export default function SchoolScene({ onComplete }: Props) {
             โรงเรียนเวทมนตร์
           </h1>
         </div>
+
+        {/* Black Overlay (Exit) */}
+        <div className="black-overlay pointer-events-none absolute inset-0 z-[60] bg-black opacity-0"></div>
       </div>
 
       {/* --- SCROLL TRIGGERS --- */}
