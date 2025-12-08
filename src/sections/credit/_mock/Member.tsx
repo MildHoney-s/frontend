@@ -123,6 +123,43 @@ const TEAM: Member[] = [
     },
     scores: { Copywriter: 96, Artist: 89, Developer: 1 },
     twitterUrl: 'https://x.com/ZAYZHIK_KungV2',
+    gallery: ['/assets/gallery/OKITAO_art_a.png'],
+  },
+  {
+    id: '11',
+    name: 'kochujang',
+    roles: ['Copywriter', 'Project Manager'],
+    avatar: '/assets/team/kochujang.png',
+    bio: 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    roleBios: {
+      Copywriter: 'เขียนบทและกำกับโทนเนื้อเรื่องของโปรเจกต์',
+      'Project Manager': 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    },
+    scores: { Copywriter: 96, 'Project Manager': 89 },
+    twitterUrl: 'https://x.com/kochujang2703',
+  },
+  {
+    id: '12',
+    name: 'Kiwa',
+    roles: ['Artist', 'Project Manager'],
+    avatar: '/assets/team/Kiwa.png',
+    bio: 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    roleBios: {
+      Artist: 'ออกแบบและวาดงานภาพประกอบของโปรเจกต์',
+      'Project Manager': 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',
+    },
+    scores: { Artist: 96, 'Project Manager': 89 },
+    twitterUrl: 'https://x.com/KiwaPawari',
+    gallery: ['/assets/gallery/OKITAO_art_a.png'],
+  },
+  {
+    id: '13',
+    name: 'My_mint',
+    roles: ['Copywriter'],
+    avatar: '/assets/team/My-mint.jpg',
+    bio: 'เขียนบทและกำกับโทนเนื้อเรื่องของโปรเจกต์',
+    scores: { Copywriter: 89 },
+    twitterUrl: 'https://x.com/PeamaiT',
   },
 ]
 

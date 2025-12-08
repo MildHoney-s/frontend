@@ -95,7 +95,8 @@ export default function CreditsViewPage() {
 
           <div className="space-y-12">
             {groups.map(([role, members]) => {
-              const scrollable = members.length > 6
+              // const scrollable = members.length > 6
+              const scrollable = false
               return (
                 <section key={role}>
                   <div className="mb-4 flex items-center justify-between">
