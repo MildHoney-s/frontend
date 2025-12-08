@@ -21,7 +21,7 @@ export default function LandingPage() {
       <LandingScreen
         coverSrc="/assets/book/book-cover.png"
         backCoverSrc="/assets/book/book-back-cover.png"
-        pageSrc='/assets/book/paper.png'
+        pageSrc="/assets/book/paper.png"
         onStart={handleStart}
       />
     </>
