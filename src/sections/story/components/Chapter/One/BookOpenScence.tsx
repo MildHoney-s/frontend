@@ -5,6 +5,8 @@ interface Props {
   onComplete: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function BookOpenScene({ onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   useLayoutEffect(() => {

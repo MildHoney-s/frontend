@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -8,150 +8,203 @@ interface Props {
   onComplete: () => void
 }
 
-// ----------------------------------------------------------------------
-
-export default function MildHouseScene({ onComplete }: Props) {
+export default function HouseScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const doorRef = useRef<HTMLDivElement>(null)
-  const [isDoorOpened, setIsDoorOpened] = useState(false)
-  const [knockCount, setKnockCount] = useState(0)
-
-  // Animation ตอนเคาะประตู
-  const handleKnock = () => {
-    if (isDoorOpened) return
-
-    // เคาะ 3 ครั้งถึงจะเปิด
-    if (knockCount < 2) {
-      setKnockCount((prev) => prev + 1)
-      // สั่นประตู
-      gsap.to(doorRef.current, { x: 5, duration: 0.1, yoyo: true, repeat: 3 })
-      // TODO: ใส่เสียงเคาะประตูตรงนี้ playSound('knock')
-    } else {
-      // เปิดประตู
-      setIsDoorOpened(true)
-      gsap.to(doorRef.current, {
-        rotateY: -110,
-        duration: 1.5,
-        ease: 'power2.inOut',
-        transformOrigin: 'left center', // จุดหมุนอยู่ซ้าย
-      })
-    }
-  }
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Fade In ฉากบ้าน
-      gsap.fromTo(
-        '.house-bg',
-        { autoAlpha: 0 },
-        {
-          autoAlpha: 1,
-          duration: 2,
-          scrollTrigger: { trigger: containerRef.current, start: 'top 60%' },
-        },
-      )
+      // =========================================================
+      // 1. INITIAL SETUP
+      // =========================================================
 
-      // ถ้าเปิดประตูแล้ว ให้บทพูดลอยขึ้นมา
-      if (isDoorOpened) {
-        gsap.fromTo(
-          '.dialogue-section',
-          { autoAlpha: 0, y: 50 },
-          { autoAlpha: 1, y: 0, duration: 1, delay: 1 },
-        )
-      }
+      // Scene Atmosphere (ค่ำแล้ว)
+      gsap.set('.black-overlay', { autoAlpha: 1 }) 
+      gsap.set('.evening-overlay', { autoAlpha: 0.6 }) // สีน้ำเงินเข้ม/ม่วง ให้บรรยากาศค่ำๆ
+
+      // Honey (ยืนรอหน้าประตู)
+      gsap.set('.honey-group', { x: -50, autoAlpha: 1 })
+      gsap.set('.honey-bubble-think', { scale: 0, autoAlpha: 0, transformOrigin: 'bottom right' })
+      gsap.set('.knock-effect', { scale: 0, autoAlpha: 0 })
+
+      // Mild (ซ่อนอยู่ในบ้าน/หลังประตู)
+      gsap.set('.mild-group', { x: 50, autoAlpha: 0 }) // เริ่มต้นซ่อนไว้
+      gsap.set('.mild-face-normal', { autoAlpha: 1 })
+      gsap.set('.mild-face-surprise', { autoAlpha: 0 })
+      gsap.set('.mild-face-happy', { autoAlpha: 0 })
+      
+      // Bubbles
+      gsap.set('.mild-bubble-think', { scale: 0, autoAlpha: 0, transformOrigin: 'bottom left' })
+      gsap.set('.mild-bubble-speak', { scale: 0, autoAlpha: 0, transformOrigin: 'bottom left' })
+      
+      // Magic Text (เวทตัวอักษรของฮันนี่)
+      gsap.set('.magic-text-container', { autoAlpha: 0, scale: 0.8, y: 20 })
+
+
+      // =========================================================
+      // 2. TIMELINE
+      // =========================================================
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          onLeave: () => onComplete && onComplete(),
+        },
+      })
+
+      // --- PHASE 1: ARRIVAL & THINKING ---
+      // เปิดฉาก Honey ยืนหน้าบ้าน
+      tl.to('.black-overlay', { autoAlpha: 0, duration: 2 })
+        .from('.house-bg', { scale: 1.1, duration: 2 }, '<')
+      
+      // Honey คิดในใจ: "ใช่หลังนี้ไหมนะ"
+      tl.to('.honey-bubble-think', { scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out' })
+        .to('.honey-bubble-think', { scale: 0, autoAlpha: 0, duration: 0.3, delay: 1 }) // หายไป
+
+      // --- PHASE 2: KNOCK KNOCK ---
+      // Honey เคาะประตู (Effect สั่นๆ)
+      tl.to('.honey-group', { x: -40, duration: 0.1, yoyo: true, repeat: 3 }) // ขยับตัวเหมือนเคาะ
+        .to('.knock-effect', { scale: 1, autoAlpha: 1, duration: 0.2 }, '<')
+        .to('.knock-effect', { scale: 1.2, duration: 0.2, yoyo: true, repeat: 3 }, '<')
+        .to('.knock-effect', { autoAlpha: 0, duration: 0.2 }, '>0.5')
+
+      // --- PHASE 3: MILD OPENS DOOR ---
+      // Mild คิดในใจก่อนเปิด: "ใครกัน?"
+      // (สมมติว่า Bubble ลอยออกมาจากในบ้านก่อนตัวคน)
+      tl.to('.mild-bubble-think', { scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out' })
+        .to('.mild-bubble-think', { scale: 0, autoAlpha: 0, duration: 0.3, delay: 1 })
+
+      // Mild แง้มประตูออกมา (Slide & Fade In)
+      tl.to('.mild-group', { x: 0, autoAlpha: 1, duration: 1, ease: 'power2.out' })
+      
+      // Mild พูด: "เอ๊ะ คุณฮันนี่?"
+      tl.to('.mild-bubble-speak', { scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out' })
+        .to('.text-mild-speak-1', { autoAlpha: 1, duration: 0.5 }, '<') // "ใครหรอคะ..."
+
+      // Mild เปลี่ยนข้อความ -> ตกใจ
+      tl.to('.text-mild-speak-1', { autoAlpha: 0, duration: 0.2, delay: 1 })
+        .to('.mild-face-normal', { autoAlpha: 0, duration: 0.2 }, '<')
+        .to('.mild-face-surprise', { autoAlpha: 1, duration: 0.2 }, '<')
+        .to('.text-mild-speak-2', { autoAlpha: 1, duration: 0.2 }) // "เอ๊ะ คุณฮันนี่... มาซะเย็น"
+
+      // --- PHASE 4: MAGIC TEXT REPLY ---
+      // Honey ตอบกลับด้วยเวทมนตร์ (Bubble ปกติหายไป Mild เงียบฟัง)
+      tl.to('.mild-bubble-speak', { autoAlpha: 0, scale: 0, duration: 0.3 }, '>0.5')
+      
+      // Magic Text ปรากฏ (Glow effect)
+      tl.to('.magic-text-container', { 
+          autoAlpha: 1, 
+          scale: 1, 
+          y: 0, 
+          duration: 1.5, 
+          ease: 'power3.out' 
+      })
+
+      // --- PHASE 5: HAPPY ENDING ---
+      // Mild ดีใจเปลี่ยนหน้า + Bubble "จริงหรอคะ!?"
+      tl.to('.mild-face-surprise', { autoAlpha: 0, duration: 0.3 }, '>1')
+        .to('.mild-face-happy', { autoAlpha: 1, duration: 0.3 }, '<')
+        .to('.mild-bubble-speak', { scale: 1, autoAlpha: 1, duration: 0.3 }, '<')
+        .to('.text-mild-speak-2', { autoAlpha: 0, duration: 0 }, '<') // ซ่อน text เก่า
+        .to('.text-mild-speak-3', { autoAlpha: 1, duration: 0.2 }) // โชว์ text ใหม่ "จริงหรอคะ!?"
+
+      // Fade Out จบ Scene
+      tl.to('.black-overlay', { autoAlpha: 1, duration: 1.5 }, '>1.5')
+
     }, containerRef)
     return () => ctx.revert()
-  }, [isDoorOpened])
+  }, [onComplete])
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full overflow-hidden bg-black pb-20 text-white"
-    >
-      {/* ส่วนประตูบ้าน (Interactive) */}
-      <div className="house-bg relative flex h-screen w-full flex-col items-center justify-center">
-        <div className="absolute top-10 animate-pulse text-sm text-gray-400">
-          Scroll ลงมาแล้วเคาะประตูบ้าน...
+    <div ref={containerRef} className="relative h-[450vh] w-full bg-black">
+      <div className="sticky left-0 top-0 h-screen w-full overflow-hidden font-sans">
+        
+        {/* Background: หน้าบ้านมายด์ */}
+        <div
+          className="house-bg absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/assets/Part2/Mild_House_Front.png')" }} // ⚠️ เปลี่ยนเป็นรูปหน้าบ้านจริง
+        >
+          {/* Evening Overlay: สีน้ำเงินม่วงเข้มๆ ให้ดูเป็นตอนค่ำ */}
+          <div className="evening-overlay absolute inset-0 bg-indigo-900 mix-blend-multiply pointer-events-none"></div>
         </div>
 
-        {/* Container บ้าน */}
-        <div className="perspective-1000 relative h-[500px] w-[300px] overflow-hidden rounded-xl border-8 border-gray-800 bg-gray-700 shadow-2xl md:h-[600px] md:w-[400px]">
-          {/* พื้นหลังในบ้าน (เห็นตอนประตูเปิด) */}
-          <div className="absolute inset-0 flex items-center justify-center bg-yellow-100">
-            {isDoorOpened ? (
-              <div className="animate-in fade-in zoom-in text-center duration-500">
-                {/* ใส่รูปมายด์ตกใจ/ยิ้มตรงนี้ */}
-                <div className="mx-auto mb-4 h-48 w-48 rounded-full border-4 border-white bg-pink-200"></div>
-                <p className="rounded bg-white/80 px-2 font-bold text-black">
-                  มายด์: "เอ๊ะ คุณฮันนี่!?"
+        {/* --- HONEY (LEFT) --- */}
+        <div className="honey-group absolute bottom-0 left-[5%] md:left-[15%] z-20 w-[260px] md:w-[320px]">
+             <img src="/assets/Part2/Honey/Body.PNG" className="relative w-full" alt="Honey Body" />
+             <img src="/assets/Part2/Honey/Normal_Face.PNG" className="absolute top-[95px] left-0 w-full" alt="Honey Face" />
+
+             {/* 1. Thought Bubble */}
+             <div className="honey-bubble-think absolute -right-[100px] top-[0px] w-[200px] bg-white rounded-full p-4 shadow-xl border-2 border-gray-300 opacity-0">
+                <p className="text-gray-600 text-sm text-center italic">"ใช่หลังนี้มั้ยนะ?<br/>ลองเคาะดูละกัน"</p>
+                <div className="absolute -bottom-2 left-4 w-3 h-3 bg-white rounded-full"></div>
+                <div className="absolute -bottom-5 left-2 w-2 h-2 bg-white rounded-full"></div>
+             </div>
+
+             {/* 2. Knock Effect Text */}
+             <div className="knock-effect absolute -right-[50px] top-[150px] pointer-events-none">
+                 <h2 className="text-4xl font-black text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] italic transform -rotate-12">
+                     Gok! Gok!
+                 </h2>
+             </div>
+        </div>
+
+        {/* --- MILD (RIGHT) --- */}
+        <div className="mild-group absolute bottom-0 right-[5%] md:right-[15%] z-10 w-[260px] md:w-[320px]">
+             {/* สมมติว่า Mild ยืนอยู่หลังประตู หรือโผล่มาจากขอบจอขวา */}
+             <img src="/assets/Part2/Mild/Body/Body_1.PNG" className="relative w-full" alt="Mild Body" />
+             
+             <div className="absolute top-0 left-0 w-full h-full">
+                <img src="/assets/Part2/Mild/Face/Face_08_หน้าจริงจัง.PNG" className="mild-face-normal w-full absolute top-0" alt="Normal" />
+                <img src="/assets/Part2/Mild/Face/Face_03_หน้าตกใจ.PNG" className="mild-face-surprise w-full absolute top-0 opacity-0" alt="Surprise" />
+                <img src="/assets/Part2/Mild/Face/Face_01_ยิ้ม.PNG" className="mild-face-happy w-full absolute top-0 opacity-0" alt="Happy" />
+             </div>
+
+             {/* Mild Thought Bubble (ก่อนเปิดประตู) */}
+             <div className="mild-bubble-think absolute -left-[120px] top-[50px] w-[180px] bg-white rounded-full p-3 shadow-xl border-2 border-gray-300 opacity-0 z-30">
+                <p className="text-gray-600 text-sm text-center italic">"ใครกันมาซะเย็นเชียว..."</p>
+                <div className="absolute -bottom-2 right-4 w-3 h-3 bg-white rounded-full"></div>
+                <div className="absolute -bottom-5 right-2 w-2 h-2 bg-white rounded-full"></div>
+             </div>
+
+             {/* Mild Speak Bubble */}
+             <div className="mild-bubble-speak absolute -left-[160px] top-[20px] w-[240px] bg-white rounded-2xl p-4 shadow-xl border-2 border-gray-300 z-30 opacity-0">
+                <div className="text-mild-speak-1 absolute inset-0 flex items-center justify-center p-4 opacity-0">
+                    <p className="text-gray-800 text-sm leading-tight text-center">"(เสียงเบา)<br/>ใครหรอคะ..."</p>
+                </div>
+                <div className="text-mild-speak-2 absolute inset-0 flex items-center justify-center p-4 opacity-0">
+                    <p className="text-black font-bold text-base leading-tight text-center">"เอ๊ะ!? คุณฮันนี่เองหรอ<br/>มีอะไรรึป่าวคะ<br/>มาซะเย็นเชียว"</p>
+                </div>
+                <div className="text-mild-speak-3 absolute inset-0 flex items-center justify-center p-4 opacity-0">
+                    <p className="text-pink-600 font-black text-xl text-center">"จริงหรอคะ!?"</p>
+                </div>
+                {/* หาง Bubble */}
+                <div className="absolute -bottom-2 -right-2 w-4 h-4 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-300"></div>
+             </div>
+        </div>
+
+        {/* --- MAGIC TEXT (CENTER) --- */}
+        {/* กล่องข้อความเวทมนตร์ ลอยอยู่ตรงกลาง */}
+        <div className="magic-text-container absolute top-[30%] left-1/2 -translate-x-1/2 z-40 w-[90%] md:w-[600px] pointer-events-none">
+            <div className="relative bg-blue-900/80 backdrop-blur-md border-2 border-blue-300 rounded-xl p-6 md:p-8 shadow-[0_0_30px_rgba(59,130,246,0.6)]">
+                {/* Decoration Icons */}
+                <div className="absolute -top-4 -left-4 text-3xl">✨</div>
+                <div className="absolute -bottom-4 -right-4 text-3xl">✨</div>
+
+                <p className="font-serif text-lg md:text-2xl text-blue-100 text-center leading-relaxed drop-shadow-md">
+                    " ขอโทษนะที่มารบกวน... <br/>
+                    พอดีฉันตัดสินใจได้แล้วว่า <br/>
+                    <span className="text-yellow-300 font-bold text-xl md:text-3xl mt-2 block">
+                        จะเป็นอาจารย์ให้เธอเอง!
+                    </span> "
                 </p>
-              </div>
-            ) : (
-              <div className="text-black/30">ในบ้าน...</div>
-            )}
-          </div>
-
-          {/* บานประตู (ตัวบัง) */}
-          <div
-            ref={doorRef}
-            onClick={handleKnock}
-            className="absolute inset-0 flex cursor-pointer items-center justify-center border-r-4 border-black/20 bg-[#5D4037]"
-            style={{ transformStyle: 'preserve-3d' }} // สำคัญสำหรับเปิดประตู 3D
-          >
-            {/* ลวดลายประตู */}
-            <div className="h-[90%] w-[80%] rounded border-2 border-[#3E2723] opacity-50"></div>
-            <div className="absolute right-4 h-4 w-4 rounded-full bg-yellow-500 shadow-lg"></div>{' '}
-            {/* ลูกบิด */}
-            {!isDoorOpened && (
-              <span className="pointer-events-none absolute bottom-20 rounded bg-black/50 px-3 py-1 text-sm">
-                {knockCount === 0 ? 'คลิกเพื่อเคาะ' : 'เคาะอีก!'}
-              </span>
-            )}
-          </div>
+            </div>
         </div>
+
+        {/* Black Overlay */}
+        <div className="black-overlay absolute inset-0 z-50 bg-black pointer-events-none"></div>
+
       </div>
-
-      {/* บทสนทนาหลังประตูเปิด (Manhwa Style) */}
-      {isDoorOpened && (
-        <div className="dialogue-section mx-auto mt-10 max-w-2xl space-y-20 px-6 pb-20">
-          <div className="manhwa-panel rounded-xl border border-gray-700 bg-gray-900/80 p-6">
-            <p className="mb-2 text-sm text-gray-400">มายด์ (เสียงเบาๆ)</p>
-            <p className="text-xl">
-              "ใครหรอคะ... เอ๊ะ คุณฮันนี่เองหรอ มีอะไรรึป่าวคะมาซะเย็นเชียว"
-            </p>
-          </div>
-
-          <div className="manhwa-panel text-center">
-            <p className="mb-2 font-bold text-yellow-500">
-              ✨ ฮันนี่ (เวทตัวอักษร) ✨
-            </p>
-            <p className="font-serif text-2xl leading-relaxed text-yellow-200 md:text-3xl">
-              "ขอโทษนะที่มารบกวน...
-              <br />
-              พอดีฉันตัดสินใจได้แล้วว่า
-              <br />
-              จะเป็นอาจารย์ให้เธอเอง"
-            </p>
-          </div>
-
-          <div className="manhwa-panel flex flex-col items-center">
-            <p className="mb-4 text-4xl">😲 ➝ 😄</p>
-            <p className="text-3xl font-bold text-pink-400">"จริงหรอคะ!?"</p>
-            <p className="mt-4 text-sm text-gray-400">
-              &lt; มายด์ยิ้มแย้มอย่างสดใสน่ารัก &gt;
-            </p>
-          </div>
-
-          <div className="pt-10 text-center">
-            <button
-              onClick={onComplete}
-              className="animate-bounce rounded-full bg-blue-600 px-8 py-3 font-bold hover:bg-blue-500"
-            >
-              เริ่มการฝึกฝน (Next Scene) ▼
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

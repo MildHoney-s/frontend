@@ -11,6 +11,8 @@ interface LandingScreenProps {
   tagSrc?: string
 }
 
+// ----------------------------------------------------------------------
+
 export default function LandingScreenGSAP({
   onStart,
   coverSrc = '/assets/book/book-cover.png',

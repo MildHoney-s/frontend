@@ -2,9 +2,11 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 
-import { ChapterOne, ChapterTwo } from './components'
+import { ChapterOne, ChapterThree, ChapterTwo } from './components'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// ----------------------------------------------------------------------
 
 export default function StoryPageView() {
   const [chapterOneDone, setChapterOneDone] = useState(false)
@@ -18,14 +20,12 @@ export default function StoryPageView() {
     })
   }, [chapterOneDone])
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const scrollToChapterTwo = (smooth = true) => {
-    if (!chapterTwoRef.current) return
-    chapterTwoRef.current.scrollIntoView({
-      behavior: smooth ? 'smooth' : 'auto',
-      block: 'start',
+  useEffect(() => {
+    if (!chapterTwoDone) return
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
     })
-  }
+  }, [chapterTwoDone])
 
   return (
     <div
@@ -47,11 +47,10 @@ export default function StoryPageView() {
             className="animate-in fade-in duration-700"
             aria-hidden={!chapterOneDone}
           >
-            <ChapterTwo />
+            <ChapterTwo onComplete={() => setChapterTwoDone(true)} />
           </div>
         )}
-
-        
+        {chapterTwoDone && <ChapterThree />}
       </div>
     </div>
   )

@@ -17,6 +17,8 @@ interface ChapterOneProps {
   onComplete?: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function ChapterOne({ onComplete }: ChapterOneProps) {
   const [stage, setStage] = useState(0)
 

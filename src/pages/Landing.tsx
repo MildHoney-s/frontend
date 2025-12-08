@@ -4,6 +4,8 @@ import { useCallback } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 
+// ----------------------------------------------------------------------
+
 export default function LandingPage() {
   const navigate = useNavigate()
 
@@ -21,7 +23,7 @@ export default function LandingPage() {
       <LandingScreen
         coverSrc="/assets/book/book-cover.png"
         backCoverSrc="/assets/book/book-back-cover.png"
-        pageSrc='/assets/book/paper.png'
+        pageSrc="/assets/book/paper.png"
         onStart={handleStart}
       />
     </>

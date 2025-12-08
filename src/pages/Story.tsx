@@ -2,6 +2,8 @@
 import { StoryPageView } from '@/sections/story'
 import { Helmet } from 'react-helmet-async'
 
+// ----------------------------------------------------------------------
+
 export default function StoryPage() {
   return (
     <>

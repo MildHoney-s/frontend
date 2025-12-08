@@ -7,6 +7,8 @@ interface Props {
   onComplete: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function RescueHomeScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const doorRef = useRef<HTMLDivElement | null>(null)

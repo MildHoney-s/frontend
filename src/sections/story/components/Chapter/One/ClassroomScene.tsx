@@ -8,6 +8,8 @@ interface Props {
   onComplete: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function ClassroomScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
