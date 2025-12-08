@@ -1,6 +1,6 @@
 export { default as OpenSceneColosseum } from './OpenSceneColosseum'
-export { default as VersusScene01 } from './VersusScene01'
-export { default as VersusScene02 } from './VersusScene02'
-export { default as VersusScene03 } from './VersusScene03'
-export { default as VersusScene04 } from './VersusScene04'
+export { default as VersusSceneOne } from './VersusSceneOne'
+export { default as VersusSceneTwo } from './VersusSceneTwo'
+export { default as VersusSceneThree } from './VersusSceneThree'
+export { default as VersusSceneFour } from './VersusSceneFour'
 

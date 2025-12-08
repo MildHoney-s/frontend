@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import OpenSceneColosseum from './Chapter/Three/OpenSceneColosseum'
 import { 
-  VersusScene01, 
-  VersusScene02, 
-  VersusScene03, 
-  VersusScene04 
+  VersusSceneFour, 
+  VersusSceneOne,
+  VersusSceneThree,
+  VersusSceneTwo
 } from './Chapter/Three' // เช็ค index.ts ของ folder ให้ export ครบนะครับ
 
 export default function ChapterThree() {
@@ -21,7 +21,7 @@ export default function ChapterThree() {
       {/* SCENE 1: Versus 01 (Unlock เมื่อ Scene 0 จบ) */}
       {stage >= 1 && (
         <div className="transition-opacity duration-1000 ease-in opacity-0 animate-[fadeIn_1s_ease-in_forwards]">
-          <VersusScene01
+          <VersusSceneOne
             onComplete={() => setStage((prev) => Math.max(prev, 2))}
           />
         </div>
@@ -30,7 +30,7 @@ export default function ChapterThree() {
       {/* SCENE 2: Versus 02 (Unlock เมื่อ Scene 1 จบ) */}
       {stage >= 2 && (
         <div className="transition-opacity duration-1000 ease-in opacity-0 animate-[fadeIn_1s_ease-in_forwards]">
-          <VersusScene02
+          <VersusSceneTwo
             onComplete={() => setStage((prev) => Math.max(prev, 3))}
           />
         </div>
@@ -39,7 +39,7 @@ export default function ChapterThree() {
       {/* SCENE 3: Versus 03 (Unlock เมื่อ Scene 2 จบ) */}
       {stage >= 3 && (
         <div className="transition-opacity duration-1000 ease-in opacity-0 animate-[fadeIn_1s_ease-in_forwards]">
-          <VersusScene03
+          <VersusSceneThree
             onComplete={() => setStage((prev) => Math.max(prev, 4))}
           />
         </div>
@@ -48,7 +48,7 @@ export default function ChapterThree() {
       {/* SCENE 4: Versus 04 (Unlock เมื่อ Scene 3 จบ) */}
       {stage >= 4 && (
         <div className="transition-opacity duration-1000 ease-in opacity-0 animate-[fadeIn_1s_ease-in_forwards]">
-          <VersusScene04
+          <VersusSceneFour
             onComplete={() => setStage((prev) => Math.max(prev, 5))} // จบ Chapter หรือไปต่อ
           />
         </div>
