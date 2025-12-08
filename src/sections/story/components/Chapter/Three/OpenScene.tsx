@@ -5,6 +5,8 @@ import { useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// ----------------------------------------------------------------------
+
 export default function OpenScene() {
   const main = useRef<HTMLDivElement | null>(null)
   useGSAP(
@@ -33,23 +35,23 @@ export default function OpenScene() {
         <div className="bg-chapter3-01 bg-lift-bottom-left">
           <img
             className="firework abs x-400 y-0"
-            src="public\assets\background\firework\firework_pink.png"
+            src="assets/background/firework/firework_pink.png"
           />
           <img
             className="firework abs x-560 y-0"
-            src="public\assets\background\firework\firework_blue.png"
+            src="assets/background/firework/firework_blue.png"
           />
           <img
             className="firework abs x-480 y-90"
-            src="public\assets\background\firework\firework_orange.png"
+            src="assets/background/firework/firework_orange.png"
           />
           <img
             className="firework abs x-690 y-40"
-            src="public\assets\background\firework\firework_green.png"
+            src="assets/background/firework/firework_green.png"
           />
           <img
             className="firework abs x-800 y-40"
-            src="public\assets\background\firework\firework_white.png"
+            src="assets/background/firework/firework_white.png"
           />
           {/* Content ข้างใน (ถ้ามี) */}
         </div>

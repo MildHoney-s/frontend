@@ -17,6 +17,8 @@ interface VersusProps {
   playerB: Player
 }
 
+// ----------------------------------------------------------------------
+
 export default function VersusScene({ playerA, playerB }: VersusProps) {
   const main = useRef<HTMLDivElement | null>(null)
   useGSAP(

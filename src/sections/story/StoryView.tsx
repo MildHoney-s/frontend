@@ -6,8 +6,11 @@ import { ChapterOne, ChapterThree, ChapterTwo } from './components'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// ----------------------------------------------------------------------
+
 export default function StoryPageView() {
   const [chapterOneDone, setChapterOneDone] = useState(false)
+  const [chapterTwoDone, setChapterTwoDone] = useState(false)
   const chapterTwoRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -17,14 +20,12 @@ export default function StoryPageView() {
     })
   }, [chapterOneDone])
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const scrollToChapterTwo = (smooth = true) => {
-    if (!chapterTwoRef.current) return
-    chapterTwoRef.current.scrollIntoView({
-      behavior: smooth ? 'smooth' : 'auto',
-      block: 'start',
+  useEffect(() => {
+    if (!chapterTwoDone) return
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
     })
-  }
+  }, [chapterTwoDone])
 
   return (
     <div
@@ -46,10 +47,10 @@ export default function StoryPageView() {
             className="animate-in fade-in duration-700"
             aria-hidden={!chapterOneDone}
           >
-            <ChapterTwo />
+            <ChapterTwo onComplete={() => setChapterTwoDone(true)} />
           </div>
         )}
-        <ChapterThree />
+        {chapterTwoDone && <ChapterThree />}
       </div>
     </div>
   )

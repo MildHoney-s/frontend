@@ -5,6 +5,8 @@ interface Props {
   onComplete: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function TeaShopScene({ onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const cupRef = useRef<HTMLDivElement | null>(null)

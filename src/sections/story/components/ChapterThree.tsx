@@ -1,8 +1,8 @@
+import '@/styles/chapter-three.scss'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
-import 'src/styles/chapter-three.scss'
 
 import {
   OpenScene,
@@ -13,6 +13,8 @@ import {
 } from './Chapter/Three'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// ----------------------------------------------------------------------
 
 export default function ChapterThree() {
   const main = useRef<HTMLDivElement | null>(null)

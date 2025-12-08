@@ -5,6 +5,8 @@ interface Props {
   onComplete: () => void
 }
 
+// ----------------------------------------------------------------------
+
 export default function MonsterEncounterScene({ onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const monsterRef = useRef<HTMLDivElement | null>(null)
