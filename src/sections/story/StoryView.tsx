@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function StoryPageView() {
   const [chapterOneDone, setChapterOneDone] = useState(false)
+  const [chapterTwoDone, setChapterTwoDone] = useState(false)
   const chapterTwoRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -49,6 +50,8 @@ export default function StoryPageView() {
             <ChapterTwo />
           </div>
         )}
+
+        
       </div>
     </div>
   )
