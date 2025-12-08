@@ -2,7 +2,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 
-import { ChapterOne, ChapterTwo } from './components'
+import { ChapterOne, ChapterThree, ChapterTwo } from './components'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -49,6 +49,7 @@ export default function StoryPageView() {
             <ChapterTwo />
           </div>
         )}
+        <ChapterThree />
       </div>
     </div>
   )
