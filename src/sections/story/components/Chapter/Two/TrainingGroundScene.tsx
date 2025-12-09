@@ -307,12 +307,12 @@ export default function TrainingGroundScene({ onComplete }: Props) {
                 alt="Body"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src="/assets/Part2/Mild/Arms/Arm_4_L.PNG"
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Left Arm"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_R.PNG"
+                src="/assets/Part2/Mild/Arms/Arm_4_R.PNG"
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Right Arm"
               />
