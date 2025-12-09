@@ -9,8 +9,7 @@ export default function CutSceneOne() {
   const containerRef = useRef<HTMLDivElement>(null)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
 
-  const bgPath = '/assets/gallery/OKITAO_art_a.png'
-
+  const bgPath = '/assets/part3/cutscene/Cutscene_1.png'
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({

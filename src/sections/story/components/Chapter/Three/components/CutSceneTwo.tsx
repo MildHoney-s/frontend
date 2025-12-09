@@ -13,7 +13,7 @@ export default function CutSceneTwo({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const imageWrapperRef = useRef<HTMLDivElement>(null)
 
-  const bgPath = '/assets/gallery/OKITAO_art_b.png'
+  const bgPath = '/assets/part3/cutscene/Cutscene_2.png'
   const finalShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
 
   useLayoutEffect(() => {

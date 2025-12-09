@@ -18,14 +18,16 @@ export default function VersusScene01({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'Mild-R สาวน้อย Introvert ',
-          src: 'assets/part3/Character/Versus/Mild-R/Mild_open.png',
+          src: 'assets/part3/Character/Versus/Mild-R/',
+          file: 'Mild',
           text: 'test',
         }}
         playerB={{
           name: 'Haruki',
           alias: 'ผู้มัวเมาในยามรัตติกาล 100%คาเฟอีน',
           text: 'ผู้ลุ่มหลงในค่ำคืนราวกับต้องมนตร์ คาเฟอีนไหลเวียนแทนเลือดในกาย ทำให้หัวใจเต้นแรงดุจพายุกลางดึก สายตาที่พร่าเลือนด้วยความง่วง กลับทอประกายแปลกประหลาดในแสงจันทร์ เขาถูกค่ำคืนกลืนกิน… และพร้อมกันนั้น เขาก็กลืนกินค่ำคืนกลับไป!!',
-          src: 'assets/part3/Character/Versus/Haruki/Haruki_open.png',
+          src: 'assets/part3/Character/Versus/Haruki/',
+          file: 'Haruki',
         }}
       />
       <BattleComponentThree />
