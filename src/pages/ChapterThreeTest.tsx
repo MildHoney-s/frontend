@@ -10,7 +10,7 @@ export default function ChapterThreeTest() {
         <title> Part 3: tournament | Mild-R HBD 2025 </title>
       </Helmet>
 
-      <ChapterThree/>
+      <ChapterThree />
     </>
   )
 }

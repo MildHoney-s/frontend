@@ -1,8 +1,8 @@
-import { CSSProperties } from "react";
+import { CSSProperties } from 'react'
 
 interface MagicCircleProps {
-  className?: string;
-  style?: CSSProperties;
+  className?: string
+  style?: CSSProperties
 }
 
 const MagicCircleSVG = ({ className, style }: MagicCircleProps) => {
@@ -12,7 +12,7 @@ const MagicCircleSVG = ({ className, style }: MagicCircleProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ overflow: "visible", ...style }}
+      style={{ overflow: 'visible', ...style }}
     >
       {/* วงแหวนรอบนอกสุด */}
       <circle
@@ -23,7 +23,7 @@ const MagicCircleSVG = ({ className, style }: MagicCircleProps) => {
         strokeWidth="2"
         strokeOpacity="0.8"
       />
-      
+
       {/* วงแหวนรอง */}
       <circle
         cx="250"
@@ -60,7 +60,7 @@ const MagicCircleSVG = ({ className, style }: MagicCircleProps) => {
         strokeWidth="3"
         fill="none"
       />
-      
+
       {/* ลวดลายตกแต่งวงใน */}
       <circle
         cx="250"
@@ -71,7 +71,7 @@ const MagicCircleSVG = ({ className, style }: MagicCircleProps) => {
         strokeOpacity="0.3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default MagicCircleSVG;
+export default MagicCircleSVG

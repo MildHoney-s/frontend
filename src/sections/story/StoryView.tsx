@@ -35,7 +35,7 @@ export default function StoryPageView() {
       }}
     >
       {/* กรอบกลาง */}
-      <div className="mx-auto min-h-screen max-w-[1150px] bg-[#f5f5fa] px-4 py-8">
+      <div className="mx-auto min-h-screen max-w-[1150px] bg-[#f5f5fa] px-4">
         {/* ส่ง onComplete ให้ ChapterOne */}
         <ChapterOne onComplete={() => setChapterOneDone(true)} />
 

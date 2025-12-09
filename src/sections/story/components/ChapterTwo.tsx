@@ -1,7 +1,8 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
+// 1. เปลี่ยนจาก useEffect เป็น useLayoutEffect
 import {
   MildHouseScene,
   SchoolScene,
@@ -16,37 +17,30 @@ interface ChapterTwoProps {
   onComplete?: () => void
 }
 
-// ----------------------------------------------------------------------
-
 export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
   const [stage, setStage] = useState(0)
 
-  // Optional: You can keep this as a fallback, but the specific onComplete 
-  // passed to the final scene is more accurate for pinned scroll sections.
-  useEffect(() => {
-    const trigger = ScrollTrigger.create({
-      trigger: '#chapter-two-root',
-      start: 'bottom bottom',
-      onEnter: () => {
-        // This is a safeguard in case the user scrolls past everything quickly
-        // onComplete?.() 
-      },
+  // ✅ 2. เพิ่มท่อนนี้เข้าไปสำคัญมาก!
+  // ทุกครั้งที่ stage เปลี่ยน (มีฉากใหม่โผล่มา) ให้บอก GSAP ว่า "เฮ้ย หน้าเว็บยาวขึ้นแล้วนะ คำนวณใหม่ด่วน!"
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // ใส่ setTimeout นิดนึง เพื่อรอให้ React วาดฉากใหม่เสร็จสมบูรณ์จริงๆ
+      setTimeout(() => {
+        ScrollTrigger.refresh()
+      }, 200)
     })
-
-    return () => trigger.kill()
-  }, [onComplete])
+    return () => ctx.revert()
+  }, [stage])
 
   return (
     <div
       className="min-h-screen w-full bg-black text-white"
       id="chapter-two-root"
     >
-
-
       <SchoolScene onComplete={() => setStage((prev) => Math.max(prev, 1))} />
 
       {stage >= 1 && (
-        <div className="animate-in fade-in duration-700">
+        <div className="animate-in fade-in duration-200">
           <TrainingGroundScene
             onComplete={() => setStage((prev) => Math.max(prev, 2))}
           />

@@ -38,7 +38,7 @@ export default function SchoolScene({ onComplete }: Props) {
       tl.fromTo(
         '.honey-character',
         { x: -100, opacity: 0 },
-        { x: 0, opacity: 1, duration: 1.5, ease: 'power2.out' }
+        { x: 0, opacity: 1, duration: 1.5, ease: 'power2.out' },
       )
 
       // Setup
@@ -361,7 +361,7 @@ export default function SchoolScene({ onComplete }: Props) {
               className="honey-body absolute bottom-0 left-0 w-full origin-bottom object-contain"
             />
 
-            <div className="honey-face-group absolute left-1/2 top-[95px] w-[320px] origin-bottom -translate-x-1/2">
+            <div className="honey-face-group absolute left-1/2 top-[100px] w-[320px] origin-bottom -translate-x-1/2">
               <img
                 src="/assets/Part2/Honey/Normal_Face.PNG"
                 className="face-normal absolute left-0 top-0 w-full object-contain"
@@ -378,19 +378,19 @@ export default function SchoolScene({ onComplete }: Props) {
 
             {/* Bubbles */}
             <div className="bubble-1 absolute -right-[150px] -top-[60px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
-              <p className="font-serif text-lg font-medium leading-relaxed">
-                " เห้อ... ตาลุงนั่นชอบใช้ให้ไปทำเรื่องที่วุ่นวายตลอดเลย "
+              <p className="text-xl font-semibold leading-relaxed tracking-wide">
+                "เห้อ... ตาลุงนั่นชอบใช้ให้ไปทำเรื่องที่วุ่นวายตลอดเลย"
               </p>
               <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-white"></div>
               <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
             </div>
 
             <div className="bubble-middle absolute -right-[180px] -top-[80px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
-              <p className="font-serif text-lg font-medium leading-relaxed">
-                " จะว่าไปไม่ได้กลับมาซะนาน... <br />
-                <span className="font-bold text-blue-600">
+              <p className="text-xl font-semibold leading-relaxed tracking-wide">
+                "จะว่าไปไม่ได้กลับมาซะนาน...
+                <span className="ml-1 font-bold text-blue-600">
                   ที่นี่เองก็เปลี่ยนไปเยอะเหมือนกันนะ
-                </span>{' '}
+                </span>
                 "
               </p>
               <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-white"></div>
@@ -398,9 +398,9 @@ export default function SchoolScene({ onComplete }: Props) {
             </div>
 
             <div className="bubble-2 absolute -right-[150px] -top-[50px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
-              <p className="text-center font-serif text-2xl font-bold leading-relaxed">
-                " แล้วห้องอาจารย์ใหญ่ <br />
-                <span className="text-red-500">ไปทางไหนเนี่ย?</span> "
+              <p className="text-center text-xl font-bold leading-relaxed tracking-wide">
+                "แล้วห้องอาจารย์ใหญ่ <br />
+                <span className="text-red-500">ไปทางไหนเนี่ย?</span>"
               </p>
               <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-white"></div>
               <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
@@ -411,10 +411,10 @@ export default function SchoolScene({ onComplete }: Props) {
         {/* Lost Text */}
         <div className="lost-text pointer-events-none absolute inset-0 z-40 flex items-center justify-center opacity-0">
           <div className="animate-float -translate-y-32 space-y-6 text-center">
-            <h2 className="text-8xl font-black text-white/80 blur-[2px] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] md:text-9xl">
+            <h2 className="text-8xl font-black text-white/80 blur-[1px] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] md:text-9xl">
               . . .
             </h2>
-            <p className="text-white-300 text-2xl font-light uppercase tracking-widest opacity-70">
+            <p className="text-white-300 text-4xl font-light uppercase tracking-widest opacity-90">
               ( หลงทางซะแล้ว )
             </p>
           </div>
@@ -422,7 +422,7 @@ export default function SchoolScene({ onComplete }: Props) {
 
         {/* Intro Overlay */}
         <div className="intro-overlay absolute inset-0 z-50 flex items-center justify-center bg-black">
-          <h1 className="animate-pulse font-serif text-4xl tracking-widest text-white md:text-6xl">
+          <h1 className="animate-pulse text-8xl font-medium tracking-widest text-white md:text-8xl">
             โรงเรียนเวทมนตร์
           </h1>
         </div>
