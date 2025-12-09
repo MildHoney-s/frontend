@@ -21,12 +21,15 @@ interface ChapterTwoProps {
 export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
   const [stage, setStage] = useState(0)
 
+  // Optional: You can keep this as a fallback, but the specific onComplete 
+  // passed to the final scene is more accurate for pinned scroll sections.
   useEffect(() => {
     const trigger = ScrollTrigger.create({
       trigger: '#chapter-two-root',
       start: 'bottom bottom',
       onEnter: () => {
-        onComplete?.()
+        // This is a safeguard in case the user scrolls past everything quickly
+        // onComplete?.() 
       },
     })
 
@@ -38,12 +41,12 @@ export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
       className="min-h-screen w-full bg-black text-white"
       id="chapter-two-root"
     >
-      {/* แต่ละ Scene จะปลดล็อค Scene ถัดไปเมื่อ onComplete */}
+
 
       <SchoolScene onComplete={() => setStage((prev) => Math.max(prev, 1))} />
 
       {stage >= 1 && (
-        <div className="animate-in fade-in duration-1000">
+        <div className="animate-in fade-in duration-700">
           <TrainingGroundScene
             onComplete={() => setStage((prev) => Math.max(prev, 2))}
           />
@@ -51,7 +54,7 @@ export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
       )}
 
       {stage >= 2 && (
-        <div className="animate-in fade-in duration-1000">
+        <div className="animate-in fade-in duration-200">
           <MildHouseScene
             onComplete={() => setStage((prev) => Math.max(prev, 3))}
           />
@@ -59,7 +62,7 @@ export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
       )}
 
       {stage >= 3 && (
-        <div className="animate-in fade-in duration-1000">
+        <div className="animate-in fade-in duration-200">
           <TrainingMontageScene
             onComplete={() => setStage((prev) => Math.max(prev, 4))}
           />
@@ -67,8 +70,8 @@ export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
       )}
 
       {stage >= 4 && (
-        <div className="animate-in fade-in duration-1000">
-          <ThreeMonthsLaterScene />
+        <div className="animate-in fade-in duration-200">
+          <ThreeMonthsLaterScene onComplete={() => onComplete?.()} />
         </div>
       )}
     </div>

@@ -158,8 +158,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
   }, [onComplete])
 
   return (
-    // ใช้ h-[500vh] เพื่อสร้างพื้นที่ Scroll ยาวๆ
-    <div ref={containerRef} className="relative h-[500vh] w-full bg-black">
+    <div ref={containerRef} className="relative h-[1000vh] w-full bg-black">
 
       {/* ใช้ Sticky เพื่อให้ภาพติดอยู่กับหน้าจอขณะ Scroll */}
       <div className="sticky left-0 top-0 h-screen w-full overflow-hidden font-sans">
