@@ -264,7 +264,7 @@ export default function HouseScene({ onComplete }: Props) {
               <div
                 className="absolute z-30"
                 style={{
-                  top: '18%',
+                  top: '82px',
                   left: '0%',
                   width: '100%',
                   height: 'auto',
