@@ -8,238 +8,172 @@ interface Props {
   onComplete: () => void
 }
 
-// ----------------------------------------------------------------------
-
 export default function ClassroomScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const root = containerRef.current!
-      // -------------------------
-      // Intro overlay (ณ ห้องเรียน) fade out while scrolling ลงนิดหน่อย
-      gsap.to('.intro-overlay', {
-        autoAlpha: 0,
-        y: -30,
-        ease: 'power1.out',
+      // --- SETUP ---
+      // ตัวละครและฉาก
+      gsap.set('.teacher-group', { x: -50, autoAlpha: 0 })
+      gsap.set('.student-group', { autoAlpha: 0 })
+      gsap.set('.bg-students', { autoAlpha: 0 })
+      gsap.set(['.bubble-teacher', '.bubble-student'], { scale: 0, autoAlpha: 0, transformOrigin: 'bottom left' })
+      
+      // Text Setup: ใช้ autoAlpha ควบคุมการมองเห็น
+      gsap.set('.text-t-1', { autoAlpha: 1 }) 
+      gsap.set('.text-t-2', { autoAlpha: 0 }) // ซ่อนชุด 2 ไว้ก่อน
+      
+      // ซ่อนประโยคย่อยในชุด 2
+      gsap.set(['.final-line-1', '.final-line-2', '.final-line-3'], { autoAlpha: 0, y: 15 }) 
+
+      // =========================================================
+      // MAIN TIMELINE
+      // =========================================================
+      const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: root,
+          trigger: containerRef.current,
           start: 'top top',
-          end: '+=220',
-          scrub: true,
+          end: '+=7000', // ระยะยาวเพื่อให้ Scroll สมูท
+          scrub: 1.5,    // ความหน่วงให้นุ่มนวล
+          pin: true,
+          onLeave: () => onComplete && onComplete(),
         },
       })
 
-      // -------------------------
-      // Teacher entrance
-      const teacherTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: 'top top+=200',
-          toggleActions: 'play none none reverse',
-        },
-      })
+      // STEP 1: Teacher Enter
+      tl.to('.intro-overlay', { autoAlpha: 0, duration: 2 })
+      tl.to('.teacher-group', { x: 0, autoAlpha: 1, duration: 2 })
+      tl.to('.bubble-teacher', { scale: 1, autoAlpha: 1, duration: 1.5, ease: 'back.out(1.2)' }, '-=1')
+      tl.to({}, { duration: 3 }) // อ่าน Text 1
 
-      teacherTl.fromTo(
-        '.teacher-wrap',
-        { x: -120, autoAlpha: 0 },
-        { x: 0, autoAlpha: 1, duration: 1, ease: 'power2.out' },
-      )
+      // STEP 2: Swap to Students
+      tl.to(['.teacher-group', '.bubble-teacher'], { autoAlpha: 0, duration: 2 })
+      tl.to('.bg-teacher', { autoAlpha: 0, duration: 2 }, '<')
+      tl.to('.bg-students', { autoAlpha: 1, duration: 2 }, '<')
+      tl.to('.student-group', { autoAlpha: 1, duration: 2 }, '<')
+      tl.to('.bubble-student', { scale: 1, autoAlpha: 1, duration: 1.5, ease: 'back.out(1.2)' })
+      tl.to({}, { duration: 4 }) // อ่าน Text นักเรียน
 
-      // -------------------------
-      // speech bubble (อาจารย์) appear เมื่อ scroll มาถึงจุด
-      ScrollTrigger.create({
-        trigger: '.trigger-lecture',
-        start: 'top 65%',
-        onEnter: () => {
-          gsap.to('.bubble-teacher', {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.6,
-            ease: 'back.out(1.7)',
-          })
-        },
-        onLeaveBack: () => {
-          gsap.to('.bubble-teacher', {
-            scale: 0.8,
-            autoAlpha: 0,
-            duration: 0.3,
-          })
-        },
-      })
+      // STEP 3: Back to Teacher
+      tl.to(['.student-group', '.bubble-student'], { autoAlpha: 0, duration: 2 })
+      tl.to('.bg-students', { autoAlpha: 0, duration: 2 }, '<')
+      tl.to('.bg-teacher', { autoAlpha: 1, duration: 2 }, '<')
+      tl.to('.teacher-group', { autoAlpha: 1, duration: 2 }, '<')
 
-      // -------------------------
-      // STUDENT SEQUENCE:
-      // เปลี่ยน BG + โชว์นักเรียน + ฟองคำพูดเพื่อนๆ
-      ScrollTrigger.create({
-        trigger: '.trigger-student',
-        start: 'top 65%',
-        onEnter: () => {
-          // เปลี่ยนจาก BG อาจารย์ -> BG นักเรียน
-          gsap.to('.bg-teacher', { autoAlpha: 0, duration: 0.6 })
-          gsap.to('.bg-students', { autoAlpha: 1, duration: 0.6 })
+      // ✅ สลับ Text (ใช้ Fade เพื่อความสมูทตอนย้อนกลับ)
+      tl.to('.text-t-1', { autoAlpha: 0, duration: 1 }) 
+      tl.to('.text-t-2', { autoAlpha: 1, duration: 1 }) 
+      
+      tl.to('.bubble-teacher', { scale: 1, autoAlpha: 1, duration: 1.5, ease: 'back.out(1.2)' }, '<')
 
-          // ซ่อนครู
-          gsap.to('.teacher-wrap', { autoAlpha: 0, duration: 0.4 })
+      // =========================================================
+      // STEP 4: Reveal Final Sentences (ค่อยๆ มา)
+      // =========================================================
+      
+      // ประโยค 1
+      tl.to('.final-line-1', { autoAlpha: 1, y: 0, duration: 3, ease: 'power2.out' })
+      tl.to({}, { duration: 4 })
+      tl.to('.final-line-1', { autoAlpha: 0, y: -10, duration: 1 })
 
-          // โชว์กลุ่มนักเรียน
-          gsap.to('.student-group', {
-            autoAlpha: 1,
-            duration: 0.6,
-          })
+      // ประโยค 2
+      tl.to('.final-line-2', { autoAlpha: 1, y: 0, duration: 3, ease: 'power2.out' })
+      tl.to({}, { duration: 4 })
+      tl.to('.final-line-2', { autoAlpha: 0, y: -10, duration: 1 })
 
-          // โชว์ bubble นักเรียน
-          gsap.to('.bubble-student', {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.6,
-            ease: 'back.out(1.7)',
-          })
+      // ประโยค 3 (จบ)
+      tl.to('.final-line-3', { autoAlpha: 1, y: 0, duration: 3, ease: 'power2.out' })
+      tl.to({}, { duration: 5 })
 
-          // ซ่อน bubble อาจารย์
-          gsap.to('.bubble-teacher', {
-            autoAlpha: 0,
-            scale: 0.8,
-            duration: 0.3,
-          })
-        },
-        onLeaveBack: () => {
-          // กลับเป็นฉากอาจารย์
-          gsap.to('.bg-teacher', { autoAlpha: 1, duration: 0.4 })
-          gsap.to('.bg-students', { autoAlpha: 0, duration: 0.4 })
-
-          // กลับมาโชว์ครู
-          gsap.to('.teacher-wrap', { autoAlpha: 1, duration: 0.4 })
-
-          gsap.to('.student-group', { autoAlpha: 0, duration: 0.3 })
-
-          gsap.to('.bubble-student', {
-            scale: 0.8,
-            autoAlpha: 0,
-            duration: 0.3,
-          })
-
-          gsap.to('.bubble-teacher', {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.4,
-          })
-        },
-      })
-
-      // -------------------------
-      // finish -> call onComplete when chapter view scrolled to bottom
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'bottom bottom',
-        onEnter: () => onComplete(),
-      })
     }, containerRef)
 
     return () => ctx.revert()
   }, [onComplete])
 
   return (
-    <div
-      ref={containerRef}
-      className="relative h-[420vh] w-full bg-black text-white"
-    >
-      {/* Sticky area */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Background 1: ห้องเรียน (ตอนอาจารย์พูด) */}
-        <div
-          className="bg-teacher absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/assets/Part1/classroom/Classroom_2.png')",
-          }}
-        />
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black text-white font-sans">
+      
+      {/* BACKGROUNDS */}
+      <div className="bg-teacher absolute inset-0 bg-cover bg-center z-0 will-change-opacity" 
+           style={{ backgroundImage: "url('/assets/Part1/classroom/Classroom_2.png')" }} />
+      <div className="bg-students absolute inset-0 bg-cover bg-center z-0 will-change-opacity" 
+           style={{ backgroundImage: "url('/assets/Part1/classroom/Classroom_1.png')" }} />
 
-        {/* Background 2: ชั้นหนังสือ (ตอนนักเรียนพูด) */}
-        <div
-          className="bg-students absolute inset-0 bg-cover bg-center opacity-0"
-          style={{
-            backgroundImage: "url('/assets/Part1/classroom/Classroom_1.png')",
-          }}
-        />
-
-        {/* Intro overlay: "ณ ห้องเรียนเวทมนตร์" */}
-        <div className="intro-overlay absolute inset-0 z-40 flex items-start justify-center bg-black/30 pt-24 backdrop-blur-sm">
-          <h1 className="text-4xl text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.35)] md:text-6xl">
-            ณ ห้องเรียนเวทมนตร์
-          </h1>
-        </div>
-
-        {/* Teacher - ยืนหน้าห้องข้างโต๊ะ */}
-        <div className="teacher-wrap absolute bottom-[40%] right-[2%] z-30 opacity-0">
-          <div className="relative w-64 md:w-72">
-            <img
-              src="/assets/Part1/classroom/Xoneko_Sensei_open.png"
-              alt="teacher"
-              className="block w-full"
-            />
-          </div>
-        </div>
-
-        {/* Teacher speech bubble */}
-        <div className="bubble-teacher absolute right-[8%] top-[18%] z-40 max-w-[420px] origin-top-right scale-75 rounded-xl bg-white p-6 text-black opacity-0 shadow-lg after:absolute after:bottom-[-20px] after:right-6 after:border-[10px] after:border-transparent after:border-t-white after:content-['']">
-          <p className="font-bold">อาจารย์:</p>
-          <p>
-            “ก็อย่างที่สอนข้างต้นไป เวทมนตร์นั้น เราต้องร่ายออกมาให้ชัดเจน
-            เพื่อที่จะทำให้ตัวเวทมนตร์นั้นแสดงผลออกมาได้อย่างมีประสิทธิภาพ”
-          </p>
-        </div>
-
-        {/* ===== STUDENT GROUP (โชว์ตอน BG เปลี่ยน) ===== */}
-        <div className="student-group pointer-events-none absolute inset-0 z-30 opacity-0">
-          {/* Mild (กลาง) */}
-          <div className="student mild absolute left-[63%] top-[56%] -translate-x-1/2 -translate-y-1/2">
-            <img
-              src="/assets/Part1/classroom/MildR_front.png"
-              className="w-56"
-              alt="mild-r"
-            />
-          </div>
-
-          {/* Elevene (ซ้ายสุด – บนบันได) */}
-          <div className="student elevene absolute right-[-14%] top-[88%] -translate-x-1/2 -translate-y-1/2">
-            <img
-              src="/assets/Part1/classroom/Elevene_front.png"
-              className="w-64"
-              alt="elevene"
-            />
-          </div>
-
-          {/* Elze (ขวากลาง) */}
-          <div className="student elze absolute left-[77%] top-[21%] -translate-x-1/2 -translate-y-1/2">
-            <img
-              src="/assets/Part1/classroom/Elze_front.png"
-              className="w-64"
-              alt="elze"
-            />
-          </div>
-        </div>
-
-        {/* Student speech bubble */}
-        <div
-          className="bubble-student absolute left-[24%] top-[6%] z-40 max-w-[520px] origin-top-left scale-75 rounded-xl bg-white p-6 text-black opacity-0 shadow-lg
-                        after:absolute after:bottom-[-16px] after:right-2 after:border-[10px] after:border-transparent after:border-t-white after:content-['']"
-        >
-          <p className="font-bold">เพื่อนๆ:</p>
-          <p>
-            “อาจารย์คะ แบบนี้ถ้าคนที่แม้แต่พูดปกติยังพูดให้ชัดไม่ได้เลย
-            แล้วกับการร่ายเวทมนตร์จะไม่มีปัญหาหรอคะ
-            ก็มีแต่คนที่ร่ายเวทได้เท่านั้นสิคะ ถึงจะใช้เวทมนตร์ได้”
-          </p>
-        </div>
-
-        <div className="pointer-events-none absolute inset-0" />
+      {/* INTRO OVERLAY */}
+      <div className="intro-overlay absolute inset-0 z-50 flex items-start justify-center bg-black/60 pt-24 backdrop-blur-sm pointer-events-none">
+        <h1 className="text-4xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] md:text-6xl font-bold tracking-widest">
+          ณ ห้องเรียนเวทมนตร์
+        </h1>
       </div>
 
-      {/* trigger ให้ bubble อาจารย์โผล่หลังเลื่อนลงไปหน่อย */}
-      <div className="trigger-lecture absolute top-[120vh] h-[10px] w-full" />
+      {/* TEACHER GROUP */}
+      <div className="teacher-group absolute bottom-[10%] right-[5%] z-10 w-[280px] md:bottom-[38%] md:right-[10%] md:w-[350px]">
+        <img src="/assets/Part1/classroom/Xoneko_Sensei_open.png" alt="teacher" className="w-full drop-shadow-2xl" />
+        
+        {/* TEACHER BUBBLE */}
+        <div className="bubble-teacher absolute -top-[80px] -left-[180px] w-[300px] md:w-[400px] min-h-[140px] 
+                        bg-white text-black p-6 rounded-2xl shadow-xl origin-bottom-right z-20
+                        after:content-[''] after:absolute after:bottom-[-20px] after:right-10 
+                        after:border-[15px] after:border-transparent after:border-t-white">
+            
+            <p className="font-bold text-purple-700 mb-2">อาจารย์:</p>
+            
+            {/* ✅ ใช้ Position Absolute ทับกันเหมือนเดิม แต่ควบคุมด้วย autoAlpha */}
+            <div className="relative w-full h-full">
+                
+                {/* Text Set 1 */}
+                <div className="text-t-1 absolute top-0 left-0 w-full">
+                    <p className="leading-relaxed text-sm md:text-base text-gray-800">
+                    “ก็อย่างที่สอนข้างต้นไป เวทมนตร์นั้น เราต้องร่ายออกมาให้ชัดเจน
+                    เพื่อที่จะทำให้ตัวเวทมนตร์นั้นแสดงผลออกมาได้อย่างมีประสิทธิภาพ”
+                    </p>
+                </div>
 
-      {/* trigger สำหรับบทพูดนักเรียน + เปลี่ยนฉาก */}
-      <div className="trigger-student absolute top-[220vh] h-[10px] w-full" />
+                {/* Text Set 2 Container */}
+                <div className="text-t-2 absolute top-0 left-0 w-full h-full">
+                    {/* ประโยคย่อย 1 */}
+                    <div className="final-line final-line-1 absolute top-0 left-0 w-full">
+                        <p className="leading-relaxed text-sm md:text-base text-gray-800">
+                        “ก็ใช่ว่าจะเป็นไปไม่ได้นะ อย่าง 1 ในนักปราชญ์ มีอยู่คนนึงสามารถใช้เวทโดยไม่ต้องร่ายเลยด้วยซ้ำ แต่มันเป็นศาสตร์ขั้นสูงเลยล่ะ”
+                        </p>
+                    </div>
+                    
+                    {/* ประโยคย่อย 2 */}
+                    <div className="final-line final-line-2 absolute top-0 left-0 w-full">
+                        <p className="leading-relaxed text-sm md:text-base text-gray-800">
+                        “อาจารย์คิดว่านักเรียนมีศักยภาพพอ... เพราะงั้นทุกคนจงพยายาม เป็น <strong className="text-purple-600">จอมเวทผู้ยิ่งใหญ่</strong> อย่างจอมเวทไร้ร่ายให้ได้ละ”
+                        </p>
+                    </div>
+
+                    {/* ประโยคย่อย 3 */}
+                    <div className="final-line final-line-3 absolute top-0 left-0 w-full flex flex-col justify-center text-center pt-2">
+                        <p className="text-sm md:text-base text-gray-800">“เอาล่ะ บทเรียนวันนี้จบแล้ว อีก 4 เดือนจะมีงานแข่ง...”</p>
+                        <p className="text-red-500 font-bold text-lg mt-2">“เพราะงั้นแยกย้ายกลับบ้านกันได้แล้ว!”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      {/* STUDENT GROUP */}
+      <div className="student-group absolute inset-0 z-10 pointer-events-none">
+        <img src="/assets/Part1/classroom/MildR_front.png" className="absolute right-[25%] top-[35%] w-[200px] md:w-[280px]" alt="mild" />
+        <img src="/assets/Part1/classroom/Elevene_front.png" className="absolute left-[73%] top-[67%] w-[220px] md:w-[300px] z-20" alt="elevene" />
+        <img src="/assets/Part1/classroom/Elze_front.png" className="absolute right-[15%] top-[2%] w-[210px] md:w-[290px]" alt="elze" />
+
+        {/* STUDENT BUBBLE */}
+        <div className="bubble-student absolute top-[5%] left-[10%] md:left-[20%] w-[300px] md:w-[450px] 
+                        bg-white text-black p-6 rounded-2xl shadow-xl origin-bottom-left
+                        after:content-[''] after:absolute after:bottom-[-20px] after:right-10
+                        after:border-[15px] after:border-transparent after:border-t-white">
+             <p className="font-bold mb-2 text-blue-600">เพื่อนๆ:</p>
+             <p className="leading-relaxed text-sm md:text-base text-gray-700">
+                “อาจารย์คะ แบบนี้ถ้าคนที่แม้แต่พูดปกติยังพูดให้ชัดไม่ได้เลย แล้วกับการร่ายเวทมนตร์จะไม่มีปัญหาหรอคะ<br/>
+                <span className="font-semibold text-blue-800 block mt-2">ก็มีแต่คนที่ร่ายเวทได้เท่านั้นสิคะ ถึงจะใช้เวทมนตร์ได้”</span>
+             </p>
+        </div>
+      </div>
+
     </div>
   )
 }
