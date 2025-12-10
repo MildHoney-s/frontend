@@ -23,6 +23,9 @@ export default function InColosseum({ onComplete }: Props) {
       gsap.set('.magic-char', { y: 20, autoAlpha: 0 })
       gsap.set('.mild-face-worry', { autoAlpha: 1 })
       gsap.set('.mild-face-happy', { autoAlpha: 0 })
+      gsap.set('.mild-asset-mimi', { autoAlpha: 0 })
+
+      
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -65,6 +68,7 @@ export default function InColosseum({ onComplete }: Props) {
         .to(['.magic-line-wrapper-3', '.magic-line-wrapper-4'], { autoAlpha: 0, duration: 0.5 }, "+=0.5")
         .to('.mild-face-worry', { autoAlpha: 0, duration: 0.2 }, "<")
         .to('.mild-face-happy', { autoAlpha: 1, duration: 0.2 }, "<")
+        .to('.mild-asset-mimi', { autoAlpha: 1, duration: 0.2 }, "<")
 
         // Bubble 3-4
         .to('.bubble-mild-3', { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' })
@@ -92,6 +96,12 @@ export default function InColosseum({ onComplete }: Props) {
           {/* MILD */}
           <div className="mild-group will-change-transform absolute bottom-[4%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 md:left-[25%] md:h-[600px] md:w-[350px]">
             <div className="mild-body-img relative h-full w-full">
+              {/* Asset */}
+
+              <img src="/assets/Part2/Mild/Assets/giff.png" className="absolute left-0 top-0 z-50 w-full" alt="Hair" />
+              <img src="/assets/Part2/Mild/Assets/mimi.png" className="mild-asset-mimi absolute left-0 top-0 z-50 w-full" alt="Hair" />
+
+              {/* body */}
               <img src="/assets/Part2/Mild/Body/Hair.PNG" className="absolute left-0 top-0 z-0 w-full" alt="Hair" />
               <img src="/assets/Part2/Mild/Body/Body_1.PNG" className="absolute left-0 top-0 z-10 w-full" alt="Body" />
               <img src="/assets/Part2/Mild/Arms/Arm_2_L.PNG" className="mild-arm-2-l absolute left-0 top-0 z-20 w-full" alt="L Arm 2" />
