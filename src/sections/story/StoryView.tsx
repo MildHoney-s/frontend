@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 // ----------------------------------------------------------------------
 
 export default function StoryPageView() {
-  const [chapterOneDone, setChapterOneDone] = useState(false)
+  const [chapterOneDone, setChapterOneDone] = useState(true)
   const [chapterTwoDone, setChapterTwoDone] = useState(false)
   const chapterTwoRef = useRef<HTMLDivElement | null>(null)
 

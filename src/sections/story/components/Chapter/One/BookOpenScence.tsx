@@ -5,118 +5,109 @@ import { useLayoutEffect, useRef } from 'react'
 gsap.registerPlugin(ScrollTrigger)
 
 interface Props {
-  onComplete: () => void // เรียกตอน intro เล่นจบครั้งหนึ่ง
-  onReset: () => void // เรียกตอน scroll กลับมาใหม่ ให้ stage = 0
+  onComplete: () => void
 }
 
-export default function BookOpenScene({ onComplete, onReset }: Props) {
+export default function BookOpenScene({ onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement | null>(null)
-  const doneRef = useRef(false) // true = เล่นจบแล้วหนึ่งรอบ
 
   useLayoutEffect(() => {
-    const previousOverflow = document.body.style.overflow
-
     const ctx = gsap.context(() => {
       const root = rootRef.current
       if (!root) return
 
-      const textEl = root.querySelector('.page-text') as HTMLElement | null
+      gsap.set('.black-overlay', { autoAlpha: 1 })
 
-      // เตรียม span ตัวอักษร
-      if (textEl) {
+      // ----- เตรียม span ทีละตัวอักษร -----
+      const textEl = root.querySelector('.page-text') as HTMLElement | null
+      if (textEl && !textEl.dataset.split) {
         const full = textEl.textContent || ''
-        textEl.innerHTML = ''
+        textEl.textContent = ''
         full.split('').forEach((ch) => {
-          const s = document.createElement('span')
-          s.textContent = ch
-          s.style.opacity = '0'
-          textEl.appendChild(s)
+          const span = document.createElement('span')
+          span.textContent = ch
+          span.style.opacity = '0'
+          textEl.appendChild(span)
         })
+        textEl.dataset.split = 'true'
       }
 
-      // สร้าง timeline (แต่ให้ paused ไว้ก่อน)
+      // ----- Timeline ที่ผูกกับ scroll -----
       const tl = gsap.timeline({
-        paused: true,
-        onComplete: () => {
-          // เล่นจบหนึ่งรอบ → ปลดล็อก scroll และแจ้ง parent
-          document.body.style.overflow = previousOverflow || 'auto'
-
-          if (!doneRef.current) {
-            doneRef.current = true
-            setTimeout(onComplete, 800)
-          }
+        scrollTrigger: {
+          trigger: root,
+          start: 'top top',
+          end: '+=3500', // ปรับความยาวฉากได้ ตัวอักษรจะไหลช้าหรือเร็วตามระยะนี้
+          scrub: 1,
+          pin: true,
+          // markers: true,
+          onLeave: () => {
+            requestAnimationFrame(() => onComplete?.())
+          },
         },
       })
 
-      // fade-in ฉากรวม
-      tl.fromTo(
-        root,
-        { autoAlpha: 0, scale: 1.08 },
-        { autoAlpha: 1, scale: 1, duration: 1.2 },
-        0,
-      )
+      tl.to('.black-overlay', { autoAlpha: 0, duration: 1.5 })
 
-      // page ลอยขึ้น
+      // fade-in ฉาก
+      // tl.fromTo(
+      //   root,
+      //   { autoAlpha: 0, scale: 1.05 },
+      //   { autoAlpha: 1, scale: 1, duration: 0.6 },
+      //   0,
+      // )
+
+      // หนังสือลอยขึ้น
       tl.fromTo(
         '.page',
-        { y: 24, autoAlpha: 0 },
+        { y: 40, autoAlpha: 0 },
         { y: 0, autoAlpha: 1, duration: 0.8 },
-        '-=0.8',
+        '<', // เริ่มพร้อมกับ root
       )
 
-      tl.addLabel('text')
+      // label สำหรับช่วงเริ่มโชว์ตัวอักษร
+      tl.add('text')
 
-      // ตัวอักษรขึ้นทีละตัว
+      // ตัวอักษรไต่ขึ้นทีละตัวตาม scroll
       tl.to(
         '.page-text span',
-        { opacity: 1, stagger: 0.02, duration: 0.02 },
+        {
+          opacity: 1,
+          stagger: 0.03,
+          duration: 0.03,
+        },
         'text',
       )
 
-      // เปลี่ยน BG เป็นภาพที่ 2
-      tl.to('.page-bg-2', { autoAlpha: 1, duration: 1 }, 'text+=2.5')
+      // เปลี่ยน BG 2 เมื่อ scroll เลยช่วงหนึ่งไป
+      tl.to(
+        '.page-bg-2',
+        { autoAlpha: 1, duration: 0.8 },
+        'text+=4', // เลื่อนจุดเปลี่ยน BG ได้ตามจังหวะที่อยากให้เกิด
+      )
 
-      // เปลี่ยน BG เป็นภาพที่ 3
-      tl.to('.page-bg-3', { autoAlpha: 1, duration: 1 }, 'text+=5')
+      // เปลี่ยน BG 3 ช่วงท้าย ๆ ของข้อความ
+      tl.to(
+        '.page-bg-3',
+        { autoAlpha: 1, duration: 0.8 },
+        'text+=8', // ขยับตัวเลขให้ตรงกับจังหวะที่ชอบ
+      )
 
-      // ฟังก์ชันเริ่มเล่น intro + ล็อก scroll
-      const playIntro = () => {
-        document.body.style.overflow = 'hidden'
-        tl.restart()
-      }
-
-      // ⭐ เล่นรอบแรกตอน mount
-      playIntro()
-
-      // ⭐ ถ้า scroll ย้อนกลับมาที่ฉากนี้อีก
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top top',
-        markers: true,
-        onEnterBack: () => {
-          // เล่นจบไปแล้วแล้วค่อยรีสตาร์ท
-          if (doneRef.current) {
-            doneRef.current = false // เตรียมให้ onComplete ทำงานใหม่รอบหน้า
-            onReset() // ให้ ChapterOne setStage(0)
-            playIntro() // ล็อก scroll + รีเล่น intro
-          }
-        },
-      })
+      // 9) ปิดฉากด้วย fade to black
+      tl.to('.black-overlay', { autoAlpha: 1, duration: 1.2 }, '+=1')
+      tl.to({}, { duration: 0.5 }) // เว้นจังหวะนิดนึงก่อนเปลี่ยนฉาก
     }, rootRef)
 
-    return () => {
-      ctx.revert()
-      document.body.style.overflow = previousOverflow
-    }
-  }, [onComplete, onReset])
+    return () => ctx.revert()
+  }, [onComplete])
 
   return (
     <div
       ref={rootRef}
-      className="relative flex min-h-screen items-center justify-center bg-black"
+      className="relative flex h-screen w-full items-center justify-center bg-black"
     >
-      <div className="page relative h-[80vh] w-[900px] max-w-full overflow-hidden rounded-lg shadow-2xl">
-        {/* BG เลเยอร์ 1–3 */}
+      <div className="page relative h-full w-full max-w-full overflow-hidden rounded-lg shadow-2xl">
+        {/* BG 1–3 ซ้อนกันแล้วใช้ opacity สลับ */}
         <div
           className="page-bg-1 absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/assets/Part1/Prologue_1.png')" }}
@@ -144,6 +135,9 @@ export default function BookOpenScene({ onComplete, onReset }: Props) {
             “จอมปราชญ์ไร้เสียง”
           </div>
         </div>
+
+        {/* BLACK OVERLAY ปิดฉาก / transition */}
+        <div className="black-overlay pointer-events-none absolute inset-0 z-[100] bg-black" />
       </div>
     </div>
   )
