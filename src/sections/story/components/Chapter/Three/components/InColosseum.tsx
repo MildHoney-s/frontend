@@ -44,7 +44,7 @@ export default function InColosseum({ onComplete }: Props) {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=1400%',
+          end: '+=500%',
           scrub: 1,
           pin: true,
           onLeave: () => {
@@ -203,7 +203,7 @@ export default function InColosseum({ onComplete }: Props) {
 
         <div className="pointer-events-none absolute inset-0 z-10">
           {/* MILD */}
-          <div className="mild-group absolute bottom-[4%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[25%] md:h-[600px] md:w-[350px]">
+          <div className="mild-group absolute bottom-[4%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[10%] md:h-[600px] md:w-[350px]">
             <div className="mild-body-img relative h-full w-full">
               {/* Asset */}
 
@@ -277,12 +277,12 @@ export default function InColosseum({ onComplete }: Props) {
           </div>
           <div className="bubble-mild-3 absolute left-[10%] top-[40%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-2xl">
-              อือ ขอบคุณนะที่เป็นกำลังใจให้เสมอ
+              อือ ขอบคุณนะฮันนี่ <br /> ที่เป็นกำลังใจให้เสมอ
             </p>
           </div>
           <div className="bubble-mild-4 absolute left-[10%] top-[40%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-2xl">
-              ฉันจะออกไปแสดงผลลัพธ์ของการฝึกกับฮันนี่ให้ทุกคนเห็นเอง
+              ฉันจะออกไปแสดงผลลัพธ์ ของการฝึกกับฮันนี่ให้ทุกคนเห็นเอง
             </p>
           </div>
         </div>
