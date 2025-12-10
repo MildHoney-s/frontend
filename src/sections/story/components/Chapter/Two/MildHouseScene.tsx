@@ -147,15 +147,7 @@ export default function HouseScene({ onComplete }: Props) {
               <img src="/assets/Part2/Mild/Arms/Arm_1_L.PNG" className="absolute left-0 top-0 z-20 h-full w-full object-contain" alt="Left Arm" />
               <img src="/assets/Part2/Mild/Arms/Arm_1_R.PNG" className="absolute left-0 top-0 z-20 h-full w-full object-contain" alt="Right Arm" />
 
-              <div
-                className="absolute z-30"
-                style={{
-                  top: '13%',
-                  left: '0%',
-                  width: '100%',
-                  height: 'auto',
-                }}
-              >
+              <div className="absolute z-30 top-20 left-0 w-full h-auto">
                 <img src="/assets/Part2/Mild/Face/Face_01_หน้าปกติ.PNG" className="mild-face-normal w-full object-contain" alt="Normal" />
                 <img src="/assets/Part2/Mild/Face/Face_03_หน้าตกใจ.PNG" className="mild-face-surprise absolute left-0 top-0 w-full object-contain" alt="Shock" />
                 <img src="/assets/Part2/Mild/Face/Face_02_หน้ายิ้ม.PNG" className="mild-face-happy absolute left-0 top-0 w-full object-contain" alt="Happy" />
@@ -225,7 +217,7 @@ export default function HouseScene({ onComplete }: Props) {
 <div className="magic-text-group absolute inset-0 z-[60] flex flex-col items-end justify-center pr-[20%]">
   {/* เพิ่ม text-right และ items-end เพื่อให้ชิดขวาเหมือนต้นฉบับ */}
   <div className="relative flex flex-col items-end space-y-[2%] p-[1%] text-right">
-    
+
     {/* บรรทัดที่ 1: สีเหลือง, เงาเข้ม, font-medium */}
     <div className="magic-line-wrapper-1 overflow-hidden whitespace-nowrap">
       <p  className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] md:text-3xl"style={{ WebkitTextStroke: '1px rgba(0,0,0,0.6)' }}>
