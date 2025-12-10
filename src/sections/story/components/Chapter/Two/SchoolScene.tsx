@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -51,7 +52,7 @@ export default function SchoolScene({ onComplete }: Props) {
       gsap.set('.face-normal', { autoAlpha: 1 })
       gsap.set('.arena-bg-img', { autoAlpha: 0 })
       gsap.set('.lost-text', { autoAlpha: 0, scale: 0.5 })
-      gsap.set('.black-overlay', { autoAlpha: 0 }) // เริ่มต้นซ่อนไว้
+      gsap.set('.black-overlay', { autoAlpha: 0 })
 
       // --- TRIGGER 1: WORRY ---
       ScrollTrigger.create({
@@ -237,7 +238,6 @@ export default function SchoolScene({ onComplete }: Props) {
         trigger: '.trigger-3',
         start: 'top 60%',
         onEnter: () => {
-          // เอา overwrite: true ออก เพื่อไม่ให้ background panning หยุดชะงัก
           gsap.to('.school-bg-img', { autoAlpha: 0, duration: 1 })
           gsap.to('.arena-bg-img', { autoAlpha: 1, duration: 1 })
 
@@ -274,8 +274,7 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- TRIGGER 4: EXIT SCENE (Fade To Black แบบเนียนๆ) ---
-      // ✅ ใช้ .black-overlay บังจอแทนการสั่งซ่อนรูป เพื่อความ Smooth
+      // --- TRIGGER 4: EXIT SCENE ---
       ScrollTrigger.create({
         trigger: '.trigger-exit',
         start: 'top 80%',
@@ -377,7 +376,7 @@ export default function SchoolScene({ onComplete }: Props) {
             </div>
 
             {/* Bubbles */}
-            <div className="bubble-1 absolute -right-[150px] -top-[60px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
+            <div className="bubble-1 absolute -right-[200px] -top-[20px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
               <p className="text-xl font-semibold leading-relaxed tracking-wide">
                 "เห้อ... ตาลุงนั่นชอบใช้ให้ไปทำเรื่องที่วุ่นวายตลอดเลย"
               </p>
@@ -385,10 +384,10 @@ export default function SchoolScene({ onComplete }: Props) {
               <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
             </div>
 
-            <div className="bubble-middle absolute -right-[180px] -top-[80px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
+            <div className="bubble-middle absolute -right-[200px] -top-[50px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
               <p className="text-xl font-semibold leading-relaxed tracking-wide">
                 "จะว่าไปไม่ได้กลับมาซะนาน...
-                <span className="ml-1 font-bold text-blue-600">
+                <span className="ml-1 font-semibold">
                   ที่นี่เองก็เปลี่ยนไปเยอะเหมือนกันนะ
                 </span>
                 "
@@ -397,10 +396,10 @@ export default function SchoolScene({ onComplete }: Props) {
               <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
             </div>
 
-            <div className="bubble-2 absolute -right-[150px] -top-[50px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
+            <div className="bubble-2 absolute -right-[200px] -top-[20px] z-30 w-[300px] origin-bottom-left scale-0 rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black opacity-0 shadow-xl">
               <p className="text-center text-xl font-bold leading-relaxed tracking-wide">
                 "แล้วห้องอาจารย์ใหญ่ <br />
-                <span className="text-red-500">ไปทางไหนเนี่ย?</span>"
+                <span className="ml-1 font-bold ">ไปทางไหนเนี่ย?</span>"
               </p>
               <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-white"></div>
               <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
@@ -408,7 +407,6 @@ export default function SchoolScene({ onComplete }: Props) {
           </div>
         </div>
 
-        {/* Lost Text */}
         <div className="lost-text pointer-events-none absolute inset-0 z-40 flex items-center justify-center opacity-0">
           <div className="animate-float -translate-y-32 space-y-6 text-center">
             <h2 className="text-8xl font-black text-white/80 blur-[1px] drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] md:text-9xl">
@@ -420,24 +418,20 @@ export default function SchoolScene({ onComplete }: Props) {
           </div>
         </div>
 
-        {/* Intro Overlay */}
         <div className="intro-overlay absolute inset-0 z-50 flex items-center justify-center bg-black">
           <h1 className="animate-pulse text-8xl font-medium tracking-widest text-white md:text-8xl">
             โรงเรียนเวทมนตร์
           </h1>
         </div>
 
-        {/* Black Overlay (Exit) */}
         <div className="black-overlay pointer-events-none absolute inset-0 z-[60] bg-black opacity-0"></div>
       </div>
 
-      {/* --- SCROLL TRIGGERS --- */}
       <div className="trigger-1 absolute top-[100vh] h-[10px] w-full bg-transparent"></div>
       <div className="trigger-middle absolute top-[190vh] h-[10px] w-full bg-transparent"></div>
       <div className="trigger-2 absolute top-[280vh] h-[10px] w-full bg-transparent"></div>
       <div className="trigger-3 absolute top-[360vh] h-[10px] w-full bg-transparent"></div>
 
-      {/* Trigger Exit: อยู่ท้ายสุด เพื่อ Fade Out ทุกอย่าง */}
       <div className="trigger-exit absolute top-[440vh] h-[10px] w-full bg-transparent"></div>
     </div>
   )

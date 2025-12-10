@@ -43,7 +43,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // =========================================================
-      // 1. INITIAL SETUP (ตั้งค่าเริ่มต้นทั้งหมดตรงนี้)
+      // 1. INITIAL SETUP
       // =========================================================
 
       // Mild & Magic
@@ -53,15 +53,15 @@ export default function TrainingGroundScene({ onComplete }: Props) {
       gsap.set('.magic-circle-svg', { autoAlpha: 0, scale: 0, rotation: 0 })
       gsap.set('.rune-char', { autoAlpha: 0, scale: 0, x: 0, y: 0 })
       gsap.set('.fail-symbol', { autoAlpha: 0, scale: 0 })
-      gsap.set('.magic-text', { autoAlpha: 0, y: 20 }) // ซ่อนไว้ + เลื่อนลงนิดนึง
+      gsap.set('.magic-text', { autoAlpha: 0, y: 20 })
 
       // Bully
       gsap.set('.group-students', { autoAlpha: 0 })
       gsap.set('.bully-word', { autoAlpha: 0, scale: 0 })
       gsap.set('.bully-laugh', { scale: 0, opacity: 0 })
 
-      // Honey (เริ่มที่นอกจอฝั่งขวา)
-      gsap.set('.honey-group', { x: 0, autoAlpha: 0 })
+      // Honey (เริ่มนอกจอซ้าย x: -200)
+      gsap.set('.honey-group', { x: -200, autoAlpha: 0 })
       gsap.set(
         ['.honey-face-scare', '.honey-face-worry', '.honey-face-normal'],
         { autoAlpha: 0 },
@@ -79,6 +79,15 @@ export default function TrainingGroundScene({ onComplete }: Props) {
       gsap.set('.location-title', { y: 30, autoAlpha: 0 })
       gsap.set('.black-overlay', { autoAlpha: 1 })
 
+      // Animation เดินดึ๋งๆ (เหมือนฉากโรงเรียน)
+      gsap.to('.honey-body-img', {
+        scaleY: 1.02,
+        duration: 0.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      })
+
       // =========================================================
       // 2. MAIN TIMELINE
       // =========================================================
@@ -86,7 +95,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: 'bottom bottom', // ใช้ความสูงของ container ควบคุมความยาว
+          end: 'bottom bottom',
           scrub: 1,
           onLeave: () => onComplete && onComplete(),
         },
@@ -148,7 +157,6 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           ease: 'expo.out',
         })
         .to('.magic-circle-svg', { scale: 1.5, opacity: 0, duration: 0.2 }, '<')
-        // Face Change: Serious -> Shock
         .to('.mild-face-serious', { autoAlpha: 0, duration: 0.1 }, '<')
         .to('.mild-face-shock', { autoAlpha: 1, duration: 0.1 }, '<')
 
@@ -173,7 +181,6 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'back.out(1.5)' },
           '>0.2',
         )
-        // Face Change: Shock -> Sad
         .to('.mild-face-shock', { autoAlpha: 0, duration: 0.5 }, '<')
         .to('.mild-face-sad', { autoAlpha: 1, duration: 0.5 }, '<')
         .to(
@@ -188,9 +195,9 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           '<0.2',
         )
 
-      // --- PHASE 5: HONEY SEQUENCE (Right -> Center -> Left) ---
+      // --- PHASE 5: HONEY SEQUENCE (Walk Left -> Right) ---
 
-      // 5.1 Focus Shift & Honey Enter (Right)
+      // 5.1 Focus Shift & Honey Enter (จากซ้าย -> หยุด)
       tl.to(
         [
           '.arena-bg',
@@ -217,41 +224,51 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           '<',
         )
         .to(
-          ['.group-students', '.mild-group'],
+          '.mild-group',
           { scale: 0.5, transformOrigin: 'bottom center', duration: 1.5 },
           '<',
         )
 
-        // Honey เดินมาขวา (x: 250) + หน้า Scare + Text 1
+        .to(
+          '.group-students',
+          {
+            scale: 0.5,
+            y: 50,
+            transformOrigin: 'bottom center',
+            duration: 1.5
+          },
+          '<',
+        )
+
         .to(
           '.honey-group',
-          { x: 250, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+          { x: 0, autoAlpha: 1, duration: 0.8, ease: 'power2.out' },
           '>0.2',
         )
         .to('.honey-face-scare', { autoAlpha: 1, duration: 0.1 }, '<')
         .to(
           '.honey-bubble',
           { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out' },
-          '-=0.5',
+          '-=0.3', // บับเบิ้ลเด้งขึ้นมาก่อนหยุดเดินนิดนึง
         )
         .to('.honey-text-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
-        // 5.2 Honey เดินมากลาง (x: 0) + หน้า Worry + Text 2
-        .to('.honey-group', { x: 500, duration: 2, ease: 'linear' }, '>1')
+        // 5.2 Honey เดินไปกลาง (x: 0 -> 350)
+        .to('.honey-group', { x: 350, duration: 2, ease: 'linear' }, '>1')
         .to('.honey-text-1', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-scare', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 1, duration: 0.3 }, '<')
         .to('.honey-text-2', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
-        // 5.3 Honey เดินไปซ้าย (x: -250) + หน้า Normal + Text 3
-        .to('.honey-group', { x: 750, duration: 2, ease: 'linear' }, '>1')
+        // 5.3 Honey เดินออกขวา (x: 350 -> 1000)
+        .to('.honey-group', { x: 1000, duration: 2.5, ease: 'linear' }, '>1')
         .to('.honey-text-2', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-normal', { autoAlpha: 1, duration: 0.3 }, '<')
         .to('.honey-text-3', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
       // --- PHASE 6: EXIT ---
-      tl.to('.black-overlay', { autoAlpha: 1, duration: 1 }, '>1').to(
+      tl.to('.black-overlay', { autoAlpha: 1, duration: 1 }, '>0.5').to(
         '.magic-text',
         {
           autoAlpha: 1,
@@ -260,14 +277,13 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           ease: 'power2.out',
         },
         '<0.5',
-      ) // เริ่มทำงานหลังจากจอดำเริ่มไปได้ครึ่งทาง (ซ้อนเหลื่อมกันนิดๆ)
+      )
     }, containerRef)
     return () => ctx.revert()
   }, [onComplete])
 
   return (
     <div ref={containerRef} className="relative h-[1000vh] w-full bg-black">
-      {/* ใช้ Sticky เพื่อให้ภาพติดอยู่กับหน้าจอขณะ Scroll */}
       <div className="sticky left-0 top-0 h-screen w-full overflow-hidden">
         {/* Background */}
         <div
@@ -317,7 +333,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
                 alt="Right Arm"
               />
 
-              {/* Faces Container */}
+              {/* Faces */}
               <div className="absolute left-0 top-[1%] z-30 h-auto w-full">
                 <img
                   src="/assets/Part2/Mild/Face/Face_08_หน้าจริงจัง.PNG"
@@ -337,8 +353,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
               </div>
             </div>
             <div className="fail-symbol absolute -top-10 left-1/2 z-40 -translate-x-1/2 text-6xl font-bold text-white drop-shadow-md">
-              {' '}
-              . . .{' '}
+              . . .
             </div>
           </div>
 
@@ -406,9 +421,10 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         {/* --- HONEY SECTION --- */}
         <div className="honey-group absolute bottom-0 left-0 z-40 h-[500px] w-[300px] md:left-20">
           <div className="relative h-full w-full">
+            {/* Added class honey-body-img for scaleY animation */}
             <img
               src="/assets/Part2/Honey/Body.PNG"
-              className="absolute bottom-0 left-0 w-full object-contain"
+              className="honey-body-img absolute bottom-0 left-0 w-full object-contain"
               alt="Honey Body"
             />
 
@@ -429,36 +445,45 @@ export default function TrainingGroundScene({ onComplete }: Props) {
               alt="Normal"
             />
 
-            {/* Bubble */}
-            <div className="honey-bubble absolute -right-[200px] -top-[20px] z-50 flex min-h-[150px] w-[280px] origin-bottom-left items-center justify-center rounded-[30px] border-4 border-yellow-400 bg-white p-6 text-black shadow-2xl md:w-[320px]">
+            {/* Bubble - สไตล์เดียวกับ SchoolScene */}
+            <div className="honey-bubble absolute -right-[200px] -top-[40px] z-50 flex min-h-[150px] w-[300px] origin-bottom-left items-center justify-center rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black shadow-xl md:w-[320px]">
               <div className="relative h-full w-full">
+
+                {/* Text 1 */}
                 <div className="honey-text-1 absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-center text-base font-semibold leading-snug tracking-wider md:text-lg">
+                  <p className="text-center text-xl font-semibold leading-relaxed tracking-wide">
                     "เอ๊ะ.. นั่นมายด์รึป่าว?
                     <br />
                     ทำไมเหมือนโดนแกล้งเลย..."
                   </p>
                 </div>
+
+                {/* Text 2 */}
                 <div className="honey-text-2 absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="block text-center text-sm font-medium italic tracking-wide text-gray-600">
+                  <p className="text-center text-xl font-semibold leading-relaxed tracking-wide">
                     "นี่มันเหมือนกับเรา
                     <br />
-                    เมื่อก่อนเลย... <br />
+                    เมื่อก่อนเลย...
+                    <br />
                     มายด์ต้องรู้สึกแย่มากแน่ๆ"
-                  </span>
+                  </p>
                 </div>
+
+                {/* Text 3 */}
                 <div className="honey-text-3 absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="block rounded-lg bg-yellow-100 p-1 text-center text-lg font-bold tracking-wide text-red-600">
+                  <p className="text-center text-xl font-semibold leading-relaxed tracking-wide">
                     "หรือเราควรจะสอนมายด์ดู!
                     <br />
                     ...เดี๋ยวเสร็จธุระแล้ว
                     <br />
                     รีบมาหาดีกว่า!"
-                  </span>
+                  </p>
                 </div>
               </div>
-              <div className="absolute -bottom-3 -left-2 h-6 w-6 rounded-full bg-white"></div>
-              <div className="absolute -bottom-6 -left-6 h-3 w-3 rounded-full bg-white"></div>
+
+              {/* หาง Bubble */}
+              <div className="absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-white"></div>
+              <div className="absolute -bottom-5 -left-6 h-3 w-3 rounded-full bg-white"></div>
             </div>
           </div>
         </div>

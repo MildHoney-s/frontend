@@ -54,43 +54,60 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       // =========================================================
       // 1. General Images (Scene 13 - Mental Training Stack)
       // =========================================================
-      const imageContainers = gsap.utils.toArray('.montage-image-container')
+      const imageContainers = gsap.utils.toArray('.montage-image-container') as HTMLElement[]
 
-      imageContainers.forEach((container: any, i: number) => {
+      imageContainers.forEach((container, i) => {
+        // --- ส่วนที่แก้ไข: จัดการรูปที่ 0, 1, 2 (Scene 13) ด้วย Timeline ---
         if (i === 0) {
-          gsap.fromTo(
-            container,
-            { opacity: 0, y: 50, scale: 0.95 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 1.5,
-              ease: 'power2.out',
-              delay: 0.3,
-              scrollTrigger: {
-                trigger: container,
-                start: 'top 95%',
-                toggleActions: 'play none none none',
-              },
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: 'top 85%', // Trigger เร็วขึ้นเล็กน้อยเพื่อให้ "ขึ้นเลย"
+              toggleActions: 'play none none none',
             },
+          })
+
+          // รูปที่ 1: ขึ้นเลยทันที (Duration 1s)
+          tl.fromTo(
+            container,
+            { opacity: 0, y: 100, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' }
           )
-          return
+
+          // รูปที่ 2: ตามหลังรูป 1 (เริ่มหลังจากรูป 1 เสร็จไปนิดนึง หรือต่อกันเลย)
+          if (imageContainers[1]) {
+            tl.fromTo(
+              imageContainers[1],
+              { opacity: 0, y: 100, scale: 0.95 },
+              { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' },
+              ">-0.2" // เริ่มก่อนรูปแรกจบ 0.2 วินาที เพื่อความต่อเนื่อง
+            )
+          }
+
+          // รูปที่ 3: ตามหลังรูป 2
+          if (imageContainers[2]) {
+            tl.fromTo(
+              imageContainers[2],
+              { opacity: 0, y: 100, scale: 0.95 },
+              { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' },
+              ">-0.2"
+            )
+          }
+          return // จบการทำงานรอบนี้ (เพราะจัดการ 1 และ 2 ไปแล้วใน Timeline นี้)
         }
 
-        const isMentalStack = i === 1 || i === 2
-        const triggerTarget = isMentalStack ? imageContainers[0] : container
-        const delayMultiplier = i === 2 ? 1.5 : 0.7
+        // ข้าม loop ของ index 1 และ 2 เพราะถูกสั่งงานไปแล้วใน loop ของ i===0
+        if (i === 1 || i === 2) return
 
+        // --- ส่วนเดิม: สำหรับ Scene อื่นๆ (ตั้งแต่รูปที่ 3 เป็นต้นไป) ---
         gsap.to(container, {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: i === 2 ? 1.6 : 1.2,
-          delay: isMentalStack ? i * delayMultiplier : 0,
+          duration: 1.2,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: triggerTarget,
+            trigger: container,
             start: 'top 60%',
             end: 'bottom 5%',
             toggleActions: 'play none none none',
@@ -124,7 +141,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       // =========================================================
       // 2. Scene 14: Theory Class
       // =========================================================
-      addParallax('.theory-container', 100) // Increased from 50 to 100
+      addParallax('.theory-container', 100)
 
       const theoryOverlay = document.querySelector('.theory-overlay')
       if (theoryOverlay) {
@@ -141,9 +158,9 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       }
 
       // =========================================================
-      // 3. Scene 16: Physical Training (Last Image - Extended)
+      // 3. Scene 16: Physical Training
       // =========================================================
-      addParallax('.physical-overlay-container', 200) // Increased from 120 to 200
+      addParallax('.physical-overlay-container', 100)
 
       const physicalContainer = document.querySelector(
         '.physical-overlay-container',
@@ -155,27 +172,27 @@ export default function TrainingMontageScene({ onComplete }: Props) {
           scrollTrigger: {
             trigger: physicalContainer,
             start: 'top 20%',
-            end: 'bottom 20%', // Changed from 40% to 20% for longer display
+            end: 'bottom 20%',
             scrub: 1,
           },
         })
 
         tl.to(overlays[0], { opacity: 1, duration: 1 })
-        tl.to({}, { duration: 0.5 }) // Increased pause between overlays
+        tl.to({}, { duration: 0.5 })
         tl.to(overlays[1], { opacity: 1, duration: 1 })
-        tl.to({}, { duration: 1 }) // Add hold time at the end
+        tl.to({}, { duration: 1 })
       }
 
-      // End Trigger - Moved further down for longer viewing
+      // End Trigger
       ScrollTrigger.create({
         trigger: '.end-spacer',
-        start: 'top 60%', // Changed from 'bottom' to 'top 60%' - triggers earlier but after scrolling past image
+        start: 'top 60%',
         onEnter: () => {
           if (!hasCompleted.current) {
             hasCompleted.current = true
             setTimeout(() => {
               onComplete?.()
-            }, 1000) // Increased from 800ms to 1000ms
+            }, 1000)
           }
         },
         once: true,
@@ -187,10 +204,16 @@ export default function TrainingMontageScene({ onComplete }: Props) {
 
   const getMentalStyle = (index: number) => {
     const baseStyle = 'transition-all duration-500 translate-y-24'
+    
     if (index === 0) return `z-10 ${baseStyle}`
-    if (index === 1) return `z-20 -mt-[280px] ml-[15%] rotate-3 ${baseStyle}`
+    
+    // ปรับแก้: ลด Negative Margin ให้น้อยลง (จาก -280 เป็น -80) เพื่อให้รูปห่างกันมากขึ้น
+    if (index === 1) return `z-20 -mt-[80px] ml-[15%] rotate-3 ${baseStyle}`
+    
+    // ปรับแก้: ลด Negative Margin (จาก -150 เป็น -80) และปรับระยะห่าง
     if (index === 2)
-      return `z-30 -mt-[150px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}` // Changed from -mt-[200px] to -mt-[150px]
+      return `z-30 -mt-[80px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}` 
+      
     return ''
   }
 
@@ -295,8 +318,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
         </div>
       </div>
 
-      {/* Increased spacer height for longer viewing time */}
-      <div className="end-spacer h-[80vh] w-full bg-transparent"></div>
+      <div className="end-spacer h-[120vh] w-full bg-transparent"></div>
     </div>
   )
 }

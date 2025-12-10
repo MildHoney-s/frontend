@@ -32,13 +32,13 @@ export default function HouseScene({ onComplete }: Props) {
 
       gsap.set(doorPanelRef.current, { rotationY: 0 })
 
-      gsap.set('.mild-group', { autoAlpha: 1 })
+      gsap.set('.mild-group', { autoAlpha: 1, transformOrigin: 'bottom center' }) // เพิ่ม transformOrigin เพื่อให้ยืดหดจากด้านล่าง
       gsap.set('.mild-face-normal', { autoAlpha: 1 })
       gsap.set(['.mild-face-surprise', '.mild-face-happy'], { autoAlpha: 0 })
       gsap.set(['.mild-bubble-think', '.mild-bubble-speak'], {
         scale: 0,
         autoAlpha: 0,
-        transformOrigin: 'bottom right',
+        transformOrigin: 'bottom left', // ปรับจุดขยายให้มาจากทางซ้ายล่าง (ทางตัวละคร)
       })
 
       gsap.set('.magic-text-group', { autoAlpha: 0 })
@@ -123,8 +123,22 @@ export default function HouseScene({ onComplete }: Props) {
         ease: 'back.out',
       }).to('.text-mild-speak-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
+      // จังหวะเปลี่ยนหน้าเป็นตกใจ และเพิ่ม Animation สะดุ้ง (Startle)
       tl.to('.text-mild-speak-1', { autoAlpha: 0, duration: 0.2, delay: 1.5 })
-        .to('.mild-face-normal', { autoAlpha: 0, duration: 0.1 })
+        
+        // --- STARTLE ANIMATION (สะดุ้ง) ---
+        .to('.mild-group', { 
+            y: -20,         // กระโดดขึ้น
+            scaleY: 1.05,   // ยืดตัวนิดหน่อย
+            scaleX: 0.95,   // หดแกนนอนนิดหน่อยให้ดูเด้งๆ
+            duration: 0.1, 
+            yoyo: true,     // กลับที่เดิม
+            repeat: 1,      // ทำ 1 รอบ (เด้งขึ้น-ลง)
+            ease: "power1.out"
+        }, "<") // เริ่มพร้อมกับการเปลี่ยนหน้า
+        // ----------------------------------
+
+        .to('.mild-face-normal', { autoAlpha: 0, duration: 0.1 }, '<')
         .to('.mild-face-surprise', { autoAlpha: 1, duration: 0.1 }, '<')
         .to('.text-mild-speak-2', { autoAlpha: 1, duration: 0.5 }, '>0.1')
 
@@ -213,6 +227,7 @@ export default function HouseScene({ onComplete }: Props) {
             height: '55%',
           }}
         >
+          {/* เพิ่ม id หรือ class เพื่อให้ง่ายต่อการอ้างอิง ถ้าจำเป็น */}
           <div className="mild-group relative bottom-0 h-full w-[90%]">
             <div className="mild-body-img relative h-full w-full">
               <img
@@ -321,7 +336,8 @@ export default function HouseScene({ onComplete }: Props) {
             <div className="absolute -bottom-5 left-2 h-2 w-2 rounded-full bg-white" />
           </div>
 
-          <div className="mild-bubble-speak absolute right-[28%] top-[25%] z-50 grid min-h-[120px] w-[260px] origin-bottom-left place-items-center rounded-[20px] border-4 border-pink-200 bg-white p-4 shadow-2xl md:w-[300px]">
+          {/* แก้ไขตำแหน่ง Mild Speak Bubble ให้ใกล้ตัวละครมากขึ้น */}
+          <div className="mild-bubble-speak absolute left-[50%] top-[25%] z-50 grid min-h-[120px] w-[260px] origin-bottom-left place-items-center rounded-[20px] border-4 border-pink-200 bg-white p-4 shadow-2xl md:w-[300px]">
             <div className="text-mild-speak-1 absolute inset-0 flex items-center justify-center px-4 opacity-0">
               <p className="text-center text-sm font-bold leading-snug tracking-wide text-gray-600 md:text-base">
                 <span className="mb-1 block text-xs font-medium tracking-wide text-gray-400">
@@ -330,20 +346,26 @@ export default function HouseScene({ onComplete }: Props) {
                 "คะ... ใครหรอคะ..."
               </p>
             </div>
+            
+            {/* แก้ไขสี Text เป็นสีดำปกติ */}
             <div className="text-mild-speak-2 absolute inset-0 flex items-center justify-center px-4 opacity-0">
               <p className="text-center text-base font-bold leading-snug tracking-wide text-black md:text-lg">
                 "เอ๊ะ!? คุณฮันนี่เองหรอ...
                 <br />
-                <span className="mt-1 block text-sm tracking-wide text-pink-500 md:text-base">
+                <span className="mt-1 block text-sm tracking-wide text-black md:text-base">
                   มีธุระอะไรรึป่าวคะ?"
                 </span>
               </p>
             </div>
+            
+            {/* แก้ไขสี Text เป็นสีดำหรือโทนเข้ม */}
             <div className="text-mild-speak-3 absolute inset-0 flex items-center justify-center px-4 opacity-0">
-              <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-3xl">
+              <p className="text-center text-xl font-bold tracking-wide text-black md:text-3xl">
                 "จะ... จริงหรอคะ!?"
               </p>
             </div>
+            
+            {/* ปรับหาง Bubble ให้ชี้ไปทางซ้ายล่างหาตัวละคร */}
             <div className="absolute -bottom-3 -left-2 h-6 w-6 rotate-12 transform rounded-bl-lg border-b-4 border-l-4 border-pink-200 bg-white" />
           </div>
 
