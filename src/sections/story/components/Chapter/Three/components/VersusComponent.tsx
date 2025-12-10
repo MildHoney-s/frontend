@@ -82,30 +82,39 @@ export default function VersusComponent({
         gsap.set('.layer-vs', { scale: 0 })
 
         // ============================================================
-        // ✅ 2. MOUTH ANIMATION LOOP (สลับภาพ Open/Close)
+        // ✅ 2. MOUTH/BLINK ANIMATION LOOP (Custom Pattern)
         // ============================================================
 
-        // 2.1 Set Initial State: ซ่อนรูป Close ไว้ก่อน
-        gsap.set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
+        // 2.1 Set Initial State (เริ่มต้นตาเปิด)
         gsap.set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
+        gsap.set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
 
-        // 2.2 Create Loop Timeline
-        // duration: 0.3 คือความเร็วในการขยับปาก (ยิ่งน้อยยิ่งเร็ว)
-        const mouthSpeed = 0.9;
-        const mouthTl = gsap.timeline({ repeat: -1, repeatDelay: mouthSpeed });
+        // 2.2 Create Timeline
+        const blinkSpeed = 0.15; // ความเร็วตอนหลับตา (ยิ่งน้อยยิ่งเร็ว)
+        const blinkGap = 0.15;   // ช่องว่างระหว่างการกระพริบแต่ละที
+        const longPause = 3.0;   // ช่วงหยุดยาว (วินาที) ก่อนเริ่มวนลูปใหม่
 
-        mouthTl
-          // จังหวะที่ 1: สลับเป็น Close
-          .set(['.char-a-open', '.char-b-open'], { autoAlpha: 0 })
-          .set(['.char-a-close', '.char-b-close'], { autoAlpha: 1 })
+        // repeatDelay: longPause -> คือการหยุดยาวหลังจากเล่นจบ Timeline ก่อนจะเริ่ม loop ใหม่
+        const mouthTl = gsap.timeline({ repeat: -1, repeatDelay: longPause });
 
-          // รอแป๊บนึง
-          .to({}, { duration: mouthSpeed })
+        // สร้างฟังก์ชันสำหรับเพิ่มท่ากระพริบ 1 ครั้ง
+        const addBlink = () => {
+          mouthTl
+            // จังหวะปิดตา (Close)
+            .set(['.char-a-open', '.char-b-open'], { autoAlpha: 0 })
+            .set(['.char-a-close', '.char-b-close'], { autoAlpha: 1 })
+            .to({}, { duration: blinkSpeed }) // ค้างไว้แป๊บนึง
 
-          // จังหวะที่ 2: สลับกลับเป็น Open
-          .set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
-          .set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 });
+            // จังหวะลืมตา (Open)
+            .set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
+            .set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
+            .to({}, { duration: blinkGap })   // เว้นระยะก่อนกระพริบครั้งต่อไป
+        };
 
+        // สั่งให้กระพริบ 3 ครั้งติดกัน
+        addBlink();
+        addBlink();
+        addBlink();
 
         // --- 3. BACKGROUND LOOP ---
         gsap.to('.layer-02', {
@@ -262,15 +271,16 @@ export default function VersusComponent({
           <img className="card-vs-a absolute bottom-[60px] left-[0%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]" src="/assets/part3/BG/versus_bg/card.png" alt="card" />
 
           {/* ✅ เพิ่ม class char-a-open และ char-a-close เพื่อใช้ใน Loop Animation */}
-          <img
-            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
-            src={fixPath(`${playerA.src}${playerA.file}_open.png`)}
-            alt={`${playerA.name} open`}
-          />
+
           <img
             className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
             src={fixPath(`${playerA.src}${playerA.file}_close.png`)}
             alt={`${playerA.name} close`}
+          />
+          <img
+            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
+            src={fixPath(`${playerA.src}${playerA.file}_open.png`)}
+            alt={`${playerA.name} open`}
           />
 
           {/* PLAYER B INFO */}
@@ -297,15 +307,16 @@ export default function VersusComponent({
 
           {/* ✅ เพิ่ม class char-b-open และ char-b-close */}
           <img
-            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
-            src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
-            alt={`${playerB.name} open`}
-          />
-          <img
             className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
             src={fixPath(`${playerB.src}${playerB.file}_close.png`)}
             alt={`${playerB.name} close`}
           />
+          <img
+            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
+            src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
+            alt={`${playerB.name} open`}
+          />
+
 
           <div className="pointer-events-none absolute bottom-0 left-0 z-40 h-32 w-full bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
