@@ -272,7 +272,7 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
       tl.to(
         '.mild-group',
         {
-          x: 800, // Walk off to the right
+          x: '60vw', // Walk off to the right
           autoAlpha: 0.8,
           duration: 2,
           ease: 'power1.inOut',
@@ -282,7 +282,7 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
       tl.to(
         '.honey-group',
         {
-          x: 850, // Walk off to the right (slightly ahead)
+          x: '65vw', // Walk off to the right (slightly ahead)
           autoAlpha: 0.8,
           duration: 2,
           ease: 'power1.inOut',

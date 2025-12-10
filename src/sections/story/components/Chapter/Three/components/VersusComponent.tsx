@@ -10,7 +10,7 @@ export interface Player {
   alias?: string
   text?: string
   src: string
-  file?: string // เพิ่ม file เพื่อรองรับชื่อไฟล์แยก
+  file?: string
 }
 
 export interface VersusProps {
@@ -44,7 +44,9 @@ export default function VersusComponent({
   useGSAP(
     () => {
       const ctx = gsap.context(() => {
-        // --- 1. INITIAL SETUP ---
+        // ============================================================
+        // 1. INITIAL SETUP
+        // ============================================================
         const elementsToHide = [
           '.character-vs-a',
           '.character-vs-b',
@@ -58,13 +60,12 @@ export default function VersusComponent({
           '.layer-01',
           '.layer-02',
         ]
+
         gsap.set(elementsToHide, { autoAlpha: 0 })
 
-        // Position Setup
         gsap.set('.character-vs-a', { x: -200, scale: 0.8 })
         gsap.set('.character-vs-b', { x: 200, scale: 0.8 })
 
-        // Card Setup
         gsap.set('.card-vs-a', {
           x: -100,
           scale: 0.2,
@@ -80,9 +81,11 @@ export default function VersusComponent({
 
         gsap.set('.info-a', { x: -50 })
         gsap.set('.info-b', { x: 50 })
-        gsap.set(['.flavor-text-a', '.flavor-text-b'], { y: 30, autoAlpha: 0 })
+        gsap.set(['.flavor-text-a', '.flavor-text-b'], {
+          y: 30,
+          autoAlpha: 0,
+        })
 
-        // Center Alignment
         gsap.set(['.layer-01', '.layer-02', '.layer-vs'], {
           xPercent: -50,
           yPercent: -50,
@@ -91,42 +94,38 @@ export default function VersusComponent({
         })
         gsap.set('.layer-vs', { scale: 0 })
 
-        // ============================================================
-        // ✅ 2. MOUTH/BLINK ANIMATION LOOP (Custom Pattern)
-        // ============================================================
-
-        // 2.1 Set Initial State (เริ่มต้นตาเปิด)
-        gsap.set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
+        // ✅ ปิดตา/ปากไว้ก่อน (ไม่ forced show ตั้งแต่ต้น)
+        gsap.set(['.char-a-open', '.char-b-open'], { autoAlpha: 0 })
         gsap.set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
 
-        // 2.2 Create Timeline
-        const blinkSpeed = 0.15 // ความเร็วตอนหลับตา (ยิ่งน้อยยิ่งเร็ว)
-        const blinkGap = 0.15 // ช่องว่างระหว่างการกระพริบแต่ละที
-        const longPause = 3.0 // ช่วงหยุดยาว (วินาที) ก่อนเริ่มวนลูปใหม่
+        // ============================================================
+        // 2. BLINK SYSTEM (CONTROLLED START)
+        // ============================================================
+        const blinkSpeed = 0.15
+        const blinkGap = 0.15
+        const longPause = 3
+        let mouthTl: gsap.core.Timeline | null = null
 
-        // repeatDelay: longPause -> คือการหยุดยาวหลังจากเล่นจบ Timeline ก่อนจะเริ่ม loop ใหม่
-        const mouthTl = gsap.timeline({ repeat: -1, repeatDelay: longPause })
+        const startBlink = () => {
+          if (mouthTl) return
 
-        // สร้างฟังก์ชันสำหรับเพิ่มท่ากระพริบ 1 ครั้ง
-        const addBlink = () => {
+          gsap.set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
+          gsap.set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
+
+          mouthTl = gsap.timeline({ repeat: -1, repeatDelay: longPause })
+
           mouthTl
-            // จังหวะปิดตา (Close)
             .set(['.char-a-open', '.char-b-open'], { autoAlpha: 0 })
             .set(['.char-a-close', '.char-b-close'], { autoAlpha: 1 })
-            .to({}, { duration: blinkSpeed }) // ค้างไว้แป๊บนึง
-
-            // จังหวะลืมตา (Open)
+            .to({}, { duration: blinkSpeed })
             .set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
             .set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
-            .to({}, { duration: blinkGap }) // เว้นระยะก่อนกระพริบครั้งต่อไป
+            .to({}, { duration: blinkGap })
         }
 
-        // สั่งให้กระพริบ 3 ครั้งติดกัน
-        addBlink()
-        addBlink()
-        addBlink()
-
-        // --- 3. BACKGROUND LOOP ---
+        // ============================================================
+        // 3. BACKGROUND LOOP
+        // ============================================================
         gsap.to('.layer-02', {
           rotation: 360,
           duration: 20,
@@ -135,103 +134,113 @@ export default function VersusComponent({
         })
 
         // ============================================================
-        // ✅ 4. SCROLL TRIGGER ANIMATIONS
+        // 4. SCROLL TRIGGER TIMELINE
         // ============================================================
-
-        const triggerConfig = {
-          id: refName,
-          trigger: containerRef.current,
-          start: 'top 30%',
-          end: 'bottom center',
-          toggleActions: 'play none none reverse',
-        }
-
-        const startDelay = 0.5
-
-        // 4.1 VS Logo
-        gsap.to('.layer-vs', {
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.6,
-          ease: 'back.out(1.7)',
-          delay: startDelay,
-          scrollTrigger: triggerConfig,
-        })
-
-        // 4.2 Cards
-        gsap.to('.card-vs-a', {
-          x: 0,
-          autoAlpha: 1,
-          scale: 1,
-          rotation: -15,
-          duration: 0.8,
-          ease: 'back.out(1.2)',
-          delay: startDelay,
-          scrollTrigger: triggerConfig,
-        })
-        gsap.to('.card-vs-b', {
-          x: 0,
-          autoAlpha: 1,
-          scale: 1,
-          rotation: 20,
-          duration: 0.8,
-          ease: 'back.out(1.2)',
-          delay: startDelay,
-          scrollTrigger: triggerConfig,
-        })
-
-        // 4.3 Characters
-        // หมายเหตุ: เรา Animate class หลัก (.character-vs-a) มันจะขยับทั้งรูป Open และ Close ไปพร้อมกัน
-        gsap.to('.character-vs-a', {
-          x: 0,
-          autoAlpha: 1, // ทำให้ Container หลักแสดงผล
-          scale: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          delay: startDelay + 0.1,
-          scrollTrigger: triggerConfig,
-        })
-        gsap.to('.character-vs-b', {
-          x: 0,
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          delay: startDelay + 0.1,
-          scrollTrigger: triggerConfig,
-        })
-
-        // 4.4 Info
-        gsap.to(['.info-a', '.info-b'], {
-          x: 0,
-          autoAlpha: 1,
-          duration: 0.6,
-          ease: 'back.out',
-          delay: startDelay + 0.3,
-          scrollTrigger: triggerConfig,
-        })
-
-        // 4.5 Flavor Text
-        gsap.to(['.flavor-text-a', '.flavor-text-b'], {
-          y: 0,
-          autoAlpha: 1,
-          duration: 1.5,
-          ease: 'power2.out',
-          stagger: 0.2,
-          delay: startDelay + 0.5,
-          scrollTrigger: triggerConfig,
-        })
-
-        // --- 5. ON COMPLETE ---
-        ScrollTrigger.create({
-          id: `${refName}-complete`,
-          trigger: containerRef.current,
-          start: 'bottom bottom',
-          onEnter: () => {
-            if (onComplete) onComplete()
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: '+=400%',
+            scrub: 1,
+            pin: true,
+            onLeave: () => {
+              if (onComplete) onComplete()
+            },
           },
         })
+
+        // Step 1: VS Logo & Background
+        tl.to('.layer-vs', {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 1,
+          ease: 'back.out(1.7)',
+        }).to(['.layer-01', '.layer-02'], { autoAlpha: 1, duration: 0.5 }, '<')
+
+        // Step 2: Cards
+        tl.to(
+          '.card-vs-a',
+          {
+            x: 0,
+            autoAlpha: 1,
+            scale: 1,
+            rotation: -15,
+            duration: 2,
+            ease: 'power2.out',
+          },
+          '+=0.2',
+        ).to(
+          '.card-vs-b',
+          {
+            x: 0,
+            autoAlpha: 1,
+            scale: 1,
+            rotation: 20,
+            duration: 2,
+            ease: 'power2.out',
+          },
+          '<',
+        )
+
+        // Step 3: Characters Slide in
+        tl.to(
+          '.character-vs-a',
+          {
+            x: 0,
+            autoAlpha: 1,
+            scale: 1,
+            duration: 2,
+            ease: 'power2.out',
+          },
+          '-=1.5',
+        ).to(
+          '.character-vs-b',
+          {
+            x: 0,
+            autoAlpha: 1,
+            scale: 1,
+            duration: 2,
+            ease: 'power2.out',
+            onComplete: () => {
+              // ✅ เริ่ม blink หลัง step 3
+              startBlink()
+            },
+          },
+          '<',
+        )
+
+        // Step 4: Info
+        tl.to(
+          ['.info-a', '.info-b'],
+          {
+            x: 0,
+            autoAlpha: 1,
+            duration: 1.5,
+            ease: 'back.out(1.2)',
+          },
+          '-=1',
+        )
+
+        // Step 5: Text
+        tl.to(['.flavor-text-a', '.flavor-text-b'], {
+          y: 0,
+          autoAlpha: 1,
+          duration: 2,
+          ease: 'power2.out',
+          stagger: 0.3,
+        })
+
+        // Step 6: Hold
+        tl.to({}, { duration: 2 })
+
+        // ============================================================
+        // CLEANUP
+        // ============================================================
+        return () => {
+          mouthTl?.kill()
+        }
       })
+
       return () => ctx.revert()
     },
     { scope: containerRef },
@@ -241,10 +250,10 @@ export default function VersusComponent({
     <section
       id={refName}
       ref={containerRef}
-      className="scene-container relative w-full overflow-hidden bg-black"
+      className="scene-container relative w-full h-screen overflow-hidden bg-black"
     >
       <div
-        className="bg-versus relative h-[100vh] min-h-[800px] w-full"
+        className="bg-versus relative h-full w-full"
         style={{
           backgroundImage: "url('/assets/part3/BG/versus_bg/bg.png')",
           backgroundSize: 'cover',
@@ -282,9 +291,12 @@ export default function VersusComponent({
             )}
             {playerA.text && (
               <div className="flavor-text-a pointer-events-auto mt-4 md:mt-8">
-                <p className="max-w-[300px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg">
-                  {playerA.text}
-                </p>
+                <p
+                  className="max-w-[300px] w-[340px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  dangerouslySetInnerHTML={{
+                    __html: playerA.text.replace(/\n/g, '<br />'),
+                  }}
+                />
               </div>
             )}
           </div>
@@ -296,15 +308,13 @@ export default function VersusComponent({
             alt="card"
           />
 
-          {/* ✅ เพิ่ม class char-a-open และ char-a-close เพื่อใช้ใน Loop Animation */}
-
           <img
-            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
+            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh] opacity-0"
             src={fixPath(`${playerA.src}${playerA.file}_close.png`)}
             alt={`${playerA.name} close`}
           />
           <img
-            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
+            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh] opacity-0"
             src={fixPath(`${playerA.src}${playerA.file}_open.png`)}
             alt={`${playerA.name} open`}
           />
@@ -323,9 +333,12 @@ export default function VersusComponent({
             )}
             {playerB.text && (
               <div className="flavor-text-b pointer-events-auto mt-4 md:mt-8">
-                <p className="max-w-[300px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg">
-                  {playerB.text}
-                </p>
+                <p
+                  className="max-w-[300px] w-[340px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  dangerouslySetInnerHTML={{
+                    __html: playerB.text.replace(/\n/g, '<br />'),
+                  }}
+                />
               </div>
             )}
           </div>
@@ -336,19 +349,19 @@ export default function VersusComponent({
             src="/assets/part3/BG/versus_bg/card.png"
             alt="card2"
           />
-
-          {/* ✅ เพิ่ม class char-b-open และ char-b-close */}
           <img
-            className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
+            className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh] opacity-0"
             src={fixPath(`${playerB.src}${playerB.file}_close.png`)}
             alt={`${playerB.name} close`}
           />
           <img
-            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
+            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh] opacity-0"
             src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
             alt={`${playerB.name} open`}
           />
 
+          {/* Gradients */}
+          <div className="pointer-events-none absolute top-0 left-0 z-40 h-32 w-full bg-gradient-to-b from-black via-black/50 to-transparent"></div>
           <div className="pointer-events-none absolute bottom-0 left-0 z-40 h-32 w-full bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
       </div>

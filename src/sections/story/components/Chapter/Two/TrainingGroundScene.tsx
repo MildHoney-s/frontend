@@ -254,14 +254,14 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         .to('.honey-text-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
         // 5.2 Honey เดินไปกลาง (x: 0 -> 350)
-        .to('.honey-group', { x: 350, duration: 2, ease: 'linear' }, '>1')
+        .to('.honey-group', { x: '35vw', duration: 2, ease: 'linear' }, '>1')
         .to('.honey-text-1', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-scare', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 1, duration: 0.3 }, '<')
         .to('.honey-text-2', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
         // 5.3 Honey เดินออกขวา (x: 350 -> 1000)
-        .to('.honey-group', { x: 1000, duration: 2.5, ease: 'linear' }, '>1')
+        .to('.honey-group', { x: '120vw', duration: 2.5, ease: 'linear' }, '>1')
         .to('.honey-text-2', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-normal', { autoAlpha: 1, duration: 0.3 }, '<')
@@ -301,11 +301,11 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         </div>
 
         {/* --- CENTER STAGE --- */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center">
+        <div className="absolute inset-0 z-20 flex items-end justify-center pb-[10vh]">
           {/* 1. เพื่อนนักเรียน */}
           <img
             src="/assets/Part2/group_students.png"
-            className="group-students bottom-50 absolute left-1/2 z-10 w-[85%] -translate-x-1/2 object-contain md:w-[50%]"
+            className="group-students absolute bottom-[10%] left-1/2 z-10 w-[85%] -translate-x-1/2 object-contain md:w-[50%]"
             alt="Group"
           />
 
