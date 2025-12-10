@@ -291,9 +291,12 @@ export default function VersusComponent({
             )}
             {playerA.text && (
               <div className="flavor-text-a pointer-events-auto mt-4 md:mt-8">
-                <p className="max-w-[300px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg">
-                  {playerA.text}
-                </p>
+                <p
+                  className="max-w-[300px] w-[340px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  dangerouslySetInnerHTML={{
+                    __html: playerA.text.replace(/\n/g, '<br />'),
+                  }}
+                />
               </div>
             )}
           </div>
@@ -330,9 +333,12 @@ export default function VersusComponent({
             )}
             {playerB.text && (
               <div className="flavor-text-b pointer-events-auto mt-4 md:mt-8">
-                <p className="max-w-[300px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg">
-                  {playerB.text}
-                </p>
+                <p
+                  className="max-w-[300px] w-[340px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  dangerouslySetInnerHTML={{
+                    __html: playerB.text.replace(/\n/g, '<br />'),
+                  }}
+                />
               </div>
             )}
           </div>
