@@ -265,8 +265,33 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
         '<',
       )
 
-      // --- STEP 5: ENDING ---
-      tl.to('.black-overlay', { autoAlpha: 1, duration: 1.5 }, '>1')
+      // --- STEP 5: CHARACTERS WALK OFF SCREEN ---
+      tl.to({}, { duration: 0.5 }) // Short pause after milk tea moment
+
+      // Both characters walk off to the right side
+      tl.to(
+        '.mild-group',
+        {
+          x: 800, // Walk off to the right
+          autoAlpha: 0.8,
+          duration: 2,
+          ease: 'power1.inOut',
+        },
+        '<',
+      )
+      tl.to(
+        '.honey-group',
+        {
+          x: 850, // Walk off to the right (slightly ahead)
+          autoAlpha: 0.8,
+          duration: 2,
+          ease: 'power1.inOut',
+        },
+        '<',
+      )
+
+      // Fade to black after they walk off
+      tl.to('.black-overlay', { autoAlpha: 1, duration: 1.5 }, '>0.3')
 
       // Final Text
       tl.to('.final-text-group', { autoAlpha: 1, duration: 0.1 })
@@ -359,8 +384,8 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
               </div>
             </div>
 
-            {/* Mild Bubble */}
-            <div className="bubble-mild absolute -left-[20px] -top-[80px] z-50 flex min-h-[100px] w-[240px] origin-bottom-right items-center justify-center rounded-[30px] border-2 border-blue-200 bg-white p-4 shadow-xl">
+            {/* Mild Bubble: สีฟ้า */}
+            <div className="bubble-mild absolute -left-[20px] -top-[80px] z-50 flex min-h-[100px] w-[240px] origin-bottom-right items-center justify-center rounded-[30px] border-2 border-pink-300 bg-blue-50 p-4 shadow-xl">
               <div className="w-full text-center text-sm leading-snug text-gray-700 md:text-base">
                 <p className="text-m-1 tracking-wide">
                   เฮ้อ... <br />
@@ -374,7 +399,8 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
                   ก็ได้ค่ะ! (ไปกินกัน)
                 </p>
               </div>
-              <div className="absolute -bottom-3 right-8 h-4 w-4 rotate-45 transform border-b-2 border-r-2 border-gray-200 bg-white"></div>
+              {/* ปรับสีหางบอลลูนให้ตรงกับตัวกล่อง */}
+              <div className="absolute -bottom-3 right-8 h-4 w-4 rotate-45 transform border-b-2 border-r-2 border-pink-300 bg-blue-50"></div>
             </div>
           </div>
 
