@@ -9,43 +9,6 @@ interface Props {
   onComplete: () => void
 }
 
-// ✅ Helper: Smart SplitText (แก้สระลอยภาษาไทย & Animation เนียน)
-// const SmartSplitText = ({
-//   children,
-//   className,
-// }: {
-//   children: string
-//   className?: string
-// }) => {
-//   const chars: string[] = []
-//   const regex = /[\u0E30-\u0E3A\u0E47-\u0E4E]/
-
-//   for (const char of children) {
-//     if (regex.test(char) && chars.length > 0) {
-//       chars[chars.length - 1] += char
-//     } else {
-//       chars.push(char)
-//     }
-//   }
-
-//   return (
-//     <span className={className} aria-label={children}>
-//       {chars.map((char, index) => (
-//         <span
-//           key={index}
-//           className="magic-char inline-block opacity-0"
-//           style={{
-//             minWidth: char === ' ' ? '0.3em' : 'auto',
-//             transform: 'translateY(10px)',
-//           }}
-//         >
-//           {char === ' ' ? '\u00A0' : char}
-//         </span>
-//       ))}
-//     </span>
-//   )
-// }
-
 export default function HouseScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const doorPanelRef = useRef<HTMLDivElement>(null)
@@ -91,13 +54,13 @@ export default function HouseScene({ onComplete }: Props) {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=7000', // 🟢 เพิ่มความยาว Scroll อีกเพื่อให้ระยะเบรคเยอะขึ้น
+          end: '+=7000',
           scrub: 1,
           pin: true,
           invalidateOnRefresh: true,
           onLeave: () => {
             requestAnimationFrame(() => {
-              onComplete && onComplete()
+              onComplete?.()
             })
           },
         },
@@ -153,7 +116,6 @@ export default function HouseScene({ onComplete }: Props) {
         })
 
       // --- STEP 3.5: DIALOGUE ---
-      // 1. Bubble มา + Text 1 มา
       tl.to('.mild-bubble-speak', {
         scale: 1,
         autoAlpha: 1,
@@ -161,23 +123,16 @@ export default function HouseScene({ onComplete }: Props) {
         ease: 'back.out',
       }).to('.text-mild-speak-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
-      // 2. Text 1 หาย
       tl.to('.text-mild-speak-1', { autoAlpha: 0, duration: 0.2, delay: 1.5 })
-
-        // 3. เปลี่ยนหน้า + Text 2 มา
         .to('.mild-face-normal', { autoAlpha: 0, duration: 0.1 })
         .to('.mild-face-surprise', { autoAlpha: 1, duration: 0.1 }, '<')
         .to('.text-mild-speak-2', { autoAlpha: 1, duration: 0.5 }, '>0.1')
 
-      // 4. Text 2 หาย
       tl.to('.text-mild-speak-2', { autoAlpha: 0, duration: 0.2, delay: 1.5 })
 
-      // =======================================================
-      // --- STEP 4: MAGIC PROPOSAL (TYPEWRITER STYLE) ---
-      // =======================================================
-
+      // --- STEP 4: MAGIC PROPOSAL ---
       tl.to('.mild-bubble-speak', { autoAlpha: 0, scale: 0, duration: 0.3 })
-      tl.to('.magic-text-group', { autoAlpha: 1, duration: 0.1 })
+      tl.to(['.magic-text-group'], { autoAlpha: 1, duration: 0.1 })
 
       // Typewriter Effect
       tl.to('.line-1 .magic-char', {
@@ -212,7 +167,7 @@ export default function HouseScene({ onComplete }: Props) {
       )
 
       // --- STEP 5: HAPPY ENDING ---
-      tl.to(['.magic-text-group', '.bg-dim-overlay'], {
+      tl.to(['.magic-text-group',], {
         autoAlpha: 0,
         duration: 0.5,
         delay: 1.5,
@@ -227,10 +182,7 @@ export default function HouseScene({ onComplete }: Props) {
         )
         .to('.text-mild-speak-3', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
-      // =======================================================
-      // ✅ STEP 6: BLACK OUT & BUFFER (กันหลุด)
-      // =======================================================
-
+      // --- STEP 6: BLACK OUT & BUFFER ---
       tl.to('.black-overlay', { autoAlpha: 1, duration: 1.5 }, '>1.5')
       tl.to({}, { duration: 1 })
     }, containerRef)
@@ -242,14 +194,14 @@ export default function HouseScene({ onComplete }: Props) {
       ref={containerRef}
       className="relative h-screen w-full overflow-hidden bg-black"
     >
-      <div className="perspective-[1500px] absolute inset-0 h-full w-full">
+      <div className="absolute inset-0 h-full w-full" style={{ perspective: '1500px' }}>
         {/* BACKGROUND */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${openDoorImg}')` }}
-        ></div>
+        />
 
-        <div className="bg-dim-overlay pointer-events-none absolute inset-0 z-[5] bg-black/60 opacity-0 transition-opacity"></div>
+        <div className="bg-dim-overlay pointer-events-none absolute inset-0 z-[5] bg-black/60 opacity-0 transition-opacity" />
 
         {/* LAYER 2: MILD */}
         <div
@@ -317,7 +269,7 @@ export default function HouseScene({ onComplete }: Props) {
             backgroundImage: `url('${openDoorImg}')`,
             clipPath: 'polygon(0% 0%, 42% 0%, 42% 100%, 0% 100%)',
           }}
-        ></div>
+        />
 
         {/* LAYER 3: DOOR PANEL */}
         <div
@@ -351,8 +303,8 @@ export default function HouseScene({ onComplete }: Props) {
               <br />
               <span className="text-blue-500">ลองเคาะดูละกัน...</span>"
             </p>
-            <div className="absolute -bottom-3 left-6 h-4 w-4 rounded-full border-b border-gray-200 bg-white"></div>
-            <div className="absolute -bottom-6 left-4 h-2 w-2 rounded-full bg-white"></div>
+            <div className="absolute -bottom-3 left-6 h-4 w-4 rounded-full border-b border-gray-200 bg-white" />
+            <div className="absolute -bottom-6 left-4 h-2 w-2 rounded-full bg-white" />
           </div>
         </div>
 
@@ -365,8 +317,8 @@ export default function HouseScene({ onComplete }: Props) {
               <br />
               ใครมาซะเย็นป่านนี้"
             </p>
-            <div className="absolute -bottom-2 left-4 h-3 w-3 rounded-full bg-white"></div>
-            <div className="absolute -bottom-5 left-2 h-2 w-2 rounded-full bg-white"></div>
+            <div className="absolute -bottom-2 left-4 h-3 w-3 rounded-full bg-white" />
+            <div className="absolute -bottom-5 left-2 h-2 w-2 rounded-full bg-white" />
           </div>
 
           <div className="mild-bubble-speak absolute right-[28%] top-[25%] z-50 grid min-h-[120px] w-[260px] origin-bottom-left place-items-center rounded-[20px] border-4 border-pink-200 bg-white p-4 shadow-2xl md:w-[300px]">
@@ -392,14 +344,14 @@ export default function HouseScene({ onComplete }: Props) {
                 "จะ... จริงหรอคะ!?"
               </p>
             </div>
-            <div className="absolute -bottom-3 -left-2 h-6 w-6 rotate-12 transform rounded-bl-lg border-b-4 border-l-4 border-pink-200 bg-white"></div>
+            <div className="absolute -bottom-3 -left-2 h-6 w-6 rotate-12 transform rounded-bl-lg border-b-4 border-l-4 border-pink-200 bg-white" />
           </div>
 
-          {/* --- MAGIC TEXT --- */}
+          {/* MAGIC TEXT */}
           <div className="magic-text-group absolute inset-0 z-[60] flex flex-col items-end justify-center pr-[5%] md:pr-[10%]">
             <div className="relative flex flex-col items-center space-y-6 p-4">
               <div className="magic-line-wrapper-1 overflow-hidden whitespace-nowrap">
-                <p className="border-[] text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] [-webkit-text-stroke:1px_rgba(0,0,0,0.6)] md:text-3xl">
+                <p className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] md:text-3xl" style={{ WebkitTextStroke: '1px rgba(0,0,0,0.6)' }}>
                   <SmartSplitText className="line-1">
                     ขอโทษนะที่มารบกวน
                   </SmartSplitText>
@@ -407,7 +359,7 @@ export default function HouseScene({ onComplete }: Props) {
               </div>
 
               <div className="magic-line-wrapper-2 overflow-hidden whitespace-nowrap">
-                <p className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] [-webkit-text-stroke:1px_rgba(0,0,0,0.6)] md:text-3xl">
+                <p className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] md:text-3xl" style={{ WebkitTextStroke: '1px rgba(0,0,0,0.6)' }}>
                   <SmartSplitText className="line-2">
                     พอดีฉันตัดสินใจได้แล้วว่า
                   </SmartSplitText>
@@ -415,7 +367,7 @@ export default function HouseScene({ onComplete }: Props) {
               </div>
 
               <div className="magic-line-wrapper-3 overflow-hidden whitespace-nowrap">
-                <p className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] [-webkit-text-stroke:1px_rgba(0,0,0,0.6)] md:text-3xl">
+                <p className="text-xl font-bold leading-relaxed tracking-wider text-blue-200 drop-shadow-[0_2px_4px_rgba(0,0,0,1)] md:text-3xl" style={{ WebkitTextStroke: '1px rgba(0,0,0,0.6)' }}>
                   <SmartSplitText className="line-3">
                     จะเป็นอาจารย์ให้เธอเอง!
                   </SmartSplitText>
@@ -425,8 +377,8 @@ export default function HouseScene({ onComplete }: Props) {
           </div>
         </div>
 
-        {/* ✅ BLACK OVERLAY (Buffer Zone) - เพิ่ม z-index สูงๆ */}
-        <div className="black-overlay pointer-events-none absolute inset-0 z-[100] bg-black"></div>
+        {/* BLACK OVERLAY */}
+        <div className="black-overlay pointer-events-none absolute inset-0 z-[100] bg-black" />
       </div>
     </div>
   )

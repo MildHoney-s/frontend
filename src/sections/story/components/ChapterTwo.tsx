@@ -1,8 +1,7 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useRef } from 'react'
 
-// 1. เปลี่ยนจาก useEffect เป็น useLayoutEffect
 import {
   MildHouseScene,
   SchoolScene,
@@ -18,55 +17,94 @@ interface ChapterTwoProps {
 }
 
 export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
-  const [stage, setStage] = useState(0)
+  const [visibleScenes, setVisibleScenes] = useState<number[]>([0])
+  const completedStages = useRef(new Set<number>())
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  // ✅ 2. เพิ่มท่อนนี้เข้าไปสำคัญมาก!
-  // ทุกครั้งที่ stage เปลี่ยน (มีฉากใหม่โผล่มา) ให้บอก GSAP ว่า "เฮ้ย หน้าเว็บยาวขึ้นแล้วนะ คำนวณใหม่ด่วน!"
+  // Preload all scenes progressively as user scrolls
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // ใส่ setTimeout นิดนึง เพื่อรอให้ React วาดฉากใหม่เสร็จสมบูรณ์จริงๆ
-      setTimeout(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight
+      const scrollTop = window.scrollY
+      const clientHeight = window.innerHeight
+      const scrollPercent = scrollTop / (scrollHeight - clientHeight)
+
+      // Progressively reveal scenes based on scroll position
+      if (scrollPercent > 0.15 && !visibleScenes.includes(1)) {
+        setVisibleScenes(prev => [...prev, 1])
+      }
+      if (scrollPercent > 0.35 && !visibleScenes.includes(2)) {
+        setVisibleScenes(prev => [...prev, 2])
+      }
+      if (scrollPercent > 0.55 && !visibleScenes.includes(3)) {
+        setVisibleScenes(prev => [...prev, 3])
+      }
+      if (scrollPercent > 0.75 && !visibleScenes.includes(4)) {
+        setVisibleScenes(prev => [...prev, 4])
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [visibleScenes])
+
+  // Gentle refresh only when new scenes are added
+  useLayoutEffect(() => {
+    if (visibleScenes.length > 1) {
+      const timer = setTimeout(() => {
         ScrollTrigger.refresh()
-      }, 200)
-    })
-    return () => ctx.revert()
-  }, [stage])
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [visibleScenes.length])
+
+  const handleStageComplete = (stage: number) => {
+    if (completedStages.current.has(stage)) return
+    completedStages.current.add(stage)
+
+    // Final completion
+    if (stage === 4) {
+      onComplete?.()
+    }
+  }
 
   return (
     <div
-      className="min-h-screen w-full bg-black text-white"
+      ref={containerRef}
+      className="w-full bg-black text-white"
       id="chapter-two-root"
     >
-      <SchoolScene onComplete={() => setStage((prev) => Math.max(prev, 1))} />
+      {/* Scene 0: School - Always visible */}
+      <SchoolScene 
+        onComplete={() => handleStageComplete(0)} 
+      />
 
-      {stage >= 1 && (
-        <div className="animate-in fade-in duration-200">
-          <TrainingGroundScene
-            onComplete={() => setStage((prev) => Math.max(prev, 2))}
-          />
-        </div>
+      {/* Scene 1: Training Ground */}
+      {visibleScenes.includes(1) && (
+        <TrainingGroundScene
+          onComplete={() => handleStageComplete(1)}
+        />
       )}
 
-      {stage >= 2 && (
-        <div className="animate-in fade-in duration-200">
-          <MildHouseScene
-            onComplete={() => setStage((prev) => Math.max(prev, 3))}
-          />
-        </div>
+      {/* Scene 2: Mild's House */}
+      {visibleScenes.includes(2) && (
+        <MildHouseScene
+          onComplete={() => handleStageComplete(2)}
+        />
       )}
 
-      {stage >= 3 && (
-        <div className="animate-in fade-in duration-200">
-          <TrainingMontageScene
-            onComplete={() => setStage((prev) => Math.max(prev, 4))}
-          />
-        </div>
+      {/* Scene 3: Training Montage */}
+      {visibleScenes.includes(3) && (
+        <TrainingMontageScene
+          onComplete={() => handleStageComplete(3)}
+        />
       )}
 
-      {stage >= 4 && (
-        <div className="animate-in fade-in duration-200">
-          <ThreeMonthsLaterScene onComplete={() => onComplete?.()} />
-        </div>
+      {/* Scene 4: Three Months Later */}
+      {visibleScenes.includes(4) && (
+        <ThreeMonthsLaterScene 
+          onComplete={() => handleStageComplete(4)} 
+        />
       )}
     </div>
   )

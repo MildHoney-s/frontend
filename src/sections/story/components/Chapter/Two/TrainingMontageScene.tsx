@@ -19,6 +19,7 @@ const BriefingText = ({ children }: { children: React.ReactNode }) => (
 
 export default function TrainingMontageScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const hasCompleted = useRef(false)
 
   const trainingSteps = [
     {
@@ -49,12 +50,9 @@ export default function TrainingMontageScene({ onComplete }: Props) {
   )
 
   useLayoutEffect(() => {
-    // 🟢 Force Refresh เพื่อความชัวร์ของตำแหน่ง
-    ScrollTrigger.refresh()
-
     const ctx = gsap.context(() => {
       // =========================================================
-      // 1. General Images
+      // 1. General Images (Scene 13 - Mental Training Stack)
       // =========================================================
       const imageContainers = gsap.utils.toArray('.montage-image-container')
 
@@ -73,7 +71,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
               scrollTrigger: {
                 trigger: container,
                 start: 'top 95%',
-                toggleActions: 'play reverse play reverse',
+                toggleActions: 'play none none none',
               },
             },
           )
@@ -82,35 +80,35 @@ export default function TrainingMontageScene({ onComplete }: Props) {
 
         const isMentalStack = i === 1 || i === 2
         const triggerTarget = isMentalStack ? imageContainers[0] : container
+        const delayMultiplier = i === 2 ? 1.5 : 0.7
 
         gsap.to(container, {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1.2,
-          delay: isMentalStack ? i * 0.4 : 0,
+          duration: i === 2 ? 1.6 : 1.2,
+          delay: isMentalStack ? i * delayMultiplier : 0,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: triggerTarget,
-            start: 'top 80%',
-            end: 'bottom 20%',
-            toggleActions: 'play reverse play reverse',
+            start: 'top 60%',
+            end: 'bottom 5%',
+            toggleActions: 'play none none none',
           },
         })
       })
 
       // =========================================================
-      // 🟢 Helper Function: Parallax Effect
+      // Helper Function: Parallax Effect
       // =========================================================
-      // เพิ่ม parameter 'distance' เพื่อกำหนดความแรงแยกกันได้
-      const addParallax = (target: string, distance: number = 40) => {
+      const addParallax = (target: string, distance: number = 60) => {
         const el = document.querySelector(target)
         if (el) {
           gsap.fromTo(
             el,
-            { y: -distance }, // เริ่มต้นลอยขึ้น (สวนทาง)
+            { y: -distance },
             {
-              y: distance, // จบด้วยการเลื่อนลง
+              y: distance,
               ease: 'none',
               scrollTrigger: {
                 trigger: el,
@@ -126,8 +124,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       // =========================================================
       // 2. Scene 14: Theory Class
       // =========================================================
-      // อันนี้เอาเบาๆ พอ (50px)
-      addParallax('.theory-container', 50)
+      addParallax('.theory-container', 100) // Increased from 50 to 100
 
       const theoryOverlay = document.querySelector('.theory-overlay')
       if (theoryOverlay) {
@@ -137,17 +134,16 @@ export default function TrainingMontageScene({ onComplete }: Props) {
           scrollTrigger: {
             trigger: theoryOverlay.parentElement,
             start: 'top 20%',
-            end: 'top 5%',
+            end: 'top 10%',
             scrub: 0.5,
           },
         })
       }
 
       // =========================================================
-      // 3. Scene 16: Physical Training (อันสุดท้าย)
+      // 3. Scene 16: Physical Training (Last Image - Extended)
       // =========================================================
-      // 🟢 จัดหนักๆ ให้เห็นชัดๆ ว่าเลื่อนลงมารับ (120px)
-      addParallax('.physical-overlay-container', 120)
+      addParallax('.physical-overlay-container', 200) // Increased from 120 to 200
 
       const physicalContainer = document.querySelector(
         '.physical-overlay-container',
@@ -159,37 +155,42 @@ export default function TrainingMontageScene({ onComplete }: Props) {
           scrollTrigger: {
             trigger: physicalContainer,
             start: 'top 20%',
-            end: 'bottom 40%',
+            end: 'bottom 20%', // Changed from 40% to 20% for longer display
             scrub: 1,
           },
         })
 
         tl.to(overlays[0], { opacity: 1, duration: 1 })
-        tl.to({}, { duration: 0.2 })
+        tl.to({}, { duration: 0.5 }) // Increased pause between overlays
         tl.to(overlays[1], { opacity: 1, duration: 1 })
+        tl.to({}, { duration: 1 }) // Add hold time at the end
       }
 
-      // End Trigger
+      // End Trigger - Moved further down for longer viewing
       ScrollTrigger.create({
         trigger: '.end-spacer',
-        start: 'top bottom',
+        start: 'top 60%', // Changed from 'bottom' to 'top 60%' - triggers earlier but after scrolling past image
         onEnter: () => {
-          setTimeout(() => {
-            onComplete && onComplete()
-          }, 800)
+          if (!hasCompleted.current) {
+            hasCompleted.current = true
+            setTimeout(() => {
+              onComplete?.()
+            }, 1000) // Increased from 800ms to 1000ms
+          }
         },
         once: true,
       })
     }, containerRef)
+    
     return () => ctx.revert()
-  }, [onComplete])
+  }, [onComplete, allImages])
 
   const getMentalStyle = (index: number) => {
     const baseStyle = 'transition-all duration-500 translate-y-24'
     if (index === 0) return `z-10 ${baseStyle}`
     if (index === 1) return `z-20 -mt-[280px] ml-[15%] rotate-3 ${baseStyle}`
     if (index === 2)
-      return `z-30 -mt-[200px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}`
+      return `z-30 -mt-[150px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}` // Changed from -mt-[200px] to -mt-[150px]
     return ''
   }
 
@@ -294,7 +295,8 @@ export default function TrainingMontageScene({ onComplete }: Props) {
         </div>
       </div>
 
-      <div className="end-spacer h-[20vh] w-full bg-transparent"></div>
+      {/* Increased spacer height for longer viewing time */}
+      <div className="end-spacer h-[80vh] w-full bg-transparent"></div>
     </div>
   )
 }

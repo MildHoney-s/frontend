@@ -35,7 +35,7 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Asset Paths
-  const bgImg = '/assets/Part2/arena.png'
+  const bgImg = '/assets/Part2/field.png'
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
