@@ -235,7 +235,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
             scale: 0.5,
             y: 50,
             transformOrigin: 'bottom center',
-            duration: 1.5
+            duration: 1.5,
           },
           '<',
         )
@@ -448,7 +448,6 @@ export default function TrainingGroundScene({ onComplete }: Props) {
             {/* Bubble - สไตล์เดียวกับ SchoolScene */}
             <div className="honey-bubble absolute -right-[200px] -top-[40px] z-50 flex min-h-[150px] w-[300px] origin-bottom-left items-center justify-center rounded-[30px] border-4 border-gray-100 bg-white p-6 text-black shadow-xl md:w-[320px]">
               <div className="relative h-full w-full">
-
                 {/* Text 1 */}
                 <div className="honey-text-1 absolute inset-0 flex flex-col items-center justify-center">
                   <p className="text-center text-xl font-semibold leading-relaxed tracking-wide">

@@ -65,8 +65,18 @@ export default function VersusComponent({
         gsap.set('.character-vs-b', { x: 200, scale: 0.8 })
 
         // Card Setup
-        gsap.set('.card-vs-a', { x: -100, scale: 0.2, rotation: -90, transformOrigin: "center center" })
-        gsap.set('.card-vs-b', { x: 100, scale: 0.2, rotation: 90, transformOrigin: "center center" })
+        gsap.set('.card-vs-a', {
+          x: -100,
+          scale: 0.2,
+          rotation: -90,
+          transformOrigin: 'center center',
+        })
+        gsap.set('.card-vs-b', {
+          x: 100,
+          scale: 0.2,
+          rotation: 90,
+          transformOrigin: 'center center',
+        })
 
         gsap.set('.info-a', { x: -50 })
         gsap.set('.info-b', { x: 50 })
@@ -90,12 +100,12 @@ export default function VersusComponent({
         gsap.set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
 
         // 2.2 Create Timeline
-        const blinkSpeed = 0.15; // ความเร็วตอนหลับตา (ยิ่งน้อยยิ่งเร็ว)
-        const blinkGap = 0.15;   // ช่องว่างระหว่างการกระพริบแต่ละที
-        const longPause = 3.0;   // ช่วงหยุดยาว (วินาที) ก่อนเริ่มวนลูปใหม่
+        const blinkSpeed = 0.15 // ความเร็วตอนหลับตา (ยิ่งน้อยยิ่งเร็ว)
+        const blinkGap = 0.15 // ช่องว่างระหว่างการกระพริบแต่ละที
+        const longPause = 3.0 // ช่วงหยุดยาว (วินาที) ก่อนเริ่มวนลูปใหม่
 
         // repeatDelay: longPause -> คือการหยุดยาวหลังจากเล่นจบ Timeline ก่อนจะเริ่ม loop ใหม่
-        const mouthTl = gsap.timeline({ repeat: -1, repeatDelay: longPause });
+        const mouthTl = gsap.timeline({ repeat: -1, repeatDelay: longPause })
 
         // สร้างฟังก์ชันสำหรับเพิ่มท่ากระพริบ 1 ครั้ง
         const addBlink = () => {
@@ -108,13 +118,13 @@ export default function VersusComponent({
             // จังหวะลืมตา (Open)
             .set(['.char-a-close', '.char-b-close'], { autoAlpha: 0 })
             .set(['.char-a-open', '.char-b-open'], { autoAlpha: 1 })
-            .to({}, { duration: blinkGap })   // เว้นระยะก่อนกระพริบครั้งต่อไป
-        };
+            .to({}, { duration: blinkGap }) // เว้นระยะก่อนกระพริบครั้งต่อไป
+        }
 
         // สั่งให้กระพริบ 3 ครั้งติดกัน
-        addBlink();
-        addBlink();
-        addBlink();
+        addBlink()
+        addBlink()
+        addBlink()
 
         // --- 3. BACKGROUND LOOP ---
         gsap.to('.layer-02', {
@@ -242,9 +252,21 @@ export default function VersusComponent({
         }}
       >
         <div className="layers-container pointer-events-none absolute inset-0 overflow-hidden">
-          <img className="versus-abs layer-01 absolute left-1/2 top-[40%] z-0 h-auto w-[120vh] opacity-80" src="/assets/part3/BG/versus_bg/01.png" alt="effect 01" />
-          <img className="versus-abs layer-02 absolute left-1/2 top-[40%] z-10 h-auto w-[110%] opacity-60 mix-blend-screen" src="/assets/part3/BG/versus_bg/02.png" alt="ring" />
-          <img className="versus-abs layer-vs absolute left-1/2 top-[40%] z-30 w-80 md:w-[800px]" src="/assets/part3/BG/versus_bg/vs.png" alt="VS" />
+          <img
+            className="versus-abs layer-01 absolute left-1/2 top-[40%] z-0 h-auto w-[120vh] opacity-80"
+            src="/assets/part3/BG/versus_bg/01.png"
+            alt="effect 01"
+          />
+          <img
+            className="versus-abs layer-02 absolute left-1/2 top-[40%] z-10 h-auto w-[110%] opacity-60 mix-blend-screen"
+            src="/assets/part3/BG/versus_bg/02.png"
+            alt="ring"
+          />
+          <img
+            className="versus-abs layer-vs absolute left-1/2 top-[40%] z-30 w-80 md:w-[800px]"
+            src="/assets/part3/BG/versus_bg/vs.png"
+            alt="VS"
+          />
         </div>
 
         <div className="content-container relative z-30 h-full w-full">
@@ -268,7 +290,11 @@ export default function VersusComponent({
           </div>
 
           {/* PLAYER A IMAGES */}
-          <img className="card-vs-a absolute bottom-[60px] left-[0%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]" src="/assets/part3/BG/versus_bg/card.png" alt="card" />
+          <img
+            className="card-vs-a absolute bottom-[60px] left-[0%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
+            src="/assets/part3/BG/versus_bg/card.png"
+            alt="card"
+          />
 
           {/* ✅ เพิ่ม class char-a-open และ char-a-close เพื่อใช้ใน Loop Animation */}
 
@@ -289,7 +315,9 @@ export default function VersusComponent({
               {playerB.name}
             </h2>
             {playerB.alias && (
-              <p className={`mt-2 inline-block skew-x-[-10deg] ${textColor} px-3 py-1 text-sm font-bold text-white shadow-lg md:text-lg`}>
+              <p
+                className={`mt-2 inline-block skew-x-[-10deg] ${textColor} px-3 py-1 text-sm font-bold text-white shadow-lg md:text-lg`}
+              >
                 {playerB.alias}
               </p>
             )}
@@ -303,7 +331,11 @@ export default function VersusComponent({
           </div>
 
           {/* PLAYER B IMAGES */}
-          <img className="card-vs-b absolute bottom-[60px] right-[1%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]" src="/assets/part3/BG/versus_bg/card.png" alt="card2" />
+          <img
+            className="card-vs-b absolute bottom-[60px] right-[1%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
+            src="/assets/part3/BG/versus_bg/card.png"
+            alt="card2"
+          />
 
           {/* ✅ เพิ่ม class char-b-open และ char-b-close */}
           <img
@@ -316,7 +348,6 @@ export default function VersusComponent({
             src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
             alt={`${playerB.name} open`}
           />
-
 
           <div className="pointer-events-none absolute bottom-0 left-0 z-40 h-32 w-full bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>

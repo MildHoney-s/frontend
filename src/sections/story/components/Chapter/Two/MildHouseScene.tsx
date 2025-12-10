@@ -1,6 +1,7 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
+
 import { SmartSplitText } from './component/SmartSplitText'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -76,13 +77,12 @@ export default function HouseScene({ onComplete }: Props) {
         autoAlpha: 1,
         duration: 0.5,
         ease: 'back.out',
+      }).to('.honey-bubble-think', {
+        scale: 0,
+        autoAlpha: 0,
+        duration: 0.3,
+        delay: 0.5,
       })
-        .to('.honey-bubble-think', {
-          scale: 0,
-          autoAlpha: 0,
-          duration: 0.3,
-          delay: 0.5,
-        })
 
       // --- STEP 2: KNOCK KNOCK ---
       tl.to('.honey-group', { x: 5, duration: 0.1, yoyo: true, repeat: 3 })
@@ -99,13 +99,12 @@ export default function HouseScene({ onComplete }: Props) {
         autoAlpha: 1,
         duration: 0.5,
         ease: 'back.out',
+      }).to('.mild-bubble-think', {
+        scale: 0,
+        autoAlpha: 0,
+        duration: 0.3,
+        delay: 0.5,
       })
-        .to('.mild-bubble-think', {
-          scale: 0,
-          autoAlpha: 0,
-          duration: 0.3,
-          delay: 0.5,
-        })
 
       // --- STEP 3: BLINK TO OPEN ---
       tl.to('.black-overlay', {
@@ -126,8 +125,7 @@ export default function HouseScene({ onComplete }: Props) {
         autoAlpha: 1,
         duration: 0.5,
         ease: 'back.out',
-      })
-        .to('.text-mild-speak-1', { autoAlpha: 1, duration: 0.5 }, '<')
+      }).to('.text-mild-speak-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
       // จังหวะเปลี่ยนหน้าเป็นตกใจ และเพิ่ม Animation สะดุ้ง (Startle)
       tl.to('.text-mild-speak-1', { autoAlpha: 0, duration: 0.2, delay: 1.5 })
@@ -349,7 +347,7 @@ export default function HouseScene({ onComplete }: Props) {
             <div className="absolute -bottom-5 left-2 h-2 w-2 rounded-full bg-white" />
           </div>
 
-{/* ✅ Mild Speak Bubble: แก้ไขหางให้เนียนขึ้น */}
+          {/* ✅ Mild Speak Bubble: แก้ไขหางให้เนียนขึ้น */}
           <div className="mild-bubble-speak absolute left-[40%] top-[35%] z-50 grid min-h-[120px] w-[260px] origin-bottom-left place-items-center rounded-[20px] border-2 border-pink-300 bg-pink-50 p-4 shadow-2xl md:w-[300px]">
             <div className="text-mild-speak-1 absolute inset-0 flex items-center justify-center px-4 opacity-0">
               <p className="text-center text-sm font-bold leading-snug tracking-wide text-gray-700 md:text-base">

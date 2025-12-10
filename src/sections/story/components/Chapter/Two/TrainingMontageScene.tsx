@@ -54,7 +54,9 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       // =========================================================
       // 1. General Images (Scene 13 - Mental Training Stack)
       // =========================================================
-      const imageContainers = gsap.utils.toArray('.montage-image-container') as HTMLElement[]
+      const imageContainers = gsap.utils.toArray(
+        '.montage-image-container',
+      ) as HTMLElement[]
 
       imageContainers.forEach((container, i) => {
         // --- ส่วนที่แก้ไข: จัดการรูปที่ 0, 1, 2 (Scene 13) ด้วย Timeline ---
@@ -71,7 +73,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
           tl.fromTo(
             container,
             { opacity: 0, y: 100, scale: 0.95 },
-            { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' }
+            { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' },
           )
 
           // รูปที่ 2: ตามหลังรูป 1 (เริ่มหลังจากรูป 1 เสร็จไปนิดนึง หรือต่อกันเลย)
@@ -80,7 +82,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
               imageContainers[1],
               { opacity: 0, y: 100, scale: 0.95 },
               { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' },
-              ">-0.2" // เริ่มก่อนรูปแรกจบ 0.2 วินาที เพื่อความต่อเนื่อง
+              '>-0.2', // เริ่มก่อนรูปแรกจบ 0.2 วินาที เพื่อความต่อเนื่อง
             )
           }
 
@@ -90,7 +92,7 @@ export default function TrainingMontageScene({ onComplete }: Props) {
               imageContainers[2],
               { opacity: 0, y: 100, scale: 0.95 },
               { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' },
-              ">-0.2"
+              '>-0.2',
             )
           }
           return // จบการทำงานรอบนี้ (เพราะจัดการ 1 และ 2 ไปแล้วใน Timeline นี้)
@@ -198,22 +200,22 @@ export default function TrainingMontageScene({ onComplete }: Props) {
         once: true,
       })
     }, containerRef)
-    
+
     return () => ctx.revert()
   }, [onComplete, allImages])
 
   const getMentalStyle = (index: number) => {
     const baseStyle = 'transition-all duration-500 translate-y-24'
-    
+
     if (index === 0) return `z-10 ${baseStyle}`
-    
+
     // ปรับแก้: ลด Negative Margin ให้น้อยลง (จาก -280 เป็น -80) เพื่อให้รูปห่างกันมากขึ้น
     if (index === 1) return `z-20 -mt-[80px] ml-[15%] rotate-3 ${baseStyle}`
-    
+
     // ปรับแก้: ลด Negative Margin (จาก -150 เป็น -80) และปรับระยะห่าง
     if (index === 2)
-      return `z-30 -mt-[80px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}` 
-      
+      return `z-30 -mt-[80px] mr-[15%] -rotate-2 mb-[200px] ${baseStyle}`
+
     return ''
   }
 
