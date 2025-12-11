@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const CACHE_PREFIX = 'story-assets'
-const CACHE_VERSION = 'v1' // เปลี่ยนเมื่อ deploy asset ใหม่
+const CACHE_PREFIX = 'Mild-R-HBD2025-story-assets'
+const CACHE_VERSION = 'v2' // เปลี่ยนเมื่อ deploy asset ใหม่
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`
 
 self.addEventListener('install', (e) => {
