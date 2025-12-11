@@ -1,0 +1,167 @@
+@import './mixinPosition.scss';
+
+/* แปลงจาก bgLiftBottomLeftStyle */
+
+/* แปลงจาก bgBlockkStyle */
+.bg-block {
+  background-color: black;
+  height: 800px;
+  width: 100%;
+}
+
+/* แปลงจาก bgBlackStyle */
+.bg-black-center {
+  background-color: black;
+  height: 500px;
+  width: 100%;
+
+  /* Flexbox จัดกึ่งกลาง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.bg-white-center {
+  background-color: white;
+  height: 200px;
+  width: 100%;
+
+  /* Flexbox จัดกึ่งกลาง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.text-title {
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.text-story {
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#chapter-three-open-scene {
+  /* แปลงจาก bgLiftBottomLeftStyle */
+  .bg-lift-bottom-left {
+    object-fit: cover;
+    object-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+
+    background-color: black;
+  }
+
+  /* ไฟล์ App.css */
+
+  .bg-chapter3-01 {
+    /* 1. Path รูป (เช็คให้ชัวร์) */
+    background-image: url('/assets/background/chapter3/00.png');
+
+    /* 2. จัดการขนาดและการวางตำแหน่ง */
+    background-size: cover;
+    /* ให้รูปเต็มพื้นที่ */
+    background-position: top center;
+    /* ให้จุดโฟกัสอยู่ด้านบนตรงกลาง */
+    background-repeat: no-repeat;
+
+    /* 3. ความสูง (เลือกเอาค่าใดค่าหนึ่ง) */
+    height: 400px;
+    /* หรือ 100vh ตามดีไซน์ */
+    width: 100%;
+  }
+
+  .firework {
+    top: 20px;
+    /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+    position: absolute;
+    /* ลอยอิสระ */
+    /* แกน X (แนวนอน) */
+    right: 20px;
+    height: 200px;
+  }
+}
+
+#chapter-three-versus-scene {
+  .bg-versus {
+    background-image: url('assets/background/chapter3/versus_bg/bg.png');
+
+    /* เปลี่ยนจาก cover เป็น contain หรือ 100% เพื่อให้เห็นครบ */
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    width: 100%;
+
+    /* ลบ height: 100vh ออก! แล้วใส่ aspect-ratio แทน */
+    /* ตัวเลข 16/9 คือสัดส่วนรูป (เช่น 1920 / 1080) */
+    /* ถ้าไม่รู้ ให้ลองใส่ auto หรือใส่ขนาดจริงของรูปเช่น 1920/1080 */
+    aspect-ratio: 4 / 3;
+  }
+
+  .bg-versus-original {
+    background-image: url('/assets/background/chapter3/Versus_BG.png');
+
+    /* เปลี่ยนจาก cover เป็น contain หรือ 100% เพื่อให้เห็นครบ */
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    width: 100%;
+
+    /* ลบ height: 100vh ออก! แล้วใส่ aspect-ratio แทน */
+    /* ตัวเลข 16/9 คือสัดส่วนรูป (เช่น 1920 / 1080) */
+    /* ถ้าไม่รู้ ให้ลองใส่ auto หรือใส่ขนาดจริงของรูปเช่น 1920/1080 */
+    aspect-ratio: 4 / 3;
+  }
+
+  .character-vs {
+    /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+    position: absolute;
+    /* ลอยอิสระ */
+    /* แกน X (แนวนอน) */
+    right: 20px;
+    height: 470px;
+    width: auto;
+  }
+
+  .character-vs-2 {
+    /* top: 50%; ถ้าอยากให้อยู่กลางแนวตั้ง */
+    position: absolute;
+    /* ลอยอิสระ */
+    /* แกน X (แนวนอน) */
+    right: 20px;
+    height: 520px;
+    width: auto;
+  }
+
+  .versus-abs {
+    right: 20px;
+    position: absolute;
+    height: 90%;
+    width: auto;
+  }
+
+  .versus-text {
+    font-size: 80px;
+    font-weight: 900;
+    color: white;
+
+    /* สร้างเงาซ้อนกัน 4 ทิศ เพื่อทำเป็นขอบ */
+    text-shadow:
+      3px 0 0 #000,
+      -3px 0 0 #000,
+      0 3px 0 #000,
+      0 -3px 0 #000,
+      3px 3px 0 #000,
+      /* มุมเฉียง */ -3px -3px 0 #000,
+      3px -3px 0 #000,
+      -3px 3px 0 #000;
+  }
+}

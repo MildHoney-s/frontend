@@ -1,0 +1,16 @@
+// สร้าง class x-0 ถึง x-100 (ทีละ 10px)
+@for $i from 0 through 200 {
+  $val: $i * 10; // 0, 10, 20, ... 100
+
+  .x-#{$val} {
+    left: #{$val}px;
+  }
+  .y-#{$val} {
+    top: #{$val}px;
+  }
+}
+
+// สร้าง class พื้นฐานที่ต้องใช้คู่กัน
+.abs {
+  position: absolute;
+}

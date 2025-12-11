@@ -1,0 +1,5 @@
+export { default as SchoolScene } from './SchoolScene'
+export { default as TrainingGroundScene } from './TrainingGroundScene'
+export { default as TrainingMontageScene } from './TrainingMontageScene'
+export { default as MildHouseScene } from './MildHouseScene'
+export { default as ThreeMonthsLaterScene } from './ThreeMonthsLaterScene'

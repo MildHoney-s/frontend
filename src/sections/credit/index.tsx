@@ -1,1 +1,1 @@
-export { default as CreditPageView } from './credit-view'
+export { default as CreditPageView } from './CreditView'
