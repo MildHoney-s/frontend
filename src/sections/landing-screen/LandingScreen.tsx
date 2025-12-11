@@ -388,10 +388,20 @@ export default function LandingScreenGSAP({
     ].filter(Boolean) as string[]
 
     // cache via service worker (if available) - uses your existing helper
+    let lastReported = -1
     cacheAssetsViaSW(allToPreload, (loaded: number, total: number) => {
-      setPreloadProgress(Math.round((loaded / Math.max(total, 1)) * 100))
+      const safeTotal = Math.max(total, 1)
+      let pct = Math.floor((loaded / safeTotal) * 100)
+      // Prevent showing 100% until final resolve; cap at 99
+      if (pct >= 100) pct = 99
+      if (pct !== lastReported) {
+        lastReported = pct
+        setPreloadProgress(pct)
+      }
     })
       .then(() => {
+        // final set to 100 when caching fully done
+        setPreloadProgress(100)
         setPreloaded(true)
         setIsPreloading(false)
         playOpenAnimation()
