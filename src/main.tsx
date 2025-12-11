@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './app.tsx'
-import { registerServiceWorker } from './registerServiceWorker.ts'
+import { registerSW } from './registerServiceWorker.ts'
 
 // ----------------------------------------------------------------------
 
@@ -20,10 +20,4 @@ root.render(
   </HelmetProvider>,
 )
 
-registerServiceWorker()
-  .then(() => {
-    console.log('SW registered')
-  })
-  .catch((e) => {
-    console.warn('SW register error', e)
-  })
+registerSW()
