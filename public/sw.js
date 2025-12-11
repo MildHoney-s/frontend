@@ -55,8 +55,9 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('message', (ev) => {
   const { type, urls, messageId, cacheName } = ev.data || {}
   if (type === 'CACHE_URLS' && Array.isArray(urls)) {
-    caches.open(cacheName || 'mild-r-assets-v1').then(async (cache) => {
+    caches.open(cacheName || CACHE_NAME).then(async (cache) => {
       let loaded = 0
+      const total = urls.length
       for (const u of urls) {
         try {
           const r = await fetch(u, { credentials: 'same-origin' })
@@ -65,19 +66,12 @@ self.addEventListener('message', (ev) => {
           // ignore individual failures
         } finally {
           loaded += 1
-          // send progress message back to all clients (include messageId)
           const clientsList = await self.clients.matchAll()
           for (const c of clientsList) {
-            c.postMessage({
-              type: 'CACHE_PROGRESS',
-              messageId,
-              loaded,
-              total: urls.length,
-            })
+            c.postMessage({ type: 'CACHE_PROGRESS', messageId, loaded, total })
           }
         }
       }
-      // final done
       const clientsList = await self.clients.matchAll()
       for (const c of clientsList) {
         c.postMessage({ type: 'CACHE_DONE', messageId })

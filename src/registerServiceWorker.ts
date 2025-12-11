@@ -125,21 +125,30 @@ export async function cacheAssetsViaSW(
   // ---------- helper: fallback caching implemented in page ----------
   async function doFallbackCaching(): Promise<void> {
     throwIfAborted()
+
+    const listToCache = Array.from(new Set(list.filter(Boolean))) // ensure unique
+    const totalItems = listToCache.length
+    if (totalItems === 0) {
+      // nothing to do, but report zero progress
+      report(0)
+      return
+    }
+
+    // If no CacheStorage, fallback to Image preloading
     if (!('caches' in window)) {
-      // if no CacheStorage, just preload via Image() as last resort
       let loaded = 0
-      for (const u of list) {
+      for (const u of listToCache) {
         throwIfAborted()
         await new Promise<void>((res) => {
           const img = new Image()
           img.onload = () => {
             loaded += 1
-            report(loaded)
+            report(Math.min(loaded, totalItems))
             res()
           }
           img.onerror = () => {
             loaded += 1
-            report(loaded)
+            report(Math.min(loaded, totalItems))
             res()
           }
           img.src = u
@@ -151,24 +160,23 @@ export async function cacheAssetsViaSW(
     const cache = await caches.open(cacheName)
     let loaded = 0
 
-    for (const u of list) {
+    for (const u of listToCache) {
       throwIfAborted()
       try {
-        // skip if already cached
+        // check if already cached
         const existing = await cache.match(u)
         if (existing) {
+          // count it as loaded once and continue to next
           loaded += 1
-          report(loaded)
+          report(Math.min(loaded, totalItems))
           continue
         }
 
         const resp = await fetch(u, { credentials: 'same-origin', signal })
-        // store successful or opaque responses
         if (resp && (resp.ok || resp.type === 'opaque')) {
           try {
             await cache.put(u, resp.clone())
           } catch (putErr) {
-            // sometimes put fails (e.g., CORS/opaque limitations or quota) — ignore but continue
             console.warn('cache.put failed for', u, putErr)
           }
         } else {
@@ -178,12 +186,16 @@ export async function cacheAssetsViaSW(
             resp && (resp.status || resp.type),
           )
         }
+
+        // count successful/failure after attempting fetch/put
+        loaded += 1
+        report(Math.min(loaded, totalItems))
       } catch (err) {
         if ((err as DOMException)?.name === 'AbortError') throw err
-        console.warn('fetch error for', u, err)
-      } finally {
+        // On error, still count the item to avoid blocking progress
         loaded += 1
-        report(loaded)
+        report(Math.min(loaded, totalItems))
+        console.warn('fetch error for', u, err)
       }
     }
     return
