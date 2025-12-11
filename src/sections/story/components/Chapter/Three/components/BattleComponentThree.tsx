@@ -365,23 +365,23 @@ export default function BattleComponentThree() {
         <div className="haruki-container absolute left-[37%] top-[18%] z-20 h-[500px] w-[320px] md:h-[500px] md:w-[300px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_arm_l.png"
+              src="/assets/part3/model/Battle/Haruki/Pose/Haruki_arm_l.png"
               className="haruki-arm-l absolute left-0 top-[2%] z-10 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_arm_r.png"
+              src="/assets/part3/model/Battle/Haruki/Pose/Haruki_arm_r.png"
               className="haruki-arm-r absolute left-0 top-[2%] z-10 w-full"
               alt="R Arm"
             />
             <div className="haruki-head-group absolute left-0 top-[1%] z-20 w-full">
               <img
-                src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_body_op.png"
+                src="/assets/part3/model/Battle/Haruki/Pose/Haruki_body_op.png"
                 className="haruki-eye-open w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_body_cl.png"
+                src="/assets/part3/model/Battle/Haruki/Pose/Haruki_body_cl.png"
                 className="haruki-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -393,19 +393,19 @@ export default function BattleComponentThree() {
         <div className="mild-gamer-container absolute bottom-[-38%] left-[30%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[400px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_leg.png"
+              src="/assets/part3/model/Battle/Mild/Pose3/Mild_R_3_leg.png"
               className="absolute left-0 top-0 z-10 w-full"
               alt="Legs"
             />
             <div className="mild-head-group absolute left-0 top-0 z-20 w-full">
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_head.png"
+                src="/assets/part3/model/Battle/Mild/Pose3/Mild_R_3_head.png"
                 className="absolute left-0 top-0 z-30 w-full"
                 alt="Head Base"
               />
               <div className="absolute left-0 top-[1%] w-full">
                 <img
-                  src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_hood_1.png"
+                  src="/assets/part3/model/Battle/Mild/Pose3/Mild_R_3_hood_1.png"
                   className="mild-eye-open w-full object-contain"
                   alt="Hood Open"
                 />
@@ -419,18 +419,18 @@ export default function BattleComponentThree() {
         <div className="magic-haruki-wrapper pointer-events-none absolute right-[0%] top-[-10%] z-10 h-[700px] w-[700px]">
           {/* วงเวทย์ (หมุนเองใน Idle) */}
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Sun&moon_Circle.png"
+            src="/assets/part3/model/Battle/Haruki/Magic/Sun&moon_Circle.png"
             className="hrk-magic-circle-1 absolute left-[-2%] top-[35%] z-10 h-[200px] w-[200px] opacity-80"
             alt="magic-circle-1"
           />
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Sun&moon_Circle.png"
+            src="/assets/part3/model/Battle/Haruki/Magic/Sun&moon_Circle.png"
             className="hrk-magic-circle-2 absolute left-[18%] top-[35%] z-10 h-[200px] w-[200px] opacity-80"
             alt="magic-circle-2"
           />
           {/* Coffee Bean (เริ่มเคลื่อนที่ใน Scroll Timeline) */}
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Coffee_Bean.png"
+            src="/assets/part3/model/Battle/Haruki/Magic/Coffee_Bean.png"
             className="hrk-bean-1 absolute left-[5%] top-[10%] z-50 w-[250px] origin-center"
             alt="coffee-bean"
           />
@@ -441,7 +441,7 @@ export default function BattleComponentThree() {
         <div className="mild-magic-back pointer-events-none absolute bottom-[-13%] left-[17%]  z-10">
           <div className="zz-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic_circle.png"
+              src="/assets/part3/model/Battle/Mild/Magic2/magic_circle.png"
               className="mild-magic-circle absolute inset-0 z-10 w-full opacity-80"
               alt="magic-circle"
             />
@@ -451,19 +451,19 @@ export default function BattleComponentThree() {
         <div className="mild-magic-front pointer-events-none absolute bottom-[-15%] left-[17%] z-30">
           <div className="mild-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png"
+              src="/assets/part3/model/Battle/Mild/Magic2/magic2.png"
               className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png"
+              src="/assets/part3/model/Battle/Mild/Magic2/magic3.png"
               className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
           </div>
           {/* Panda (เคลื่อนที่ใน Scroll Timeline) */}
           <img
-            src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png"
+            src="/assets/part3/model/Battle/Mild/Magic2/panda2.png"
             className="mild-panda-1 absolute left-[16%] top-[22%] z-50 w-[120px] origin-center"
             alt="panda-1"
           />

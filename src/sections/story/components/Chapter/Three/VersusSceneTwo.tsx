@@ -57,7 +57,7 @@ export default function VersusScene01({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
@@ -68,7 +68,7 @@ export default function VersusScene01({ onComplete }: SceneProps) {
           alias: 'อสูรฉลามผู้กัดกินความว่างเปล่า',
           text: `ในนามแห่งฉลามคลั่ง ข้าขอประกาศก้องต่อหน้าเกลียวคลื่นและพายุ! เจ้ามนุษย์เอ๋ย... จงรับผิดชอบซะ ที่บังอาจทำให้ 'ราชาแห่งห้วงลึก' ต้องหลงทางในแววตาคู่นั้น จนหาทางกลับมหาสมุทรไม่เจอ 
                 (หากความรักคือมหาสมุทร...ข้าก็คงเป็นฉลามที่ยินดีจะ 'จมน้ำตาย' ในความลึกซึ้งของเจ้า)`,
-          src: 'assets/part3/Character/Versus/Zayzhik/',
+          src: 'assets/part3/model/Versus/Zayzhik/',
           file: 'Zayzhik',
         }}
       />

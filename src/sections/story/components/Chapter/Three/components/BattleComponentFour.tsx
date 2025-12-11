@@ -305,25 +305,25 @@ export default function BattleComponentFour() {
         {/* ==================================== */}
         <div className="debirun-container absolute bottom-[7%] right-[-5%] z-20 h-[500px] w-[320px] md:h-[650px] md:w-[400px]">
           <div className="relative h-full w-full">
-            <img src="/assets/part3/Character/Battle/debirun/Pose/Debirun_asset.png" className="debirun-arm-hood absolute left-0 top-[2%] z-30 w-full" alt="Asset" />
-            <img src="/assets/part3/Character/Battle/debirun/Pose/Debirun_arm_l.png" className="debirun-arm-l absolute left-[-1%] top-[2%] z-20 w-full" alt="L Arm" />
-            <img src="/assets/part3/Character/Battle/debirun/Pose/Debirun_arm_r.png" className="debirun-arm-r absolute left-0 top-[3%] z-20 w-full" alt="R Arm" />
+            <img src="/assets/part3/model/Battle/debirun/Pose/Debirun_asset.png" className="debirun-arm-hood absolute left-0 top-[2%] z-30 w-full" alt="Asset" />
+            <img src="/assets/part3/model/Battle/debirun/Pose/Debirun_arm_l.png" className="debirun-arm-l absolute left-[-1%] top-[2%] z-20 w-full" alt="L Arm" />
+            <img src="/assets/part3/model/Battle/debirun/Pose/Debirun_arm_r.png" className="debirun-arm-r absolute left-0 top-[3%] z-20 w-full" alt="R Arm" />
             <div className="debirun-head-group absolute left-0 top-[1%] z-10 w-full">
-              <img src="/assets/part3/Character/Battle/debirun/Pose/Debirun_body_op.png" className="debirun-eye-open w-full object-contain" alt="Eye Open" />
-              <img src="/assets/part3/Character/Battle/debirun/Pose/Debirun_body_cl.png" className="debirun-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Eye Close" />
+              <img src="/assets/part3/model/Battle/debirun/Pose/Debirun_body_op.png" className="debirun-eye-open w-full object-contain" alt="Eye Open" />
+              <img src="/assets/part3/model/Battle/debirun/Pose/Debirun_body_cl.png" className="debirun-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Eye Close" />
             </div>
           </div>
         </div>
 
         {/* Debirun Magic */}
         <div className="debirun-magic-group2 pointer-events-none absolute bottom-[0%] right-[2%] z-10 h-full w-full">
-          <img src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-1 absolute bottom-[45%] right-[18%] z-10 w-[200px]" alt="circle1" />
-          <img src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-3 absolute bottom-[25%] right-[12%] z-10 w-[200px]" alt="circle2" />
-          <img src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-2 absolute bottom-[23%] right-[-3%] z-10 w-[200px]" alt="circle3" />
+          <img src="/assets/part3/model/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-1 absolute bottom-[45%] right-[18%] z-10 w-[200px]" alt="circle1" />
+          <img src="/assets/part3/model/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-3 absolute bottom-[25%] right-[12%] z-10 w-[200px]" alt="circle2" />
+          <img src="/assets/part3/model/Battle/Mild/Magic1/Sun&moon_Circle.png" className="debirun-circle-2 absolute bottom-[23%] right-[-3%] z-10 w-[200px]" alt="circle3" />
 
-          <img src="/assets/part3/Character/Battle/debirun/Magic/magic_1.png" className="debirun-magic-1 absolute bottom-[26%] right-[10%] z-10 w-[750px]" alt="magic-main-1" />
-          <img src="/assets/part3/Character/Battle/debirun/Magic/magic_3.png" className="debirun-magic-3 absolute bottom-[3%] right-[7%] z-10 w-[600px]" alt="magic-main-3" />
-          <img src="/assets/part3/Character/Battle/debirun/Magic/magic_2.png" className="debirun-magic-2 absolute bottom-[7%] right-[2%] z-10 w-[600px]" alt="magic-main-2" />
+          <img src="/assets/part3/model/Battle/debirun/Magic/magic_1.png" className="debirun-magic-1 absolute bottom-[26%] right-[10%] z-10 w-[750px]" alt="magic-main-1" />
+          <img src="/assets/part3/model/Battle/debirun/Magic/magic_3.png" className="debirun-magic-3 absolute bottom-[3%] right-[7%] z-10 w-[600px]" alt="magic-main-3" />
+          <img src="/assets/part3/model/Battle/debirun/Magic/magic_2.png" className="debirun-magic-2 absolute bottom-[7%] right-[2%] z-10 w-[600px]" alt="magic-main-2" />
         </div>
 
         {/* ==================================== */}
@@ -331,12 +331,12 @@ export default function BattleComponentFour() {
         {/* ==================================== */}
         <div className="mild-pose-1 absolute bottom-[-30%] left-[-3%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
-            <img src="/assets/part3/Character/Battle/Mild/Pose4/mild_body.png" className="absolute left-0 top-0 z-10 w-full" alt="Body" />
-            <img src="/assets/part3/Character/Battle/Mild/Pose4/mild_hood.png" className="mild-hood absolute left-0 top-0 z-20 w-full" alt="Hood" />
+            <img src="/assets/part3/model/Battle/Mild/Pose4/mild_body.png" className="absolute left-0 top-0 z-10 w-full" alt="Body" />
+            <img src="/assets/part3/model/Battle/Mild/Pose4/mild_hood.png" className="mild-hood absolute left-0 top-0 z-20 w-full" alt="Hood" />
             <div className="mild-head-group absolute left-0 top-0 z-30 w-full">
               <div className="absolute left-0 top-[1%] w-full">
-                <img src="/assets/part3/Character/Battle/Mild/Pose4/mild_head_op.png" className="mild-eye-open w-full object-contain" alt="Face Open" />
-                <img src="/assets/part3/Character/Battle/Mild/Pose4/mild_head_cl.png" className="mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Face Close" />
+                <img src="/assets/part3/model/Battle/Mild/Pose4/mild_head_op.png" className="mild-eye-open w-full object-contain" alt="Face Open" />
+                <img src="/assets/part3/model/Battle/Mild/Pose4/mild_head_cl.png" className="mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Face Close" />
               </div>
             </div>
           </div>
@@ -344,11 +344,11 @@ export default function BattleComponentFour() {
 
         <div className="mild-pose-2 absolute bottom-[-30%] left-[-3%] z-20 h-[500px] w-[320px] opacity-0 md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full scale-x-[-1]">
-            <img src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Arm.png" className="Mild-arm-l absolute left-0 top-0 z-20 w-full" alt="L Arm" />
-            <img src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_hair.png" className="Mild-hair absolute left-0 top-0 z-10 w-full" alt="Hair" />
+            <img src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Arm.png" className="Mild-arm-l absolute left-0 top-0 z-20 w-full" alt="L Arm" />
+            <img src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_hair.png" className="Mild-hair absolute left-0 top-0 z-10 w-full" alt="Hair" />
             <div className="absolute left-0 top-[1%] z-30 w-full">
-              <img src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_op.png" className="w-full object-contain" alt="Eye Open" />
-              <img src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_cl.png" className="Mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Eye Close" />
+              <img src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Body_op.png" className="w-full object-contain" alt="Eye Open" />
+              <img src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Body_cl.png" className="Mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0" alt="Eye Close" />
             </div>
           </div>
         </div>
@@ -356,32 +356,49 @@ export default function BattleComponentFour() {
         {/* Mild Summon Circle (Back - Will remain visible) */}
         <div className="mild-magic-back pointer-events-none absolute bottom-[-20%] left-[-12%] z-10 opacity-0">
           <div className="mild-magic-circle relative h-[700px] w-[700px]">
-            <img src="/assets/part3/Character/Battle/Mild/Magic2/magic_circle.png" className="absolute inset-0 z-10 w-full opacity-80" alt="magic-circle" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic_circle.png" className="absolute inset-0 z-10 w-full opacity-80" alt="magic-circle" />
           </div>
         </div>
 
         {/* Mild Elemental Magic (Floating Items) */}
         <div className="pointer-events-none absolute left-[-7%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
-            <img src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png" className="magic-mild-fire absolute left-[8%] top-[23%] z-10 w-[250px]" alt="Fire" />
-            <img src="/assets/part3/Character/Battle/Mild/Magic1/Ice_Circle.png" className="magic-mild-ice absolute left-[20%] bottom-[36%] z-10 w-[300px]" alt="Ice" />
-            <img src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png" className="magic-mild-sunmoon absolute bottom-[25%] left-[5%] z-10 w-[300px]" alt="SunMoon" />
+            <img src="/assets/part3/model/Battle/Mild/Magic1/Fire_Circle.png" className="magic-mild-fire absolute left-[8%] top-[23%] z-10 w-[250px]" alt="Fire" />
+            <img src="/assets/part3/model/Battle/Mild/Magic1/Ice_Circle.png" className="magic-mild-ice absolute left-[20%] bottom-[36%] z-10 w-[300px]" alt="Ice" />
+            <img src="/assets/part3/model/Battle/Mild/Magic1/Sun&moon_Circle.png" className="magic-mild-sunmoon absolute bottom-[25%] left-[5%] z-10 w-[300px]" alt="SunMoon" />
           </div>
         </div>
 
         {/* Mild Summon Magic (Front - Will disappear) */}
         <div className="mild-magic-front pointer-events-none absolute bottom-[-10%] left-[-12%] z-30 ">
           <div className="mild-magic-float-group relative h-[700px] w-[700px] opacity-[75%]">
-            <img src="/assets/part3/Character/Battle/Mild/Magic2/magic0.png" className="absolute inset-0 z-40 w-full opacity-60 mix-blend-screen" alt="magic-0" />
-            <img src="/assets/part3/Character/Battle/Mild/Magic2/magic1.png" className="absolute inset-0 z-40 w-full opacity-60" alt="magic-1" />
-            <img src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png" className="absolute inset-0 z-40 w-full animate-pulse opacity-50" alt="magic-2" />
-            <img src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png" className="absolute inset-0 z-40 w-full animate-pulse" alt="magic-3" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic0.png" className="absolute inset-0 z-40 w-full opacity-60 mix-blend-screen" alt="magic-0" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic1.png" className="absolute inset-0 z-40 w-full opacity-60" alt="magic-1" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic2.png" className="absolute inset-0 z-40 w-full animate-pulse opacity-50" alt="magic-2" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic3.png" className="absolute inset-0 z-40 w-full animate-pulse" alt="magic-3" />
           </div>
 
-          <img src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[10%] top-[40%] z-50 w-[150px] opacity-0" alt="panda-1" />
-          <img src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[20%] bottom-[36%] z-50 w-[170px] opacity-0" alt="panda-2" />
-          <img src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute  bottom-[25%] left-[5%] z-50 w-[220px] opacity-0" alt="panda-3" />
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[10%] top-[40%] z-50 w-[150px] opacity-0" alt="panda-1" />
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[20%] bottom-[36%] z-50 w-[170px] opacity-0" alt="panda-2" />
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute  bottom-[25%] left-[5%] z-50 w-[220px] opacity-0" alt="panda-3" />
         </div>
+
+
+
+        {/* debirun Summon Magic (Front - Will disappear) */}
+        <div className="mild-magic-front pointer-events-none absolute bottom-[-10%] left-[-12%] z-30 ">
+          <div className="mild-magic-float-group relative h-[700px] w-[700px] opacity-[75%]">
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic0.png" className="absolute inset-0 z-40 w-full opacity-60 mix-blend-screen" alt="magic-0" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic1.png" className="absolute inset-0 z-40 w-full opacity-60" alt="magic-1" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic2.png" className="absolute inset-0 z-40 w-full animate-pulse opacity-50" alt="magic-2" />
+            <img src="/assets/part3/model/Battle/Mild/Magic2/magic3.png" className="absolute inset-0 z-40 w-full animate-pulse" alt="magic-3" />
+          </div>
+
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[10%] top-[40%] z-50 w-[150px] opacity-0" alt="panda-1" />
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute left-[20%] bottom-[36%] z-50 w-[170px] opacity-0" alt="panda-2" />
+          <img src="/assets/part3/model/Battle/Mild/Magic2/panda2.png" className="mild-panda absolute  bottom-[25%] left-[5%] z-50 w-[220px] opacity-0" alt="panda-3" />
+        </div>
+
       </div>
       {/* End Background */}
 

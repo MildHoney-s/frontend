@@ -447,30 +447,30 @@ export default function BattleComponentOne() {
         <div className="dr-gamer-container absolute left-[6%] top-[13%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_L_Arm.png"
+              src="/assets/part3/model/Battle/Dr_Gamer/Pose/Dr_Gamer_L_Arm.png"
               className="dr-arm-l absolute left-0 top-0 z-20 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_R_Arm.png"
+              src="/assets/part3/model/Battle/Dr_Gamer/Pose/Dr_Gamer_R_Arm.png"
               className="dr-arm-r absolute left-0 top-0 z-20 w-full"
               alt="R Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/dr_damer_body_pure.png"
+              src="/assets/part3/model/Battle/Dr_Gamer/Pose/dr_damer_body_pure.png"
               className="absolute left-0 top-0 z-10 w-full"
               alt="Body"
             />
             <div className="dr-head-group absolute left-0 top-[1%] z-30 w-full">
               {/* ตาเปิด (Base) */}
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_head_op.png"
+                src="/assets/part3/model/Battle/Dr_Gamer/Pose/Dr_Gamer_head_op.png"
                 className="dr-eye-open w-full object-contain"
                 alt="Eye Open"
               />
               {/* ตาปิด (Overlay - เริ่มต้นซ่อนอยู่) */}
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_head_cl.png"
+                src="/assets/part3/model/Battle/Dr_Gamer/Pose/Dr_Gamer_head_cl.png"
                 className="dr-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -482,23 +482,23 @@ export default function BattleComponentOne() {
         <div className="absolute bottom-[-27%] right-[-5%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Arm.png"
+              src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Arm.png"
               className="Mild-arm-l absolute left-0 top-0 z-20 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_hair.png"
+              src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_hair.png"
               className="Mild-hair absolute left-0 top-0 z-10 w-full"
               alt="Hair"
             />
             <div className="absolute left-0 top-[1%] z-30 w-full">
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_op.png"
+                src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Body_op.png"
                 className="w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_cl.png"
+                src="/assets/part3/model/Battle/Mild/Pose1/Mild_R_1_Body_cl.png"
                 className="Mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -512,32 +512,32 @@ export default function BattleComponentOne() {
             {/* bone R */}
             <div className="pointer-events-none absolute bottom-[13%] left-[0%] h-full w-full">
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
+                src="/assets/part3/model/Battle/Dr_Gamer/Magic/R_circle.png"
                 className="magic-dr-ciecle-r absolute bottom-[35%] left-[2%] z-10 w-[250px]"
                 alt="R circle"
               />
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_bone.png"
+                src="/assets/part3/model/Battle/Dr_Gamer/Magic/R_bone.png"
                 className="magic-dr-arm-r absolute bottom-[15%] left-0 z-20  w-[1150px]"
                 alt="R Bone"
               />
             </div>
             {/* bone L */}
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
+              src="/assets/part3/model/Battle/Dr_Gamer/Magic/R_circle.png"
               className="magic-dr-ciecle-l absolute left-[27%] top-[3%] z-10 w-[200px]"
               alt="L circle"
             />
             <div className="pointer-events-none absolute left-[-5%] top-[3%] h-full w-full">
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/L_bone.png"
+                src="/assets/part3/model/Battle/Dr_Gamer/Magic/L_bone.png"
                 className="magic-dr-arm-l absolute left-0 top-[-10%] z-20 w-full"
                 alt="L Bone"
               />
             </div>
 
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/Skull.png"
+              src="/assets/part3/model/Battle/Dr_Gamer/Magic/Skull.png"
               className="magic-dr-Skull absolute left-[0%] top-[0%] z-10 w-[400px]"
               alt="head"
             />
@@ -548,17 +548,17 @@ export default function BattleComponentOne() {
         <div className="pointer-events-none absolute right-[-7%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+              src="/assets/part3/model/Battle/Mild/Magic1/Fire_Circle.png"
               className="magic-mild-fire absolute right-[0%] top-[20%] z-10 w-[350px]"
               alt="Ice"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Ice_Circle.png"
+              src="/assets/part3/model/Battle/Mild/Magic1/Ice_Circle.png"
               className="magic-mild-ice absolute right-[27%] top-[38%] z-10 w-[300px]"
               alt="SunMoon"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png"
+              src="/assets/part3/model/Battle/Mild/Magic1/Sun&moon_Circle.png"
               className="magic-mild-sunmoon absolute bottom-[18%] right-[2%] z-10 w-[400px]"
               alt="Fire"
             />

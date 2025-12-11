@@ -886,13 +886,13 @@ export default function TrainingScene({ onComplete }: Props) {
         </div>
 
         <img
-          src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+          src="/assets/part3/model/Battle/Mild/Magic1/Fire_Circle.png"
           className="magic-mild-fire absolute right-[20%] top-[60%] z-10 w-[300px]"
           alt="FireMagic"
         />
 
         <img
-          src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+          src="/assets/part3/model/Battle/Mild/Magic1/Fire_Circle.png"
           className="magic-mild-fire-2 absolute right-[19%] top-[60%] z-30 w-[300px]"
           alt="FireMagic"
         />

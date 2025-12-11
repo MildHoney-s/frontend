@@ -57,7 +57,7 @@ export default function VersusSceneFour({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
@@ -67,7 +67,7 @@ export default function VersusSceneFour({ onComplete }: SceneProps) {
           name: 'DEBBY',
           alias: 'ผู้บัญชาการสูงสุดแห่งกองทัพลับเมเทโอรอยด์',
           text: 'ข้าคือ เด็บบี้ ผู้บัญชาการสูงสุดแห่งกองทัพลับเมเทโอรอยด์ และเป็นผู้ถือครองพลังดาวตกชี้ชะตาเอกภพ! มาเยือนโลกมนุษย์ในร่างเด็กสาว แต่จุดจบกำลังมาถึง! ด้วยการตัดสินใจครั้งสำคัญ ข้าจึงย้อนเวลากลับมายังที่แห่งนี้',
-          src: 'assets/part3/Character/Versus/Debirun/',
+          src: 'assets/part3/model/Versus/Debirun/',
           file: 'Debirun',
         }}
       />

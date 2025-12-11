@@ -439,23 +439,23 @@ export default function BattleComponentTwo() {
         <div className="zz-container absolute bottom-[-26%] right-[0%] z-20 h-[500px] w-[320px] origin-bottom-right md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Pose/Zayzhik_arm_l.png"
+              src="/assets/part3/model/Battle/Zayzhik/Pose/Zayzhik_arm_l.png"
               className="zz-arm-l absolute left-0 top-[2%] z-30 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Pose/Zayzhik_arm_r.png"
+              src="/assets/part3/model/Battle/Zayzhik/Pose/Zayzhik_arm_r.png"
               className="zz-arm-r absolute left-0 top-[2%] z-10 w-full"
               alt="R Arm"
             />
             <div className="zz-head-group absolute left-0 top-[1%] z-20 w-full">
               <img
-                src="/assets/part3/Character/Battle/Zayzhik/Pose/Zayzhik_body_op.png"
+                src="/assets/part3/model/Battle/Zayzhik/Pose/Zayzhik_body_op.png"
                 className="zz-eye-open w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Zayzhik/Pose/Zayzhik_body_cl.png"
+                src="/assets/part3/model/Battle/Zayzhik/Pose/Zayzhik_body_cl.png"
                 className="zz-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -467,38 +467,38 @@ export default function BattleComponentTwo() {
         <div className="mild-gamer-container absolute left-[-3%] top-[16%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_arm_r.png"
+              src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_arm_r.png"
               className="Mild-arm-r absolute left-0 top-0 z-20 w-full"
               alt="R Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_arm_l.png"
+              src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_arm_l.png"
               className="Mild-arm-l absolute left-0 top-0 z-20 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_hair_f_l.png"
+              src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_hair_f_l.png"
               className="Mild-hair-f-l absolute left-0 top-0 z-30 w-full"
               alt="Hair FL"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_hair_b_r.png"
+              src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_hair_b_r.png"
               className="Mild-hair-b-r absolute left-0 top-0 z-10 w-full"
               alt="Hair BR"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_hair_b_l.png"
+              src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_hair_b_l.png"
               className="Mild-hair-b-l absolute left-0 top-0 z-10 w-full"
               alt="Hair BL"
             />
             <div className="absolute left-0 top-[1%] z-30 w-full">
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_Body_op.png"
+                src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_Body_op.png"
                 className="w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_Body_cl.png"
+                src="/assets/part3/model/Battle/Mild/Pose2/Mild_R_2_Body_cl.png"
                 className="Mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -510,7 +510,7 @@ export default function BattleComponentTwo() {
         <div className="zz-magic-back pointer-events-none absolute bottom-[-5%] right-[-9%] z-10">
           <div className="zz-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Magic/magic_circle.png"
+              src="/assets/part3/model/Battle/Zayzhik/Magic/magic_circle.png"
               className="zz-magic-circle absolute inset-0 z-10 w-full opacity-80"
               alt="magic-circle"
             />
@@ -520,34 +520,34 @@ export default function BattleComponentTwo() {
           <div className="zz-magic-float-group relative h-[700px] w-[700px] opacity-[75%]">
             {/* Magic Aura */}
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Magic/magic4.png"
+              src="/assets/part3/model/Battle/Zayzhik/Magic/magic4.png"
               className="zz-magic-float absolute inset-0 z-40 w-full opacity-60 mix-blend-screen"
               alt="magic-0"
             />
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Magic/magic2.png"
+              src="/assets/part3/model/Battle/Zayzhik/Magic/magic2.png"
               className="zz-magic-float absolute inset-0 z-0 w-full opacity-60"
               alt="magic-1"
             />
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Magic/magic3.png"
+              src="/assets/part3/model/Battle/Zayzhik/Magic/magic3.png"
               className="zz-magic-float absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
             <img
-              src="/assets/part3/Character/Battle/Zayzhik/Magic/magic1.png"
+              src="/assets/part3/model/Battle/Zayzhik/Magic/magic1.png"
               className="zz-magic-float absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
           </div>
           {/* Sharks */}
           <img
-            src="/assets/part3/Character/Battle/Zayzhik/Magic/shark1.png"
+            src="/assets/part3/model/Battle/Zayzhik/Magic/shark1.png"
             className="zz-shark-1 absolute left-[20%] top-[35%] z-50 w-[120px]"
             alt="shark-1"
           />
           <img
-            src="/assets/part3/Character/Battle/Zayzhik/Magic/shark2.png"
+            src="/assets/part3/model/Battle/Zayzhik/Magic/shark2.png"
             className="zz-shark-2 absolute left-[60%] top-[10%] z-50 w-[110px]"
             alt="shark-2"
           />
@@ -556,7 +556,7 @@ export default function BattleComponentTwo() {
         <div className="mild-magic-back pointer-events-none absolute left-[-13%] top-[2%] z-10">
           <div className="mild-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic_circle.png"
+              src="/assets/part3/model/Battle/Mild/Magic2/magic_circle.png"
               className="mild-magic-circle absolute inset-0 z-10 w-full opacity-80"
               alt="magic-circle"
             />
@@ -569,22 +569,22 @@ export default function BattleComponentTwo() {
             {/* Wrapper Magic Aura */}
             <div className="absolute inset-0 z-40 h-full w-full opacity-[75%]">
               <img
-                src="/assets/part3/Character/Battle/Mild/Magic2/magic0.png"
+                src="/assets/part3/model/Battle/Mild/Magic2/magic0.png"
                 className="mild-magic-float absolute inset-0 w-full opacity-60 mix-blend-screen  z-0"
                 alt="magic-0"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Magic2/magic1.png"
+                src="/assets/part3/model/Battle/Mild/Magic2/magic1.png"
                 className="mild-magic-float absolute inset-0 w-full opacity-60"
                 alt="magic-1"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png"
+                src="/assets/part3/model/Battle/Mild/Magic2/magic2.png"
                 className="mild-magic-float absolute inset-0 w-full opacity-60"
                 alt="magic-1"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png"
+                src="/assets/part3/model/Battle/Mild/Magic2/magic3.png"
                 className="mild-magic-float absolute inset-0 w-full opacity-60"
                 alt="magic-1"
               />
@@ -593,12 +593,12 @@ export default function BattleComponentTwo() {
 
           {/* Pandas */}
           <img
-            src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png"
+            src="/assets/part3/model/Battle/Mild/Magic2/panda2.png"
             className="mild-panda-1 absolute left-[15%] top-[22%] z-50 w-[120px]"
             alt="panda-1"
           />
           <img
-            src="/assets/part3/Character/Battle/Mild/Magic2/panda.png"
+            src="/assets/part3/model/Battle/Mild/Magic2/panda.png"
             className="mild-panda-2 absolute left-[60%] top-[10%] z-50 w-[140px]"
             alt="panda-2"
           />

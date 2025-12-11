@@ -19,7 +19,7 @@ export default function VersusSceneOne({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
@@ -29,7 +29,7 @@ export default function VersusSceneOne({ onComplete }: SceneProps) {
           name: 'Dr.',
           alias: 'ศัลยแพทย์แห่งความตาย ผู้มาคุมน้ำตาล',
           text: "นักปราชญ์ที่อยู่เคียงคู่กับชีวิต และเผชิญหน้ากับความตาย เวทย์มนต์ที่ล้อเล่นกับผู้วายชน เนโครเมนเซอร์ ผู้ที่คอยเหนี่ยวรั้งชีวิตที่ดับสูญให้กลับมามีชีวิตอีกครั้ง...'ศัลยแพทย์แห่งความตาย'... ณ บัดนี้สิ่งที่เขานำพามาคือชีวิตหรือความตายกันแน่!!!",
-          src: 'assets/part3/Character/Versus/Dr_Gamer/',
+          src: 'assets/part3/model/Versus/Dr_Gamer/',
           file: 'Dr_Gamer',
         }}
       />
