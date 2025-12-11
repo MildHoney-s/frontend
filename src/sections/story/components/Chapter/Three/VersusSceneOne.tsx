@@ -9,7 +9,7 @@ interface SceneProps {
   onComplete?: () => void
 }
 
-export default function VersusScene01({ onComplete }: SceneProps) {
+export default function VersusSceneOne({ onComplete }: SceneProps) {
   return (
     <>
       <VersusComponent
@@ -18,10 +18,12 @@ export default function VersusScene01({ onComplete }: SceneProps) {
         refName="vsOne"
         playerA={{
           name: 'Mild-R',
-          alias: 'Mild-R สาวน้อย Introvert',
+          alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
           src: 'assets/part3/Character/Versus/Mild-R/',
           file: 'Mild',
-          text: 'test',
+          text: `สวัสดีค่ะทุกคน... มายด์ คะ 
+                 ฝากตัวด้วยนะคะ...
+                 (ถึงคิวรักษาหัวใจแล้ว เป็นเด็กดีต่อแถวนะคะ)`,
         }}
         playerB={{
           name: 'Dr.',
