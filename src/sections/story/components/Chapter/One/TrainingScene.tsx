@@ -706,7 +706,7 @@ export default function TrainingScene({ onComplete }: Props) {
         {/* ================= MILD ================= */}
         <div className="mild-wrapper absolute bottom-[10%] left-[20%] z-30 flex h-[55%] w-[22%] items-end justify-center">
           {/* ===== Bubble Mind ทั้งหมด ===== */}
-          <div className="bubble-mind-1 absolute -left-[5%] -top-[10%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
+          <div className="bubble-mind-1 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               เอาล่ะ… ต้องทำให้ได้ดีกว่าก่อนหน้านี้
               <br />
@@ -716,7 +716,7 @@ export default function TrainingScene({ onComplete }: Props) {
             <div className="absolute -bottom-[24%] left-[18%] h-[0.9cqw] w-[0.9cqw] rounded-full bg-white" />
           </div>
 
-          <div className="bubble-mind-2 absolute -left-[5%] -top-[10%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
+          <div className="bubble-mind-2 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               แย่แล้ว… มอนสเตอร์มาจากไหนเนี่ย
               <br />
@@ -726,7 +726,7 @@ export default function TrainingScene({ onComplete }: Props) {
             <div className="absolute -bottom-[24%] left-[18%] h-[0.9cqw] w-[0.9cqw] rounded-full bg-white" />
           </div>
 
-          <div className="bubble-mind-3 absolute -left-[5%] -top-[6%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
+          <div className="bubble-mind-3 absolute -left-[5%] -top-[6%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               ไม่นะ… ไม่ได้ผลเลยเหรอ!?
             </p>
@@ -734,7 +734,7 @@ export default function TrainingScene({ onComplete }: Props) {
             <div className="absolute -bottom-[32%] left-[18%] h-[0.9cqw] w-[0.9cqw] rounded-full bg-white" />
           </div>
 
-          <div className="bubble-scream absolute -left-[5%] -top-[8%] z-50 w-[120%] rounded-3xl bg-pink-100 p-[5%] text-black shadow-xl">
+          <div className="bubble-scream absolute -left-[5%] -top-[8%] z-50 w-full rounded-3xl bg-pink-100 p-[5%] text-black shadow-xl">
             <p className="text-[1.4cqw] font-bold leading-snug text-pink-600">
               อ้าาาาาาา!!!
             </p>
@@ -747,7 +747,7 @@ export default function TrainingScene({ onComplete }: Props) {
             />
           </div>
 
-          <div className="bubble-mind-4 absolute -left-[5%] -top-[10%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
+          <div className="bubble-mind-4 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               <span className="block text-[0.9cqw] text-gray-500">
                 (เสียงเบาๆ)
@@ -763,7 +763,7 @@ export default function TrainingScene({ onComplete }: Props) {
             />
           </div>
 
-          <div className="bubble-mind-5 absolute -left-[5%] -top-[10%] z-40 w-[120%] rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
+          <div className="bubble-mind-5 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
             <p className="text-[1.4cqw] font-bold leading-snug">เอ๊ะ!!</p>
             <div
               className="absolute -bottom-[18%] left-[12%]
@@ -774,7 +774,7 @@ export default function TrainingScene({ onComplete }: Props) {
             />
           </div>
 
-          <div className="bubble-mind-6 absolute -left-[5%] -top-[10%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
+          <div className="bubble-mind-6 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               <span className="block text-[0.9cqw] text-gray-500">
                 (เสียงเบาๆ)
@@ -790,7 +790,7 @@ export default function TrainingScene({ onComplete }: Props) {
             />
           </div>
 
-          <div className="bubble-mind-7 absolute -left-[5%] -top-[10%] z-40 w-[140%] rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
+          <div className="bubble-mind-7 absolute -left-[5%] -top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black opacity-0 shadow-xl">
             <p className="text-[1.1cqw] leading-snug">
               <span className="block text-[0.9cqw] text-gray-500">
                 (เสียงเบาๆ)

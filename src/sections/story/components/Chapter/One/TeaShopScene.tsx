@@ -389,7 +389,7 @@ export default function TeasShopScene({ onComplete }: Props) {
         <div className="mild-wrapper absolute bottom-[10%] left-[20%] z-10 flex h-[55%] w-[25%] items-end justify-center">
           {/* ✅ Bubble จะขยับตามตัวละครอัตโนมัติ */}
           <div
-            className="bubble-mild-1 absolute -left-[10%] -top-[5%] z-30 w-[100%]
+            className="bubble-mild-1 absolute -left-[10%] -top-[5%] z-30 w-full
                origin-bottom-left scale-75 rounded-3xl bg-white/95
                p-[5%] text-black opacity-0 shadow-xl"
           >
@@ -407,7 +407,7 @@ export default function TeasShopScene({ onComplete }: Props) {
 
           {/* มายด์คิด “อุ้ย! ชานมก็…” */}
           <div
-            className="bubble-mild-2 absolute -left-[10%] -top-[5%] z-20 w-[100%]
+            className="bubble-mild-2 absolute -left-[10%] -top-[5%] z-20 w-full
                      origin-bottom-left scale-75 rounded-3xl bg-white/95
                p-[5%] text-black opacity-0 shadow-xl"
           >
