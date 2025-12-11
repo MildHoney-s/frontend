@@ -457,7 +457,7 @@ export default function BattleComponentOne() {
               alt="R Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_Body.png"
+              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/dr_damer_body_pure.png"
               className="absolute left-0 top-0 z-10 w-full"
               alt="Body"
             />
