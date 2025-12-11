@@ -10,13 +10,17 @@ export default function Router() {
   const routes = useRoutes([
     {
       path: '/',
+      element: <LandingPage />,
+      index: true,
+    },
+    {
+      path: '/',
       element: (
         <SimpleLayout>
           <Outlet />
         </SimpleLayout>
       ),
       children: [
-        { index: true, element: <LandingPage /> },
         { path: 'story', element: <StoryPage /> },
         { path: 'credits', element: <CreditPage /> },
       ],

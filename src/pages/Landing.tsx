@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 // ฟังก์ชันของคุณ
 
 // optional: overall maximum wait before forcing navigation (ms)
-const NAV_WAIT_TIMEOUT = 10000 // 10s (ปรับตามต้องการ)
+const NAV_WAIT_TIMEOUT = 60000 // 60s (ปรับตามต้องการ)
 
 function timeout(ms: number) {
   return new Promise((_, reject) =>
@@ -65,7 +65,7 @@ export default function LandingPage() {
       .catch((err) => {
         // abort or other error
         if ((err as DOMException)?.name === 'AbortError') {
-          console.log('aborted')
+          console.log('aborted', err)
         } else {
           console.log((err && (err as Error).message) || String(err))
         }
@@ -95,6 +95,7 @@ export default function LandingPage() {
       }
     } catch (err) {
       // timeout or other error -> abort preload to cancel remaining loads
+      console.log('Preload Timeout!')
       abortRef.current?.abort()
     } finally {
       // ensure UI flags are reset and navigate
