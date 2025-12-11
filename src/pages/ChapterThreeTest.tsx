@@ -20,7 +20,6 @@ export default function ChapterThreeTest() {
           <ChapterThree />
         </div>
       </div>
-
     </>
   )
 }

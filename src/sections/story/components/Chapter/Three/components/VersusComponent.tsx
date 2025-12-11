@@ -250,7 +250,7 @@ export default function VersusComponent({
     <section
       id={refName}
       ref={containerRef}
-      className="scene-container relative w-full h-screen overflow-hidden bg-black"
+      className="scene-container relative h-screen w-full overflow-hidden bg-black"
     >
       <div
         className="bg-versus relative h-full w-full"
@@ -292,7 +292,7 @@ export default function VersusComponent({
             {playerA.text && (
               <div className="flavor-text-a pointer-events-auto mt-4 md:mt-8">
                 <p
-                  className="max-w-[300px] w-[360px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  className="w-[360px] max-w-[300px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
                     __html: playerA.text.replace(/\n/g, '<br />'),
                   }}
@@ -309,12 +309,12 @@ export default function VersusComponent({
           />
 
           <img
-            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh] opacity-0"
+            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerA.src}${playerA.file}_close.png`)}
             alt={`${playerA.name} close`}
           />
           <img
-            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain md:h-[80vh] opacity-0"
+            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerA.src}${playerA.file}_open.png`)}
             alt={`${playerA.name} open`}
           />
@@ -334,7 +334,7 @@ export default function VersusComponent({
             {playerB.text && (
               <div className="flavor-text-b pointer-events-auto mt-4 md:mt-8">
                 <p
-                  className="max-w-[300px] w-[350px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  className="w-[350px] max-w-[300px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
                     __html: playerB.text.replace(/\n/g, '<br />'),
                   }}
@@ -350,18 +350,18 @@ export default function VersusComponent({
             alt="card2"
           />
           <img
-            className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh] opacity-0"
+            className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerB.src}${playerB.file}_close.png`)}
             alt={`${playerB.name} close`}
           />
           <img
-            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain md:h-[80vh] opacity-0"
+            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
             alt={`${playerB.name} open`}
           />
 
           {/* Gradients */}
-          <div className="pointer-events-none absolute top-0 left-0 z-40 h-32 w-full bg-gradient-to-b from-black via-black/50 to-transparent"></div>
+          <div className="pointer-events-none absolute left-0 top-0 z-40 h-32 w-full bg-gradient-to-b from-black via-black/50 to-transparent"></div>
           <div className="pointer-events-none absolute bottom-0 left-0 z-40 h-32 w-full bg-gradient-to-t from-black via-black/50 to-transparent"></div>
         </div>
       </div>
