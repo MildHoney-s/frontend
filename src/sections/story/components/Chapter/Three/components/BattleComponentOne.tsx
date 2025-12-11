@@ -80,18 +80,17 @@ export default function BattleComponentOne() {
       let mildBlinkTween: gsap.core.Timeline | null = null
 
       const startBlinking = () => {
-        // 1. Dr.Gamer Blink Loop
         drBlinkTween = gsap.timeline({ repeat: -1, repeatDelay: 3, delay: 0.5 })
         drBlinkTween
           .to('.dr-eye-close', { autoAlpha: 1, duration: 0.1 })
           .to('.dr-eye-close', { autoAlpha: 0, duration: 0.1, delay: 0.1 })
 
-        // 2. Mild Blink Loop
         mildBlinkTween = gsap.timeline({ repeat: -1, repeatDelay: 4, delay: 2 })
         mildBlinkTween
           .to('.Mild-eye-close', { autoAlpha: 1, duration: 0.1 })
           .to('.Mild-eye-close', { autoAlpha: 0, duration: 0.1, delay: 0.1 })
       }
+
 
       startBlinking()
 
@@ -309,21 +308,20 @@ export default function BattleComponentOne() {
 
         // ✅ Phase 3: DEFEAT SEQUENCE
         .call(() => {
-          // 1. หยุด Animation Idle ของร่างกาย Dr.Gamer
           gsap.killTweensOf(['.dr-arm-l', '.dr-arm-r', '.dr-head-group'])
-
-          // 2. 🛑 สั่งหยุดกระพริบตา "เฉพาะของ Dr.Gamer"
-          if (drBlinkTween) drBlinkTween.kill()
+          if (drBlinkTween) drBlinkTween.kill() // สั่ง Kill Loop ก่อน
         })
 
         // ซ่อน Magic Effects
         .to(
-          [
-            '.magic-dr-Skull',
+          ['.magic-dr-Skull',
             '.magic-dr-arm-l',
             '.magic-dr-arm-r',
             '.magic-dr-ciecle-l',
             '.magic-dr-ciecle-r',
+            '.magic-mild-ice',
+            '.magic-mild-sunmoon',
+            '.magic-mild-fire'
           ],
           {
             autoAlpha: 0,
@@ -339,21 +337,21 @@ export default function BattleComponentOne() {
             rotation: -90,
             ease: 'bounce.out',
             duration: 2,
+            onStart: () => {
+              drBlinkTween?.pause()
+              gsap.set('.dr-eye-open', { autoAlpha: 0 })
+              gsap.set('.dr-eye-close', { autoAlpha: 1 })
+            },
+            onReverseComplete: () => {
+              drBlinkTween?.resume()
+              gsap.set('.dr-eye-open', { autoAlpha: 1 })
+              gsap.set('.dr-eye-close', { autoAlpha: 0 })
+            },
           },
-          '<',
+          '<', // Start same time as cleanup
         )
 
-        // บังคับ Dr.Gamer ปิดตาถาวร
-        .to(
-          '.dr-eye-open',
-          { autoAlpha: 0, duration: 0.05, overwrite: true },
-          '<',
-        )
-        .to(
-          '.dr-eye-close',
-          { autoAlpha: 1, duration: 0.05, overwrite: true },
-          '<',
-        )
+
 
         // Final Hold (รอ Mild ชนะ)
         .to({}, { duration: 0.5 })

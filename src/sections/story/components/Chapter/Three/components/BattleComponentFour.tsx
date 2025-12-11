@@ -737,47 +737,7 @@ export default function BattleComponentFour() {
           />
         </div>
 
-        {/* debirun Summon Magic (Front - Will disappear) */}
-        <div className="mild-magic-front pointer-events-none absolute bottom-[-10%] left-[-12%] z-30 ">
-          <div className="mild-magic-float-group relative h-[700px] w-[700px] opacity-[75%]">
-            <img
-              src={battleComponentsFourAssets.mildMagic0}
-              className="absolute inset-0 z-40 w-full opacity-60 mix-blend-screen"
-              alt="magic-0"
-            />
-            <img
-              src={battleComponentsFourAssets.mildMagic1}
-              className="absolute inset-0 z-40 w-full opacity-60"
-              alt="magic-1"
-            />
-            <img
-              src={battleComponentsFourAssets.mildMagic2}
-              className="absolute inset-0 z-40 w-full animate-pulse opacity-50"
-              alt="magic-2"
-            />
-            <img
-              src={battleComponentsFourAssets.mildMagic3}
-              className="absolute inset-0 z-40 w-full animate-pulse"
-              alt="magic-3"
-            />
-          </div>
 
-          <img
-            src={battleComponentsFourAssets.mildPanda}
-            className="mild-panda absolute left-[10%] top-[40%] z-50 w-[150px] opacity-0"
-            alt="panda-1"
-          />
-          <img
-            src={battleComponentsFourAssets.mildPanda}
-            className="mild-panda absolute bottom-[36%] left-[20%] z-50 w-[170px] opacity-0"
-            alt="panda-2"
-          />
-          <img
-            src={battleComponentsFourAssets.mildPanda}
-            className="mild-panda absolute  bottom-[25%] left-[5%] z-50 w-[220px] opacity-0"
-            alt="panda-3"
-          />
-        </div>
       </div>
       {/* End Background */}
 
