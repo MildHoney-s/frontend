@@ -444,7 +444,7 @@ export default function BattleComponentOne() {
         />
 
         {/* 2. Dr.Gamer */}
-        <div className="dr-gamer-container absolute left-[0%] top-[25%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
+        <div className="dr-gamer-container absolute left-[6%] top-[13%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
               src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_L_Arm.png"
@@ -479,7 +479,7 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 3. Mild */}
-        <div className="absolute bottom-[-6%] right-[0%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
+        <div className="absolute bottom-[-27%] right-[-5%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
               src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Arm.png"
@@ -507,32 +507,31 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 4. Dr.Gamer [Magic] */}
-        <div className="absolute left-[0%] top-[15%] z-20 h-[1300px] w-[1300px]">
+        <div className="absolute left-[0%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
             {/* bone R */}
-            <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
-              className="magic-dr-ciecle-l absolute left-[27%] top-[12%] z-10 w-[200px]"
-              alt="L circle"
-            />
             <div className="pointer-events-none absolute bottom-[13%] left-[0%] h-full w-full">
               <img
+                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
+                className="magic-dr-ciecle-r absolute bottom-[35%] left-[2%] z-10 w-[250px]"
+                alt="R circle"
+              />
+              <img
                 src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_bone.png"
-                className="magic-dr-arm-r absolute bottom-0 left-0 z-20 w-full"
+                className="magic-dr-arm-r absolute bottom-[15%] left-0 z-20  w-[1150px]"
                 alt="R Bone"
               />
             </div>
             {/* bone L */}
-
             <img
               src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
-              className="magic-dr-ciecle-r absolute bottom-[35%] left-[0%] z-10 w-[300px]"
-              alt="R circle"
+              className="magic-dr-ciecle-l absolute left-[27%] top-[3%] z-10 w-[200px]"
+              alt="L circle"
             />
             <div className="pointer-events-none absolute left-[-5%] top-[3%] h-full w-full">
               <img
                 src="/assets/part3/Character/Battle/Dr_Gamer/Magic/L_bone.png"
-                className="magic-dr-arm-l absolute left-0 top-0 z-20 w-full"
+                className="magic-dr-arm-l absolute left-0 top-[-10%] z-20 w-full"
                 alt="L Bone"
               />
             </div>
@@ -546,7 +545,7 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 5. Mild [Magic] */}
-        <div className="pointer-events-none absolute right-[-7%] top-[15%] z-20 h-[1300px] w-[1300px]">
+        <div className="pointer-events-none absolute right-[-7%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
             <img
               src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
@@ -589,7 +588,7 @@ export default function BattleComponentOne() {
           <p className=" text-xl font-medium leading-relaxed text-black md:text-2xl">
             ไม่น่าเชื่อว่า<span className="underline">นักเวทม้ามืด</span>อย่าง
             <span className="mt-1 block text-4xl font-medium text-pink-600">
-              "มายด์"
+              "MIld-R"
             </span>
           </p>
           <p className=" mt-2 text-xl font-medium leading-relaxed text-black md:text-2xl">

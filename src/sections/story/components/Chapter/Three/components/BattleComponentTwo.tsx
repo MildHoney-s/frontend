@@ -15,10 +15,18 @@ export default function BattleComponentTwo() {
       // =============================
       // 0. Initial Setups (Hide Elements)
       // =============================
-      gsap.set(['.mild-magic-circle', '.zz-magic-circle'], {
-        scale: 0,
-        autoAlpha: 0,
-      })
+      gsap.set(
+        [
+          '.mild-magic-circle',
+          '.mild-magic-float',
+          '.zz-magic-circle',
+          '.zz-magic-float',
+        ],
+        {
+          scale: 0,
+          autoAlpha: 0,
+        },
+      )
       gsap.set(
         ['.mild-panda-1', '.mild-panda-2', '.zz-shark-1', '.zz-shark-2'],
         { scale: 0, autoAlpha: 0 },
@@ -178,18 +186,29 @@ export default function BattleComponentTwo() {
         })
 
       // --- Phase 2: Magic Entrance ---
-      tl.to(['.mild-magic-circle', '.zz-magic-circle'], {
-        scale: 1,
-        autoAlpha: 1,
-        duration: 1,
-        ease: 'back.out(1.2)',
-      }).to(['.mild-panda-1', '.mild-panda-2', '.zz-shark-1', '.zz-shark-2'], {
-        scale: 1,
-        autoAlpha: 1,
-        duration: 0.5,
-        ease: 'back.out(1.5)',
-        stagger: 0.1,
-      })
+      tl.to(
+        [
+          '.mild-magic-circle',
+          '.mild-magic-float',
+          '.zz-magic-circle',
+          '.zz-magic-float',
+        ],
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 1,
+          ease: 'back.out(1.2)',
+        },
+      ).to(
+        ['.mild-panda-1', '.mild-panda-2', '.zz-shark-1', '.zz-shark-2'],
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.5,
+          ease: 'back.out(1.5)',
+          stagger: 0.1,
+        },
+      )
 
       // --- Phase 3: The CLASH ---
       const clashTimeline = gsap.timeline()
@@ -305,10 +324,16 @@ export default function BattleComponentTwo() {
 
       // --- Phase 5: Defeat Zayzhik & Close Magic ---
 
-      // 1. ปิดวงเวท (เฉพาะของ Zayzhik คนแพ้)
-      // เลือกเฉพาะ class ที่เป็นของ Zayzhik (.zz-*)
+      // 1. Clean Up Zayzhik's side first
       tl.to(
-        ['.zz-magic-circle', '.zz-shark-1', '.zz-shark-2'],
+        [
+          '.zz-magic-circle',
+          '.zz-magic-float',
+          '.zz-shark-1',
+          '.zz-shark-2',
+          '.mild-panda-1',
+          '.mild-panda-2',
+        ],
         {
           autoAlpha: 0,
           scale: 0,
@@ -318,11 +343,12 @@ export default function BattleComponentTwo() {
         '-=0.2',
       )
 
-      // 2. ล้มลง (Fall Down in Place)
+      // 2. Zayzhik Falls (Duration 2s)
       tl.to(
         '.zz-container',
         {
           rotation: -45,
+          y: 10,
           ease: 'bounce.out',
           duration: 2,
           onStart: () => {
@@ -336,7 +362,19 @@ export default function BattleComponentTwo() {
             gsap.set('.zz-eye-close', { autoAlpha: 0 })
           },
         },
-        '<',
+        '<', // Start same time as cleanup
+      )
+
+      // 3. ✅ UPDATED: Close ONLY .mild-magic-float (Keep .mild-magic-circle open)
+      tl.to(
+        '.mild-magic-float',
+        {
+          autoAlpha: 0,
+          scale: 0,
+          duration: 0.8,
+          ease: 'back.in(1.2)',
+        },
+        '>-0.5', // เริ่มก่อนท่าล้มจบเล็กน้อย
       )
 
       // Helper Flash
@@ -398,7 +436,7 @@ export default function BattleComponentTwo() {
         />
 
         {/* 2. ZAYZHIK (Right Bottom) */}
-        <div className="zz-container absolute bottom-[-6%] right-[0%] z-20 h-[500px] w-[320px] origin-bottom-right md:h-[750px] md:w-[500px]">
+        <div className="zz-container absolute bottom-[-26%] right-[0%] z-20 h-[500px] w-[320px] origin-bottom-right md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Pose/Zayzhik_arm_l.png"
@@ -426,7 +464,7 @@ export default function BattleComponentTwo() {
         </div>
 
         {/* 3. MILD (Left Top Area) */}
-        <div className="mild-gamer-container absolute left-[0%] top-[25%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
+        <div className="mild-gamer-container absolute left-[-3%] top-[16%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
               src="/assets/part3/Character/Battle/Mild/Pose2/Mild_R_2_arm_r.png"
@@ -469,7 +507,7 @@ export default function BattleComponentTwo() {
         </div>
 
         {/* 4. MAGIC ZAYZHIK (Right Bottom Area) */}
-        <div className="zz-magic-back pointer-events-none absolute bottom-[10%] right-[-9%] z-10">
+        <div className="zz-magic-back pointer-events-none absolute bottom-[-5%] right-[-9%] z-10">
           <div className="zz-magic-float-group relative h-[700px] w-[700px]">
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Magic/magic_circle.png"
@@ -478,27 +516,27 @@ export default function BattleComponentTwo() {
             />
           </div>
         </div>
-        <div className="zz-magic-front pointer-events-none absolute bottom-[8%] right-[-5%] z-30">
-          <div className="zz-magic-float-group relative h-[700px] w-[700px]">
+        <div className="zz-magic-front pointer-events-none absolute bottom-[-8%] right-[-8%] z-30  ">
+          <div className="zz-magic-float-group relative h-[700px] w-[700px] opacity-[75%]">
             {/* Magic Aura */}
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Magic/magic4.png"
-              className="zz-magic-circle absolute inset-0 z-40 w-full opacity-60 mix-blend-screen"
+              className="zz-magic-float absolute inset-0 z-40 w-full opacity-60 mix-blend-screen"
               alt="magic-0"
             />
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Magic/magic2.png"
-              className="zz-magic-circle absolute inset-0 z-40 w-full opacity-60"
+              className="zz-magic-float absolute inset-0 z-0 w-full opacity-60"
               alt="magic-1"
             />
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Magic/magic3.png"
-              className="zz-magic-circle absolute inset-0 z-40 w-full opacity-60"
+              className="zz-magic-float absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
             <img
               src="/assets/part3/Character/Battle/Zayzhik/Magic/magic1.png"
-              className="zz-magic-circle absolute inset-0 z-40 w-full opacity-60"
+              className="zz-magic-float absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
           </div>
@@ -514,9 +552,8 @@ export default function BattleComponentTwo() {
             alt="shark-2"
           />
         </div>
-
         {/* 5. MAGIC MILD (Left Top Area) */}
-        <div className="mild-magic-back pointer-events-none absolute left-[-9%] top-[13%] z-10">
+        <div className="mild-magic-back pointer-events-none absolute left-[-13%] top-[2%] z-10">
           <div className="mild-magic-float-group relative h-[700px] w-[700px]">
             <img
               src="/assets/part3/Character/Battle/Mild/Magic2/magic_circle.png"
@@ -525,30 +562,35 @@ export default function BattleComponentTwo() {
             />
           </div>
         </div>
-        <div className="mild-magic-front pointer-events-none absolute left-[-11%] top-[17%] z-30">
+
+        {/* --- FRONT GROUP --- */}
+        <div className="mild-magic-front pointer-events-none absolute left-[-14%] top-[10%] z-30">
           <div className="mild-magic-float-group relative h-[700px] w-[700px]">
-            {/* Magic Aura */}
-            <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic0.png"
-              className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60 mix-blend-screen"
-              alt="magic-0"
-            />
-            <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic1.png"
-              className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
-              alt="magic-1"
-            />
-            <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png"
-              className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
-              alt="magic-1"
-            />
-            <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png"
-              className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
-              alt="magic-1"
-            />
+            {/* Wrapper Magic Aura */}
+            <div className="absolute inset-0 z-40 h-full w-full opacity-[75%]">
+              <img
+                src="/assets/part3/Character/Battle/Mild/Magic2/magic0.png"
+                className="mild-magic-float absolute inset-0 w-full opacity-60 mix-blend-screen  z-0"
+                alt="magic-0"
+              />
+              <img
+                src="/assets/part3/Character/Battle/Mild/Magic2/magic1.png"
+                className="mild-magic-float absolute inset-0 w-full opacity-60"
+                alt="magic-1"
+              />
+              <img
+                src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png"
+                className="mild-magic-float absolute inset-0 w-full opacity-60"
+                alt="magic-1"
+              />
+              <img
+                src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png"
+                className="mild-magic-float absolute inset-0 w-full opacity-60"
+                alt="magic-1"
+              />
+            </div>
           </div>
+
           {/* Pandas */}
           <img
             src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png"
@@ -586,7 +628,7 @@ export default function BattleComponentTwo() {
 
       <div className="narration-box narration-final-2b absolute right-[-5%] top-[20%] z-40 max-w-xl -translate-x-1/2 -translate-y-1/2 rotate-[3deg] rounded-lg border-8 border-green-700 bg-white/90 p-8 text-center opacity-0 shadow-2xl shadow-green-900/50 will-change-transform">
         <p className="mt-4 text-3xl font-medium leading-relaxed text-gray-700">
-          เอาชนะ S.H.A.R.K ไปได้
+          เอาชนะ Z.H.A.R.K ไปได้
           <br />
           อย่างสวยงาม!
           <br />

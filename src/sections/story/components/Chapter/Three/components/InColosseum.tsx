@@ -203,7 +203,7 @@ export default function InColosseum({ onComplete }: Props) {
 
         <div className="pointer-events-none absolute inset-0 z-10">
           {/* MILD */}
-          <div className="mild-group absolute bottom-[4%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[10%] md:h-[600px] md:w-[350px]">
+          <div className="mild-group absolute bottom-[-5%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[10%] md:h-[600px] md:w-[330px]">
             <div className="mild-body-img relative h-full w-full">
               {/* Asset */}
 
@@ -265,31 +265,31 @@ export default function InColosseum({ onComplete }: Props) {
           </div>
 
           {/* BUBBLES 1-4 (เหมือนเดิม) */}
-          <div className="bubble-mild-1 absolute left-[20%] top-[40%] z-40 max-w-[200px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-['']">
+          <div className="bubble-mild-1 absolute left-[20%] top-[30%] z-40 max-w-[200px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-['']">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-3xl">
               งือ~~
             </p>
           </div>
-          <div className="bubble-mild-2 absolute left-[10%] top-[40%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
+          <div className="bubble-mild-2 absolute left-[10%] top-[30%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-2xl">
               พิธีกรเรียกชื่อฉันแล้ว ทำไงดีไม่มั่นใจเลยว่าจะทำได้ไหม
             </p>
           </div>
-          <div className="bubble-mild-3 absolute left-[10%] top-[40%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
+          <div className="bubble-mild-3 absolute left-[10%] top-[30%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-2xl">
               อือ ขอบคุณนะฮันนี่ <br /> ที่เป็นกำลังใจให้เสมอ
             </p>
           </div>
-          <div className="bubble-mild-4 absolute left-[10%] top-[40%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
+          <div className="bubble-mild-4 absolute left-[10%] top-[30%] z-40 max-w-[250px] rounded-xl bg-white p-4 text-black shadow-lg after:absolute after:bottom-[-10px] after:left-4 after:border-[10px] after:border-transparent after:border-t-white after:content-[''] md:max-w-[400px]">
             <p className="text-center text-xl font-bold tracking-wide text-pink-600 md:text-2xl">
-              ฉันจะออกไปแสดงผลลัพธ์ ของการฝึกกับฮันนี่ให้ทุกคนเห็นเอง
+              ฉันจะออกไปแสดงผลลัพธ์ การฝึกกับฮันนี่ให้ทุกคนเห็นเอง
             </p>
           </div>
         </div>
 
         {/* HONEY (เหมือนเดิม) */}
         <div className="pointer-events-none absolute inset-0 z-10">
-          <div className="honey-group absolute bottom-[-2%] left-[5%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[60%] md:h-[600px] md:w-[350px]">
+          <div className="honey-group absolute bottom-[-18%] left-[0%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[55%] md:h-[600px] md:w-[320px]">
             <div className="honey-body-img relative h-full w-full">
               <img
                 src="/assets/Part2/Honey/Normal_Face.PNG"
