@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable no-inner-declarations */
 // src/components/LandingScreenGSAP.tsx
 import useKeyPress from '@/hooks/useKeyPress'
 import { cacheAssetsViaSW } from '@/registerServiceWorker'
@@ -12,8 +15,25 @@ interface LandingScreenProps {
   pageSrc?: string
   flipSfxSrc?: string
   tagSrc?: string
-  /** ถ้ามีรูปอื่นๆ ที่ต้อง preload ทั้งหมด ให้ส่ง array มาที่นี่ */
   extraPreload?: string[]
+}
+
+// ---------- helper: load from CacheStorage ----------
+async function loadImageFromCache(
+  cacheName: string,
+  url: string,
+): Promise<string | null> {
+  if (!('caches' in window)) return null
+  try {
+    const cache = await caches.open(cacheName)
+    const resp = await cache.match(url)
+    if (!resp) return null
+    const blob = await resp.blob()
+    return URL.createObjectURL(blob) // caller must revoke
+  } catch (err) {
+    console.warn('loadImageFromCache error', url, err)
+    return null
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -28,15 +48,24 @@ export default function LandingScreenGSAP({
   extraPreload = [],
 }: LandingScreenProps) {
   // ---------- state & refs ----------
+  const CACHE_NAME = 'mild-r-assets-v1' // ต้องตรงกับชื่อที่ใช้ตอน cacheAssets
   const [visible, setVisible] = useState(true)
   const [opening, setOpening] = useState(false)
+
+  // Hold original URL (props) and possible object URLs from cache
   const [currentCoverSrc, setCurrentCoverSrc] = useState<string>(coverSrc)
+  const [currentBackSrc, setCurrentBackSrc] = useState<string>(backCoverSrc)
+  const [currentPageSrc, setCurrentPageSrc] = useState<string>(pageSrc)
+  const [currentTagSrc, setCurrentTagSrc] = useState<string | undefined>(tagSrc)
+
+  const objectUrlsRef = useRef<string[]>([]) // keep list to revoke later
 
   const [preloadProgress, setPreloadProgress] = useState(0) // 0..100
   const [preloaded, setPreloaded] = useState(false)
   const [isPreloading, setIsPreloading] = useState(false)
   const preloadAbortRef = useRef<AbortController | null>(null)
 
+  // ... other refs (same as before)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const bookRef = useRef<HTMLDivElement | null>(null)
   const coverRef = useRef<HTMLDivElement | null>(null)
@@ -54,7 +83,7 @@ export default function LandingScreenGSAP({
   const bookWidth = 380
   const bookHeight = 560
 
-  // ---------- audio ----------
+  // ---------- audio (same) ----------
   useEffect(() => {
     if (!flipSfxSrc) return
     const audio = new Audio(flipSfxSrc)
@@ -77,7 +106,59 @@ export default function LandingScreenGSAP({
     }
   }, [])
 
-  // focus button (if any) on mount
+  // ---------- try load cached images on mount ----------
+  useEffect(() => {
+    let mounted = true
+
+    ;(async () => {
+      // Try load each important asset from CacheStorage
+      // If found -> set to object URL; otherwise leave default URL (so browser will fetch it / SW may intercept)
+      try {
+        const tries: Array<Promise<void>> = []
+
+        async function trySet(
+          url: string | undefined,
+          setter: (s: string) => void,
+        ) {
+          if (!url) return
+          const obj = await loadImageFromCache(CACHE_NAME, url)
+          if (!mounted) {
+            if (obj) URL.revokeObjectURL(obj)
+            return
+          }
+          if (obj) {
+            objectUrlsRef.current.push(obj)
+            setter(obj)
+          }
+        }
+
+        tries.push(trySet(coverSrc, setCurrentCoverSrc))
+        tries.push(trySet(backCoverSrc, setCurrentBackSrc))
+        tries.push(trySet(pageSrc, setCurrentPageSrc))
+        if (tagSrc) tries.push(trySet(tagSrc, (s) => setCurrentTagSrc(s)))
+
+        await Promise.all(tries)
+      } catch (e) {
+        console.warn('error while trying to load cached assets', e)
+      }
+    })()
+
+    return () => {
+      mounted = false
+      // revoke created object URLs
+      objectUrlsRef.current.forEach((u) => {
+        try {
+          URL.revokeObjectURL(u)
+        } catch {
+          /* empty */
+        }
+      })
+      objectUrlsRef.current = []
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // run once on mount
+
+  // ---------- focus button (if any) on mount ----------
   useEffect(() => {
     const btn =
       rootRef.current?.querySelector<HTMLButtonElement>('button.open-btn')
@@ -90,7 +171,7 @@ export default function LandingScreenGSAP({
     handleOpen()
   })
 
-  // ---------- helper: finishAndStart (zoom/fade then onStart) ----------
+  // ---------- finishAndStart, playOpenAnimation (same as before) ----------
   const finishAndStart = useCallback(() => {
     if (startedRef.current) return
     startedRef.current = true
@@ -155,7 +236,6 @@ export default function LandingScreenGSAP({
     })
   }, [onStart])
 
-  // ---------- play open animation (timeline) ----------
   const playOpenAnimation = useCallback(() => {
     // prepare elements
     const els = [
@@ -203,7 +283,7 @@ export default function LandingScreenGSAP({
     })
     tlRef.current = tl
 
-    // timeline (same as original)
+    // (rest of timeline same as original)
     tl.to(coverRef.current, {
       scale: 0.987,
       duration: 0.06,
@@ -228,7 +308,8 @@ export default function LandingScreenGSAP({
 
     tl.call(
       () => {
-        setCurrentCoverSrc('/assets/book/book-back-cover.png')
+        // when timeline wants to swap cover image to back, prefer cached object URL if present
+        setCurrentCoverSrc(backCoverSrc) // backCoverSrc might still be an objectURL if cached and set earlier
       },
       undefined,
       0.6,
@@ -284,10 +365,9 @@ export default function LandingScreenGSAP({
     tl.call(() => playSfx(0.02))
 
     return tl
-  }, [finishAndStart, playSfx])
+  }, [finishAndStart, playSfx, backCoverSrc])
 
   // ---------- main handler: start preload then play animation ----------
-  // Note: clicking while preloading/animating is guarded
   const handleOpen = useCallback(() => {
     if (opening) return
     setOpening(true)
@@ -307,7 +387,8 @@ export default function LandingScreenGSAP({
       ...extraPreload,
     ].filter(Boolean) as string[]
 
-    cacheAssetsViaSW(allToPreload, (loaded, total) => {
+    // cache via service worker (if available) - uses your existing helper
+    cacheAssetsViaSW(allToPreload, (loaded: number, total: number) => {
       setPreloadProgress(Math.round((loaded / Math.max(total, 1)) * 100))
     })
       .then(() => {
@@ -315,7 +396,7 @@ export default function LandingScreenGSAP({
         setIsPreloading(false)
         playOpenAnimation()
       })
-      .catch((swErr) => {
+      .catch((swErr: any) => {
         console.warn('SW caching failed/fallback', swErr)
         // fallback to JS preloader with progress
         const controller = new AbortController()
@@ -357,10 +438,19 @@ export default function LandingScreenGSAP({
       tlRef.current = null
       sfxRef.current?.pause()
       preloadAbortRef.current?.abort()
+      // revoke any object URLs we created (also done in mounting effect's cleanup)
+      objectUrlsRef.current.forEach((u) => {
+        try {
+          URL.revokeObjectURL(u)
+        } catch {
+          /* empty */
+        }
+      })
+      objectUrlsRef.current = []
     }
   }, [])
 
-  // ---------- render ----------
+  // ---------- render (use current* state values for backgrounds / img src) ----------
   if (!visible) return null
 
   return (
@@ -403,7 +493,7 @@ export default function LandingScreenGSAP({
                   position: 'absolute',
                   borderRadius: 18,
                   overflow: 'hidden',
-                  backgroundImage: `url(${backCoverSrc})`,
+                  backgroundImage: `url(${currentBackSrc})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.06)',
@@ -435,7 +525,7 @@ export default function LandingScreenGSAP({
                     height: '100%',
                     borderRadius: 12,
                     overflow: 'hidden',
-                    backgroundImage: `url(${pageSrc})`,
+                    backgroundImage: `url(${currentPageSrc})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}
@@ -551,9 +641,9 @@ export default function LandingScreenGSAP({
                 />
               </div>
 
-              {tagSrc && (
+              {currentTagSrc && (
                 <img
-                  src={tagSrc}
+                  src={currentTagSrc}
                   alt=""
                   aria-hidden
                   style={{

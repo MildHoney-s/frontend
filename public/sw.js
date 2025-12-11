@@ -52,26 +52,35 @@ self.addEventListener('fetch', (event) => {
 })
 
 // รับ message จากหน้าเพื่อให้ SW cache URLs (วิธี B)
-self.addEventListener('message', (event) => {
-  const { type, urls } = event.data || {}
+self.addEventListener('message', (ev) => {
+  const { type, urls, messageId, cacheName } = ev.data || {}
   if (type === 'CACHE_URLS' && Array.isArray(urls)) {
-    // cache each url (no progress reporting here)
-    caches.open(CACHE_NAME).then(async (cache) => {
+    caches.open(cacheName || 'mild-r-assets-v1').then(async (cache) => {
+      let loaded = 0
       for (const u of urls) {
         try {
-          const resp = await fetch(u, { credentials: 'same-origin' })
-          if (resp && (resp.ok || resp.type === 'opaque')) {
-            await cache.put(u, resp.clone())
-          }
+          const r = await fetch(u, { credentials: 'same-origin' })
+          if (r && (r.ok || r.type === 'opaque')) await cache.put(u, r.clone())
         } catch (e) {
           // ignore individual failures
-          console.warn('SW cache failed for', u, e)
+        } finally {
+          loaded += 1
+          // send progress message back to all clients (include messageId)
+          const clientsList = await self.clients.matchAll()
+          for (const c of clientsList) {
+            c.postMessage({
+              type: 'CACHE_PROGRESS',
+              messageId,
+              loaded,
+              total: urls.length,
+            })
+          }
         }
       }
-      // แจ้ง clients ว่า caching เสร็จ (simple)
-      const clients = await self.clients.matchAll()
-      for (const client of clients) {
-        client.postMessage({ type: 'CACHE_DONE' })
+      // final done
+      const clientsList = await self.clients.matchAll()
+      for (const c of clientsList) {
+        c.postMessage({ type: 'CACHE_DONE', messageId })
       }
     })
   }
