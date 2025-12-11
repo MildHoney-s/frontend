@@ -1,3 +1,4 @@
+import versusComponentAssets from '@/assets/versusComponentAssets'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -255,32 +256,32 @@ export default function VersusComponent({
       <div
         className="bg-versus relative h-full w-full"
         style={{
-          backgroundImage: "url('/assets/part3/BG/versus_bg/bg.png')",
+          backgroundImage: `url('${versusComponentAssets.bgImg}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         <div className="layers-container pointer-events-none absolute inset-0 overflow-hidden">
           <img
-            className="versus-abs layer-01 absolute left-1/2 top-[40%] z-0 h-auto w-[120vh] opacity-80"
-            src="/assets/part3/BG/versus_bg/01.png"
+            className="versus-abs layer-01 absolute left-1/2 top-[45%] z-0 h-auto w-[120vh] opacity-80"
+            src={versusComponentAssets.effect.circle}
             alt="effect 01"
           />
           <img
-            className="versus-abs layer-02 absolute left-1/2 top-[40%] z-10 h-auto w-[110%] opacity-60 mix-blend-screen"
-            src="/assets/part3/BG/versus_bg/02.png"
+            className="versus-abs layer-02 absolute left-1/2 top-[45%] z-10 h-auto w-[110%] opacity-60 mix-blend-screen"
+            src={versusComponentAssets.effect.ring}
             alt="ring"
           />
           <img
-            className="versus-abs layer-vs absolute left-1/2 top-[40%] z-30 w-80 md:w-[800px]"
-            src="/assets/part3/BG/versus_bg/vs.png"
+            className="versus-abs layer-vs absolute left-1/2 top-[45%] z-30 w-80 md:w-[800px]"
+            src={versusComponentAssets.effect.text}
             alt="VS"
           />
         </div>
 
         <div className="content-container relative z-30 h-full w-full">
           {/* PLAYER A INFO */}
-          <div className="info-a absolute left-[5%] top-[15%] z-50 max-w-[40%] text-left md:top-[15%]">
+          <div className="info-a absolute left-[5%] top-[15%] z-50 max-w-[40%] text-left md:top-[5%]">
             <h2 className="font-serif text-4xl font-black uppercase italic tracking-wider text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] md:text-6xl">
               {playerA.name}
             </h2>
@@ -290,7 +291,7 @@ export default function VersusComponent({
               </p>
             )}
             {playerA.text && (
-              <div className="flavor-text-a pointer-events-auto mt-4 md:mt-8">
+              <div className="flavor-text-a pointer-events-auto mt-4 md:mt-4">
                 <p
                   className="w-[360px] max-w-[300px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
@@ -303,24 +304,24 @@ export default function VersusComponent({
 
           {/* PLAYER A IMAGES */}
           <img
-            className="card-vs-a absolute bottom-[60px] left-[0%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
-            src="/assets/part3/BG/versus_bg/card.png"
+            className="card-vs-a absolute bottom-[65px] left-[-3%] z-20 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
+            src={versusComponentAssets.card}
             alt="card"
           />
 
           <img
-            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
+            className="character-vs-a char-a-close absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[500px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerA.src}${playerA.file}_close.png`)}
             alt={`${playerA.name} close`}
           />
           <img
-            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
+            className="character-vs-a char-a-open absolute bottom-[60px] left-[5%] z-30 h-[55vh] max-h-[500px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerA.src}${playerA.file}_open.png`)}
             alt={`${playerA.name} open`}
           />
 
           {/* PLAYER B INFO */}
-          <div className="info-b absolute right-[5%] top-[15%] z-50 flex max-w-[45%] flex-col items-end text-right md:top-[15%]">
+          <div className="info-b absolute right-[5%] top-[15%] z-50 flex max-w-[45%] flex-col items-end text-right md:top-[5%]">
             <h2 className="font-serif text-4xl font-black uppercase italic tracking-wider text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] md:text-6xl">
               {playerB.name}
             </h2>
@@ -332,9 +333,9 @@ export default function VersusComponent({
               </p>
             )}
             {playerB.text && (
-              <div className="flavor-text-b pointer-events-auto mt-4 md:mt-8">
+              <div className="flavor-text-b pointer-events-auto mt-4 md:mt-4">
                 <p
-                  className="w-[350px] max-w-[300px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  className="w-[350px] max-w-[320px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
                     __html: playerB.text.replace(/\n/g, '<br />'),
                   }}
@@ -345,17 +346,17 @@ export default function VersusComponent({
 
           {/* PLAYER B IMAGES */}
           <img
-            className="card-vs-b absolute bottom-[60px] right-[1%] z-20 h-[55vh] max-h-[600px] object-contain md:h-[80vh]"
-            src="/assets/part3/BG/versus_bg/card.png"
+            className="card-vs-b absolute bottom-[60px] right-[-2%] z-20 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
+            src={versusComponentAssets.card}
             alt="card2"
           />
           <img
-            className="character-vs-b char-b-close absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain opacity-0 md:h-[80vh]"
+            className="character-vs-b char-b-close absolute bottom-[60px] right-[3%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerB.src}${playerB.file}_close.png`)}
             alt={`${playerB.name} close`}
           />
           <img
-            className="character-vs-b char-b-open absolute bottom-[60px] right-[5%] z-30 h-[55vh] max-h-[600px] object-contain opacity-0 md:h-[80vh]"
+            className="character-vs-b char-b-open absolute bottom-[60px] right-[3%] z-30 h-[55vh] max-h-[550px] object-contain opacity-0 md:h-[80vh]"
             src={fixPath(`${playerB.src}${playerB.file}_open.png`)}
             alt={`${playerB.name} open`}
           />

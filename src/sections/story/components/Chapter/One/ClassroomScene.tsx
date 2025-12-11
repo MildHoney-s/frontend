@@ -1,3 +1,4 @@
+import { classroomSceneAssets } from '@/assets/chapterOneAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -190,14 +191,13 @@ export default function ClassroomScene({ onComplete }: Props) {
       <div
         className="bg-teacher will-change-opacity absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/assets/Part1/classroom/Classroom_2.png')",
+          backgroundImage: `url('${classroomSceneAssets.bg_1}')`,
         }}
       />
       <div
         className="bg-students will-change-opacity absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('/assets/Part1/classroom/Classroom_2_edit.png')",
+          backgroundImage: `url('${classroomSceneAssets.bg_2}')`,
         }}
       />
 
@@ -211,7 +211,7 @@ export default function ClassroomScene({ onComplete }: Props) {
       {/* TEACHER GROUP */}
       <div className="teacher-group absolute bottom-[10%] right-[5%] z-10 w-[280px] md:bottom-[38%] md:right-[10%] md:w-[350px]">
         <img
-          src="/assets/Part1/classroom/Xoneko_Sensei_open.png"
+          src={classroomSceneAssets.teacher}
           alt="teacher"
           className="w-full drop-shadow-2xl"
         />
@@ -256,11 +256,11 @@ export default function ClassroomScene({ onComplete }: Props) {
 
               {/* ประโยคย่อย 3 */}
               <div className="final-line final-line-3 absolute left-0 top-0 flex w-full flex-col justify-center text-center">
-                <p className="text-sm text-gray-800 md:text-base">
-                  “เอาล่ะ บทเรียนวันนี้จบแล้ว อีก 4 เดือนจะมีงานแข่ง...”
+                <p className="text-sm leading-relaxed text-gray-800 md:text-base">
+                  “ก่อนพวกเธอจะแยกย้ายกันกลับบ้านครูมีเรื่องจะบอก อีก 4 เดือน
                 </p>
-                <p className="text-md mt-2 font-bold text-red-500">
-                  “เพราะงั้นแยกย้ายกลับบ้านกันได้แล้ว!”
+                <p className="text-sm leading-relaxed text-red-500">
+                  จะมีการจัดงานแข่งขึ้นหากใครสนใจเตรียมตัวสมัครได้เลย”
                 </p>
               </div>
             </div>
@@ -270,29 +270,13 @@ export default function ClassroomScene({ onComplete }: Props) {
 
       {/* STUDENT GROUP */}
       <div className="student-group pointer-events-none absolute inset-0 z-10">
-        {/* <img
-          src="/assets/Part1/classroom/MildR_front.png"
-          className="absolute right-[23%] top-[37%] w-[200px] md:w-[280px]"
-          alt="mild"
-        />
-        <img
-          src="/assets/Part1/classroom/Elevene_front.png"
-          className="absolute left-[73%] top-[67%] z-20 w-[220px] md:w-[300px]"
-          alt="elevene"
-        />
-        <img
-          src="/assets/Part1/classroom/Elze_front.png"
-          className="absolute right-[15%] top-[2%] w-[210px] md:w-[290px]"
-          alt="elze"
-        /> */}
-
         {/* STUDENT BUBBLE */}
         <div
           className="bubble-student absolute left-[25%] top-[5%] w-[300px]
-                     origin-bottom-left rounded-2xl bg-white p-6 text-black shadow-xl
-                     after:absolute after:bottom-[-20px] after:right-10 after:border-[15px]
-                     after:border-transparent after:border-t-white after:content-['']
-                     md:left-[20%] md:w-[450px]"
+           origin-bottom-left rounded-2xl bg-white p-6 text-black shadow-xl
+           after:absolute after:right-[-30px] after:top-10 after:border-[15px]
+           after:border-transparent after:border-l-white after:content-['']
+           md:left-[20%] md:w-[450px]"
         >
           <p className="text-sm leading-relaxed text-gray-700 md:text-base">
             “อาจารย์คะ แบบนี้ถ้าคนที่แม้แต่พูดปกติยังพูดให้ชัดไม่ได้เลย

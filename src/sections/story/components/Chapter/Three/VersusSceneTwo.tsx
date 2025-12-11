@@ -1,5 +1,3 @@
-import React from 'react'
-
 import BattleComponentTwo from './components/BattleComponentTwo'
 import VersusComponent from './components/VersusComponent'
 
@@ -25,7 +23,7 @@ export default function VersusScene01({ onComplete }: SceneProps) {
           {' '}
           {/* ใส่เงาแดงจางๆ ให้กล่องนี้ดูสำคัญ */}
           <p className="text-2xl font-bold leading-snug text-white md:text-4xl">
-            ไปรับชมรอบที่ 2 คู่แรก
+            ไปรับชมรอบที่ 2 คู่แรกกันเลยดีกว่า
           </p>
           <div className="mx-auto my-6 h-px w-20 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-50"></div>
           <p className="animate-pulse text-3xl font-bold text-red-500 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] md:text-5xl">
@@ -57,18 +55,18 @@ export default function VersusScene01({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
                  (ถึงคิวรักษาหัวใจแล้ว เป็นเด็กดีต่อแถวนะคะ)`,
         }}
         playerB={{
-          name: 'S.H.A.R.K.',
+          name: 'Z.H.A.R.K.',
           alias: 'อสูรฉลามผู้กัดกินความว่างเปล่า',
           text: `ในนามแห่งฉลามคลั่ง ข้าขอประกาศก้องต่อหน้าเกลียวคลื่นและพายุ! เจ้ามนุษย์เอ๋ย... จงรับผิดชอบซะ ที่บังอาจทำให้ 'ราชาแห่งห้วงลึก' ต้องหลงทางในแววตาคู่นั้น จนหาทางกลับมหาสมุทรไม่เจอ 
-                หากความรักคือมหาสมุทร...ข้าก็คงเป็นฉลามที่ยินดีจะ 'จมน้ำตาย' ในความลึกซึ้งของเจ้า`,
-          src: 'assets/part3/Character/Versus/Zayzhik/',
+                (หากความรักคือมหาสมุทร...ข้าก็คงเป็นฉลามที่ยินดีจะ 'จมน้ำตาย' ในความลึกซึ้งของเจ้า)`,
+          src: 'assets/part3/model/Versus/Zayzhik/',
           file: 'Zayzhik',
         }}
       />

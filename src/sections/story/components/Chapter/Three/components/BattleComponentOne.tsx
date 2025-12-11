@@ -1,6 +1,7 @@
+import { battleComponentsOneAssets } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import React, { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 // ลงทะเบียน Plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -9,7 +10,7 @@ export default function BattleComponentOne() {
   const containerRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
 
-  const bgPath = '/assets/part3/BG/bg_colosseum_day.png'
+  const bgPath = battleComponentsOneAssets.bg
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -79,18 +80,17 @@ export default function BattleComponentOne() {
       let mildBlinkTween: gsap.core.Timeline | null = null
 
       const startBlinking = () => {
-        // 1. Dr.Gamer Blink Loop
         drBlinkTween = gsap.timeline({ repeat: -1, repeatDelay: 3, delay: 0.5 })
         drBlinkTween
           .to('.dr-eye-close', { autoAlpha: 1, duration: 0.1 })
           .to('.dr-eye-close', { autoAlpha: 0, duration: 0.1, delay: 0.1 })
 
-        // 2. Mild Blink Loop
         mildBlinkTween = gsap.timeline({ repeat: -1, repeatDelay: 4, delay: 2 })
         mildBlinkTween
           .to('.Mild-eye-close', { autoAlpha: 1, duration: 0.1 })
           .to('.Mild-eye-close', { autoAlpha: 0, duration: 0.1, delay: 0.1 })
       }
+
 
       startBlinking()
 
@@ -308,21 +308,20 @@ export default function BattleComponentOne() {
 
         // ✅ Phase 3: DEFEAT SEQUENCE
         .call(() => {
-          // 1. หยุด Animation Idle ของร่างกาย Dr.Gamer
           gsap.killTweensOf(['.dr-arm-l', '.dr-arm-r', '.dr-head-group'])
-
-          // 2. 🛑 สั่งหยุดกระพริบตา "เฉพาะของ Dr.Gamer"
-          if (drBlinkTween) drBlinkTween.kill()
+          if (drBlinkTween) drBlinkTween.kill() // สั่ง Kill Loop ก่อน
         })
 
         // ซ่อน Magic Effects
         .to(
-          [
-            '.magic-dr-Skull',
+          ['.magic-dr-Skull',
             '.magic-dr-arm-l',
             '.magic-dr-arm-r',
             '.magic-dr-ciecle-l',
             '.magic-dr-ciecle-r',
+            '.magic-mild-ice',
+            '.magic-mild-sunmoon',
+            '.magic-mild-fire'
           ],
           {
             autoAlpha: 0,
@@ -338,21 +337,21 @@ export default function BattleComponentOne() {
             rotation: -90,
             ease: 'bounce.out',
             duration: 2,
+            onStart: () => {
+              drBlinkTween?.pause()
+              gsap.set('.dr-eye-open', { autoAlpha: 0 })
+              gsap.set('.dr-eye-close', { autoAlpha: 1 })
+            },
+            onReverseComplete: () => {
+              drBlinkTween?.resume()
+              gsap.set('.dr-eye-open', { autoAlpha: 1 })
+              gsap.set('.dr-eye-close', { autoAlpha: 0 })
+            },
           },
-          '<',
+          '<', // Start same time as cleanup
         )
 
-        // บังคับ Dr.Gamer ปิดตาถาวร
-        .to(
-          '.dr-eye-open',
-          { autoAlpha: 0, duration: 0.05, overwrite: true },
-          '<',
-        )
-        .to(
-          '.dr-eye-close',
-          { autoAlpha: 1, duration: 0.05, overwrite: true },
-          '<',
-        )
+
 
         // Final Hold (รอ Mild ชนะ)
         .to({}, { duration: 0.5 })
@@ -444,33 +443,33 @@ export default function BattleComponentOne() {
         />
 
         {/* 2. Dr.Gamer */}
-        <div className="dr-gamer-container absolute left-[0%] top-[25%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
+        <div className="dr-gamer-container absolute left-[6%] top-[13%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_L_Arm.png"
+              src={battleComponentsOneAssets.drGameArmL}
               className="dr-arm-l absolute left-0 top-0 z-20 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_R_Arm.png"
+              src={battleComponentsOneAssets.drGameArmR}
               className="dr-arm-r absolute left-0 top-0 z-20 w-full"
               alt="R Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_Body.png"
+              src={battleComponentsOneAssets.drGameBody}
               className="absolute left-0 top-0 z-10 w-full"
               alt="Body"
             />
             <div className="dr-head-group absolute left-0 top-[1%] z-30 w-full">
               {/* ตาเปิด (Base) */}
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_head_op.png"
+                src={battleComponentsOneAssets.drGameEyeOpen}
                 className="dr-eye-open w-full object-contain"
                 alt="Eye Open"
               />
               {/* ตาปิด (Overlay - เริ่มต้นซ่อนอยู่) */}
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Pose/Dr_Gamer_head_cl.png"
+                src={battleComponentsOneAssets.drGameEyeClose}
                 className="dr-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -479,26 +478,26 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 3. Mild */}
-        <div className="absolute bottom-[-6%] right-[0%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
+        <div className="absolute bottom-[-27%] right-[-5%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[500px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Arm.png"
+              src={battleComponentsOneAssets.mildArmR}
               className="Mild-arm-l absolute left-0 top-0 z-20 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_hair.png"
+              src={battleComponentsOneAssets.mildHair}
               className="Mild-hair absolute left-0 top-0 z-10 w-full"
               alt="Hair"
             />
             <div className="absolute left-0 top-[1%] z-30 w-full">
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_op.png"
+                src={battleComponentsOneAssets.mildEyeOpen}
                 className="w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose1/Mild_R_1_Body_cl.png"
+                src={battleComponentsOneAssets.mildEyeClose}
                 className="Mild-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -507,38 +506,37 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 4. Dr.Gamer [Magic] */}
-        <div className="absolute left-[0%] top-[15%] z-20 h-[1300px] w-[1300px]">
+        <div className="absolute left-[0%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
             {/* bone R */}
-            <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
-              className="magic-dr-ciecle-l absolute left-[27%] top-[12%] z-10 w-[200px]"
-              alt="L circle"
-            />
             <div className="pointer-events-none absolute bottom-[13%] left-[0%] h-full w-full">
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_bone.png"
-                className="magic-dr-arm-r absolute bottom-0 left-0 z-20 w-full"
+                src={battleComponentsOneAssets.drMagicRCircle}
+                className="magic-dr-ciecle-r absolute bottom-[35%] left-[2%] z-10 w-[250px]"
+                alt="R circle"
+              />
+              <img
+                src={battleComponentsOneAssets.drMagicRBone}
+                className="magic-dr-arm-r absolute bottom-[15%] left-0 z-20  w-[1150px]"
                 alt="R Bone"
               />
             </div>
             {/* bone L */}
-
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/R_circle.png"
-              className="magic-dr-ciecle-r absolute bottom-[35%] left-[0%] z-10 w-[300px]"
-              alt="R circle"
+              src={battleComponentsOneAssets.drMagicLCircle}
+              className="magic-dr-ciecle-l absolute left-[27%] top-[3%] z-10 w-[200px]"
+              alt="L circle"
             />
             <div className="pointer-events-none absolute left-[-5%] top-[3%] h-full w-full">
               <img
-                src="/assets/part3/Character/Battle/Dr_Gamer/Magic/L_bone.png"
-                className="magic-dr-arm-l absolute left-0 top-0 z-20 w-full"
+                src={battleComponentsOneAssets.drMagicLBone}
+                className="magic-dr-arm-l absolute left-0 top-[-10%] z-20 w-full"
                 alt="L Bone"
               />
             </div>
 
             <img
-              src="/assets/part3/Character/Battle/Dr_Gamer/Magic/Skull.png"
+              src={battleComponentsOneAssets.drMagicSkull}
               className="magic-dr-Skull absolute left-[0%] top-[0%] z-10 w-[400px]"
               alt="head"
             />
@@ -546,22 +544,22 @@ export default function BattleComponentOne() {
         </div>
 
         {/* 5. Mild [Magic] */}
-        <div className="pointer-events-none absolute right-[-7%] top-[15%] z-20 h-[1300px] w-[1300px]">
+        <div className="pointer-events-none absolute right-[-7%] top-[0%] z-20 h-[1300px] w-[1300px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+              src={battleComponentsOneAssets.mildMagicFire}
               className="magic-mild-fire absolute right-[0%] top-[20%] z-10 w-[350px]"
+              alt="Fire"
+            />
+            <img
+              src={battleComponentsOneAssets.mildMagicIce}
+              className="magic-mild-ice absolute right-[27%] top-[38%] z-10 w-[300px]"
               alt="Ice"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Ice_Circle.png"
-              className="magic-mild-ice absolute right-[27%] top-[38%] z-10 w-[300px]"
-              alt="SunMoon"
-            />
-            <img
-              src="/assets/part3/Character/Battle/Mild/Magic1/Sun&moon_Circle.png"
+              src={battleComponentsOneAssets.mildMagicSunMoon}
               className="magic-mild-sunmoon absolute bottom-[18%] right-[2%] z-10 w-[400px]"
-              alt="Fire"
+              alt="SunMoon"
             />
           </div>
         </div>
@@ -589,7 +587,7 @@ export default function BattleComponentOne() {
           <p className=" text-xl font-medium leading-relaxed text-black md:text-2xl">
             ไม่น่าเชื่อว่า<span className="underline">นักเวทม้ามืด</span>อย่าง
             <span className="mt-1 block text-4xl font-medium text-pink-600">
-              "มายด์"
+              "MIld-R"
             </span>
           </p>
           <p className=" mt-2 text-xl font-medium leading-relaxed text-black md:text-2xl">

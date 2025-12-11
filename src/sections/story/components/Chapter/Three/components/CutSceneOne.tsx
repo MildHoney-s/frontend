@@ -1,6 +1,7 @@
+import { cutSence } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import React, { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -91,7 +92,7 @@ export default function CutSceneOne() {
   const imageWrapperRef = useRef<HTMLDivElement>(null)
   const textWrapperRef = useRef<HTMLDivElement>(null)
 
-  const bgPath = '/assets/part3/cutscene/Cutscene_1.png'
+  const bgPath = cutSence.cutSence_1
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {

@@ -1,3 +1,4 @@
+import { openSceneColosseumAssets } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -145,7 +146,7 @@ export default function OpenSceneColosseum({ onComplete }: Props) {
         <div
           className="colosseum-bg absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/assets/part3/BG/bg_colosseum.png')",
+            backgroundImage: `url('${openSceneColosseumAssets.bgImg}')`,
           }}
         >
           <div className="absolute inset-0 bg-black/30"></div>
@@ -155,43 +156,43 @@ export default function OpenSceneColosseum({ onComplete }: Props) {
         <div className="fireworks-layer pointer-events-none absolute inset-0 z-0">
           {/* 1. สีฟ้า (ซ้ายล่าง) */}
           <img
-            src="/assets/part3/firework/firework_blue.png"
+            src={openSceneColosseumAssets.firework_blue}
             className="firework absolute left-[5%] top-[65%] w-64 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 2. สี Navy (ขวากลาง) */}
           <img
-            src="/assets/part3/firework/firework_navy.png"
+            src={openSceneColosseumAssets.firework_navy}
             className="firework absolute right-[10%] top-[75%] w-64 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 3. สีเขียว (ซ้ายกลาง ค่อนบน) */}
           <img
-            src="/assets/part3/firework/firework_green.png"
+            src={openSceneColosseumAssets.firework_green}
             className="firework absolute left-[25%] top-[40%] w-56 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 4. สีส้ม (ขวาล่าง) */}
           <img
-            src="/assets/part3/firework/firework_orange.png"
+            src={openSceneColosseumAssets.firework_orange}
             className="firework absolute right-[30%] top-[55%] w-72 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 5. สีม่วง (ซ้ายบนสุด) */}
           <img
-            src="/assets/part3/firework/firework_purple.png"
+            src={openSceneColosseumAssets.firework_purple}
             className="firework absolute left-[15%] top-[20%] w-64 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 6. สีขาว (ขวาบนสุด) */}
           <img
-            src="/assets/part3/firework/firework_white.png"
+            src={openSceneColosseumAssets.firework_white}
             className="firework absolute right-[25%] top-[25%] w-64 opacity-80 mix-blend-screen"
             alt="firework"
           />
           {/* 7. สีชมพู (กึ่งกลาง ล่าง) */}
           <img
-            src="/assets/part3/firework/firework_pink.png"
+            src={openSceneColosseumAssets.firework_pink}
             className="firework absolute left-[50%] top-[80%] w-64 opacity-80 mix-blend-screen"
             style={{ transform: 'translateX(-50%)' }}
             alt="firework"

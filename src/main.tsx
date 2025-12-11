@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './app.tsx'
+import { registerSW } from './registerServiceWorker.ts'
 
 // ----------------------------------------------------------------------
 
@@ -18,3 +19,5 @@ root.render(
     </BrowserRouter>
   </HelmetProvider>,
 )
+
+registerSW()

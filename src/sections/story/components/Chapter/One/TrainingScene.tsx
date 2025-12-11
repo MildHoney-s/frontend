@@ -1,3 +1,4 @@
+import { trainingSceneAssets } from '@/assets/chapterOneAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -8,6 +9,7 @@ interface Props {
   onComplete: () => void
 }
 
+// ✅ UPDATED: SplitText แบบแก้สระลอย (Smart Split)
 const SplitText = ({
   children,
   className,
@@ -15,13 +17,30 @@ const SplitText = ({
   children: string
   className?: string
 }) => {
+  const chars: string[] = []
+  // Regex จับตัวที่ต้องเกาะ (ไม้หันอากาศ, สระอิ-อู, วรรณยุกต์)
+  const regex = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/
+
+  for (const char of children) {
+    if (regex.test(char) && chars.length > 0) {
+      // ถ้าเจอตัวเกาะ ให้รวมร่างกับตัวก่อนหน้า
+      chars[chars.length - 1] += char
+    } else {
+      chars.push(char)
+    }
+  }
+
   return (
     <span className={className} aria-label={children}>
-      {children.split('').map((char, index) => (
+      {chars.map((char, index) => (
         <span
           key={index}
+          // คง class 'char-reveal' ไว้เพื่อให้ GSAP หาเจอ
           className="char-reveal inline-block translate-y-4 opacity-0"
-          style={{ minWidth: char === ' ' ? '0.3em' : 'auto' }}
+          style={{
+            minWidth: char === ' ' ? '0.3em' : 'auto',
+            willChange: 'transform, opacity',
+          }}
         >
           {char === ' ' ? '\u00A0' : char}
         </span>
@@ -38,11 +57,6 @@ const ASPECT_RATIO = DESIGN_W / DESIGN_H
 export default function TrainingScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const sceneRef = useRef<HTMLDivElement | null>(null)
-
-  // --- ปรับ path ให้ตรงกับของจริง ---
-  const fieldBgImg = '/assets/Part1/training/field.png'
-  const monsterImg = '/assets/Part1/training/monster.png'
-  const carryHomeBgImg = '/assets/Part1/training/carry_home.png'
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -658,7 +672,7 @@ export default function TrainingScene({ onComplete }: Props) {
         {/* ================= BG LAYER ================= */}
         <div className="arena-bg absolute inset-0 z-0">
           <img
-            src={fieldBgImg}
+            src={trainingSceneAssets.fieldBgImg}
             className="h-full w-full object-cover"
             alt="Training Field"
           />
@@ -667,7 +681,7 @@ export default function TrainingScene({ onComplete }: Props) {
         {/* BG ตอนพากลับบ้าน (Close-up แบบ TeaShop) */}
         <div className="bg-carry-home absolute inset-0 z-10 opacity-0">
           <img
-            src={carryHomeBgImg}
+            src={trainingSceneAssets.carryHomeBgImg}
             className="h-full w-full object-cover"
             alt="Carry Honey Home"
           />
@@ -681,11 +695,11 @@ export default function TrainingScene({ onComplete }: Props) {
           {/* กล่องข้อความตรงกลาง */}
           <div className="relative z-10 px-[4cqw] py-[3cqw] text-center">
             <div className="carry-title mb-[1cqw] text-[2cqw] font-extrabold text-white drop-shadow-lg">
-              <SplitText>ด้วยที่บุคคลปริศนาสลบไป</SplitText>
+              <SplitText>หลังจากบุคคลปริศนาสลบไป</SplitText>
             </div>
             <div className="carry-desc text-[1.4cqw] leading-snug text-white/90">
               <SplitText className="space-y-1">
-                เพราะเหตุนี้มายด์จึงต้องลากบุคคลปริศนากลับบ้าน
+                มายด์จึงจำเป็นต้องลากบุคคลปริศนากลับบ้านด้วย
               </SplitText>
             </div>
           </div>
@@ -697,7 +711,7 @@ export default function TrainingScene({ onComplete }: Props) {
         {/* ================= MONSTER ================= */}
         <div className="monster absolute bottom-[10%] right-[10%] z-20 h-[45%] w-[23%]">
           <img
-            src={monsterImg}
+            src={trainingSceneAssets.monsterImg}
             className="h-full w-full object-contain"
             alt="Monster"
           />
@@ -809,33 +823,33 @@ export default function TrainingScene({ onComplete }: Props) {
           {/* ===== Mild Body ===== */}
           <div className="mild-group relative h-full w-[90%] ">
             <img
-              src="/assets/Part2/Mild/Body/Hair.PNG"
+              src={trainingSceneAssets.mildHair}
               className="absolute inset-0 z-0"
             />
             <img
-              src="/assets/Part2/Mild/Body/Body_1.PNG"
+              src={trainingSceneAssets.mildBody}
               className="absolute inset-0 z-10"
             />
             <img
-              src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+              src={trainingSceneAssets.mildArmL}
               className="absolute inset-0 z-20"
             />
             <img
-              src="/assets/Part2/Mild/Arms/Arm_1_R.PNG"
+              src={trainingSceneAssets.mildArmR}
               className="absolute inset-0 z-20"
             />
 
             <div className="absolute left-0 top-[0%] z-30 w-full">
               <img
-                src="/assets/Part2/Mild/Face/Face_01_หน้าปกติ.PNG"
+                src={trainingSceneAssets.mildFaceNormal}
                 className="mild-face-normal w-full"
               />
               <img
-                src="/assets/Part2/Mild/Face/Face_07_หน้ายิ้ม2.PNG"
+                src={trainingSceneAssets.mildFaceSmile}
                 className="mild-face-worried absolute inset-0 w-full"
               />
               <img
-                src="/assets/Part2/Mild/Face/Face_03_หน้าตกใจ.PNG"
+                src={trainingSceneAssets.mildFaceShock}
                 className="mild-face-scared absolute inset-0 w-full"
               />
             </div>
@@ -851,26 +865,22 @@ export default function TrainingScene({ onComplete }: Props) {
         <div className="honey-wrapper absolute bottom-[7%] right-[8%] z-30 flex h-[60%] w-[22%] items-end justify-center">
           <div className="honey-group relative z-20 h-[80%] w-[80%]">
             <img
-              src="/assets/Part2/Honey/Body.PNG"
+              src={trainingSceneAssets.honeyBody}
               className="relative w-full"
             />
-            {/* <img
-              src="/assets/Part2/Honey/Normal_Face.PNG"
-              className="honey-normal-face absolute left-0 top-[2%] w-full"
-            /> */}
             <img
-              src="/assets/Part2/Honey/Hood_face.png"
+              src={trainingSceneAssets.honeyFaceHood}
               className="honey-hood-face absolute left-0 top-[2%] w-full"
             />
           </div>
 
           {/* ===== Honey Magic Text ===== */}
           <div className="bubble-honey absolute right-[150px] top-[50px] z-50 flex w-[320px] flex-col items-end text-right">
-            <div className="text-h-1 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-1 text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <SplitText>เป็นอะไรไหม?</SplitText>
             </div>
 
-            <div className="text-h-2 space-y-1 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-2 space-y-1 text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <p>
                 <SplitText>งั้นหรอ...</SplitText>
               </p>
@@ -879,20 +889,20 @@ export default function TrainingScene({ onComplete }: Props) {
               </p>
             </div>
 
-            <div className="text-h-3 relative -top-[2.5cqw] text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-3 relative -top-[2.5cqw] text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <SplitText>เอ่อ…</SplitText>
             </div>
           </div>
         </div>
 
         <img
-          src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+          src={trainingSceneAssets.magicCircle}
           className="magic-mild-fire absolute right-[20%] top-[60%] z-10 w-[300px]"
           alt="FireMagic"
         />
 
         <img
-          src="/assets/part3/Character/Battle/Mild/Magic1/Fire_Circle.png"
+          src={trainingSceneAssets.magicCircle}
           className="magic-mild-fire-2 absolute right-[19%] top-[60%] z-30 w-[300px]"
           alt="FireMagic"
         />

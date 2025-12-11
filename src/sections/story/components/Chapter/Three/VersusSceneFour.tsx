@@ -1,5 +1,3 @@
-import React from 'react'
-
 import BattleComponentFour from './components/BattleComponentFour'
 import VersusComponent from './components/VersusComponent'
 
@@ -30,7 +28,7 @@ export default function VersusSceneFour({ onComplete }: SceneProps) {
           </p>
           <div className="mx-auto my-6 h-px w-20 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-50"></div>
           <p className="animate-pulse text-3xl font-bold text-red-500 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] md:text-5xl">
-            สำหรับคู่ต่อไปก็คือ...
+            สำหรับคู่สุดท้ายนี้ก็คือ...
           </p>
         </div>
         {/* Scroll Indicator */}
@@ -57,7 +55,7 @@ export default function VersusSceneFour({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
@@ -66,8 +64,8 @@ export default function VersusSceneFour({ onComplete }: SceneProps) {
         playerB={{
           name: 'DEBBY',
           alias: 'ผู้บัญชาการสูงสุดแห่งกองทัพลับเมเทโอรอยด์',
-          text: 'ข้าคือ เด็บบี้ ผู้บัญชาการสูงสุดแห่งกองทัพลับเมเทโอรอยด์ และเป็นผู้ถือครองพลังดาวตกชี้ชะตาเอกภพ! มาเยือนโลกมนุษย์ในร่างเด็กสาว แต่จุดจบกำลังมาถึง!ด้วยการตัดสินใจครั้งสำคัญ ข้าจึงพาสหายย้อนเวลากลับมายังที่แห่งนี้',
-          src: 'assets/part3/Character/Versus/Debirun/',
+          text: 'ข้าคือ เด็บบี้ ผู้บัญชาการสูงสุดแห่งกองทัพลับเมเทโอรอยด์ และเป็นผู้ถือครองพลังดาวตกชี้ชะตาเอกภพ! มาเยือนโลกมนุษย์ในร่างเด็กสาว แต่จุดจบกำลังมาถึง! ด้วยการตัดสินใจครั้งสำคัญ ข้าจึงย้อนเวลากลับมายังที่แห่งนี้',
+          src: 'assets/part3/model/Versus/Debirun/',
           file: 'Debirun',
         }}
       />

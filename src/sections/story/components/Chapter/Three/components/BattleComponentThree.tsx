@@ -1,6 +1,7 @@
+import { battleComponentsThreeAssets } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import React, { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 // ลงทะเบียน Plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -9,10 +10,27 @@ export default function BattleComponentThree() {
   const containerRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
 
-  const bgPath = '/assets/part3/BG/bg_colosseum_night.png'
+  const bgPath = battleComponentsThreeAssets.bg
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      // =============================
+      // 0. Initial States (ซ่อนของที่จะให้ Fade In ตอนหลัง)
+      // =============================
+      // ซ่อนวงเวทย์ Haruki
+      gsap.set(['.hrk-magic-circle-1', '.hrk-magic-circle-2'], {
+        autoAlpha: 0,
+        scale: 0,
+      })
+      // ซ่อนวงเวทย์ Mild (ทั้งวงหลังและวงหน้า) และ แพนด้า
+      gsap.set(
+        ['.zz-magic-float-group', '.mild-magic-float-group', '.mild-panda-1'],
+        {
+          autoAlpha: 0,
+          scale: 0,
+        },
+      )
+
       // =============================
       // 1. Blink & Idle Animation
       // =============================
@@ -59,7 +77,7 @@ export default function BattleComponentThree() {
           { y: 3, duration: 2.5, yoyo: true, repeat: -1, ease: 'sine.inOut' },
           0,
         )
-        // Mild Idle
+        // Mild Idle (Body)
         .to(
           '.mild-head-group',
           {
@@ -74,7 +92,7 @@ export default function BattleComponentThree() {
           0,
         )
 
-        // Haruki Magic Circle Idle (หมุนวนเรื่อยๆ)
+        // Haruki Magic Circle Idle (หมุนเองใน Idle)
         .to(
           '.hrk-magic-circle-1',
           { rotation: '+=360', duration: 15, ease: 'none', repeat: -1 },
@@ -83,6 +101,19 @@ export default function BattleComponentThree() {
         .to(
           '.hrk-magic-circle-2',
           { rotation: '-=360', duration: 18, ease: 'none', repeat: -1 },
+          0,
+        )
+
+        // ✅ NEW: Magic Mild Idle (ลอย Yoyo)
+        .to(
+          ['.zz-magic-float-group', '.mild-magic-float-group'],
+          {
+            y: -15, // ลอยขึ้น
+            duration: 2.5,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+          },
           0,
         )
 
@@ -115,6 +146,37 @@ export default function BattleComponentThree() {
           duration: 1,
         })
 
+      // ✅ NEW: Phase 1.5: Magic Fade In (ปรากฏตัวของเวทมนตร์)
+      // แสดงวงเวทย์ Haruki
+      tl.to(['.hrk-magic-circle-1', '.hrk-magic-circle-2'], {
+        autoAlpha: 0.8, // opacity เดิมคือ 0.8
+        scale: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'back.out(1.2)',
+      })
+        // แสดงวงเวทย์ Mild + Panda
+        .to(
+          ['.zz-magic-float-group', '.mild-magic-float-group'],
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 1,
+            ease: 'back.out(1.2)',
+          },
+          '<',
+        ) // เริ่มพร้อม Haruki
+        .to(
+          '.mild-panda-1',
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: 'back.out(1.5)',
+          },
+          '-=0.5',
+        )
+
       // ===================================
       // Phase 2: Setup Attack
       // ===================================
@@ -122,7 +184,7 @@ export default function BattleComponentThree() {
       const panda = '.mild-panda-1'
       const harukiContainer = '.haruki-container'
 
-      // Target Positions (ใช้ค่าเดิมจากโค้ดของคุณ)
+      // Target Positions
       const mildTargetPos = { x: -200, y: 350 }
       const harukiHitPos = { x: -300, y: 200 }
 
@@ -139,11 +201,11 @@ export default function BattleComponentThree() {
         magicBean,
         { autoAlpha: 0, scale: 0.5 },
         { autoAlpha: 1, scale: 1, duration: 1, ease: 'power2.out' },
-        '+=0.5',
+        '+=0.2',
       )
 
       // ===================================
-      // ✅ Phase 3: Attack Sequence (Bean Attack -> Panda Defense -> Counter)
+      // Phase 3: Attack Sequence (Bean Attack -> Panda Defense -> Counter)
       // ===================================
       const attackTimeline = gsap.timeline()
 
@@ -177,13 +239,14 @@ export default function BattleComponentThree() {
 
       // 3. Flash Effect ตอนชนกัน
       attackTimeline.call(
-        () =>
+        () => {
           gsap.fromTo(
             '.white-flash',
             { opacity: 0.8 },
             { opacity: 0, duration: 0.2 },
-          ),
-        null,
+          )
+        },
+        undefined,
         'startAttack+=2',
       )
 
@@ -258,6 +321,7 @@ export default function BattleComponentThree() {
           autoAlpha: 0,
           scale: 0,
           duration: 0.5,
+          ease: 'power1.out',
         },
         'startAttack+=2.8',
       ) // 0.8s หลังชน Haruki
@@ -315,26 +379,26 @@ export default function BattleComponentThree() {
         />
 
         {/* 2. HARUKI (ผู้ถูกโจมตี) */}
-        <div className="haruki-container absolute left-[37%] top-[30%] z-20 h-[500px] w-[320px] md:h-[500px] md:w-[300px]">
+        <div className="haruki-container absolute left-[37%] top-[18%] z-20 h-[500px] w-[320px] md:h-[500px] md:w-[300px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_arm_l.png"
+              src={battleComponentsThreeAssets.harukiArmL}
               className="haruki-arm-l absolute left-0 top-[2%] z-10 w-full"
               alt="L Arm"
             />
             <img
-              src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_arm_r.png"
+              src={battleComponentsThreeAssets.harukiArmR}
               className="haruki-arm-r absolute left-0 top-[2%] z-10 w-full"
               alt="R Arm"
             />
             <div className="haruki-head-group absolute left-0 top-[1%] z-20 w-full">
               <img
-                src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_body_op.png"
+                src={battleComponentsThreeAssets.harukiBodyOp}
                 className="haruki-eye-open w-full object-contain"
                 alt="Eye Open"
               />
               <img
-                src="/assets/part3/Character/Battle/Haruki/Pose/Haruki_body_cl.png"
+                src={battleComponentsThreeAssets.harukiBodyCl}
                 className="haruki-eye-close absolute left-0 top-0 w-full object-contain opacity-0"
                 alt="Eye Close"
               />
@@ -343,22 +407,22 @@ export default function BattleComponentThree() {
         </div>
 
         {/* 3. MILD (ผู้ชนะ) */}
-        <div className="mild-gamer-container absolute bottom-[-20%] left-[30%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[450px]">
+        <div className="mild-gamer-container absolute bottom-[-38%] left-[30%] z-20 h-[500px] w-[320px] md:h-[750px] md:w-[400px]">
           <div className="relative h-full w-full">
             <img
-              src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_leg.png"
+              src={battleComponentsThreeAssets.mildLeg}
               className="absolute left-0 top-0 z-10 w-full"
               alt="Legs"
             />
             <div className="mild-head-group absolute left-0 top-0 z-20 w-full">
               <img
-                src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_head.png"
+                src={battleComponentsThreeAssets.mildHead}
                 className="absolute left-0 top-0 z-30 w-full"
                 alt="Head Base"
               />
               <div className="absolute left-0 top-[1%] w-full">
                 <img
-                  src="/assets/part3/Character/Battle/Mild/Pose3/Mild_R_3_hood_1.png"
+                  src={battleComponentsThreeAssets.mildHood1}
                   className="mild-eye-open w-full object-contain"
                   alt="Hood Open"
                 />
@@ -369,21 +433,21 @@ export default function BattleComponentThree() {
 
         {/* 4. MAGIC HARUKI (Attack) */}
         {/* ตำแหน่ง: Top Right Area (เพื่อโจมตีลงมาทางซ้ายล่าง) */}
-        <div className="magic-haruki-wrapper pointer-events-none absolute right-[0%] top-[0%] z-10 h-[700px] w-[700px]">
+        <div className="magic-haruki-wrapper pointer-events-none absolute right-[0%] top-[-10%] z-10 h-[700px] w-[700px]">
           {/* วงเวทย์ (หมุนเองใน Idle) */}
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Sun&moon_Circle.png"
-            className="hrk-magic-circle-1 absolute left-[-2%] top-[50%] z-10 h-[200px] w-[200px] opacity-80"
+            src={battleComponentsThreeAssets.hrkMagicCircle1}
+            className="hrk-magic-circle-1 absolute left-[-2%] top-[35%] z-10 h-[200px] w-[200px] opacity-80"
             alt="magic-circle-1"
           />
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Sun&moon_Circle.png"
-            className="hrk-magic-circle-2 absolute left-[18%] top-[50%] z-10 h-[200px] w-[200px] opacity-80"
+            src={battleComponentsThreeAssets.hrkMagicCircle2}
+            className="hrk-magic-circle-2 absolute left-[18%] top-[35%] z-10 h-[200px] w-[200px] opacity-80"
             alt="magic-circle-2"
           />
           {/* Coffee Bean (เริ่มเคลื่อนที่ใน Scroll Timeline) */}
           <img
-            src="/assets/part3/Character/Battle/Haruki/Magic/Coffee_Bean.png"
+            src={battleComponentsThreeAssets.hrkBean1}
             className="hrk-bean-1 absolute left-[5%] top-[10%] z-50 w-[250px] origin-center"
             alt="coffee-bean"
           />
@@ -391,27 +455,32 @@ export default function BattleComponentThree() {
 
         {/* 5. MAGIC MILD (Defense) */}
         {/* ตำแหน่ง: Bottom Left Area (เพื่อตั้งรับ) */}
-        <div className="mild-magic-back pointer-events-none absolute bottom-[-5%] left-[19%] z-10">
-          <div className="mild-magic-float-group relative h-[700px] w-[700px]">
+        <div className="mild-magic-back pointer-events-none absolute bottom-[-13%] left-[17%]  z-10">
+          <div className="zz-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic_circle.png"
+              src={battleComponentsThreeAssets.mildMagicCircle}
               className="mild-magic-circle absolute inset-0 z-10 w-full opacity-80"
               alt="magic-circle"
             />
+          </div>
+        </div>
+
+        <div className="mild-magic-front pointer-events-none absolute bottom-[-15%] left-[17%] z-30">
+          <div className="mild-magic-float-group relative h-[700px] w-[700px]">
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic2.png"
+              src={battleComponentsThreeAssets.mildMagic2}
               className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
             <img
-              src="/assets/part3/Character/Battle/Mild/Magic2/magic3.png"
+              src={battleComponentsThreeAssets.mildMagic3}
               className="mild-magic-circle absolute inset-0 z-40 w-full opacity-60"
               alt="magic-1"
             />
           </div>
           {/* Panda (เคลื่อนที่ใน Scroll Timeline) */}
           <img
-            src="/assets/part3/Character/Battle/Mild/Magic2/panda2.png"
+            src={battleComponentsThreeAssets.mildPanda1}
             className="mild-panda-1 absolute left-[16%] top-[22%] z-50 w-[120px] origin-center"
             alt="panda-1"
           />
@@ -435,7 +504,7 @@ export default function BattleComponentThree() {
       <div className="narration-box narration-final-2a absolute left-[20%] top-[20%] z-40 max-w-xl -translate-x-1/2 -translate-y-1/2 rotate-[-2deg] rounded-lg border-8 border-pink-700 bg-white/90 p-8 text-center opacity-0 shadow-2xl shadow-pink-900/50 will-change-transform">
         <p className="font-serif text-3xl font-bold leading-relaxed text-black md:text-3xl">
           <span className="mb-2 block text-4xl font-extrabold text-pink-600">
-            "MILD_R"
+            "MILD-R"
           </span>
           คว้าชัยชนะไปได้อีกครั้ง!
         </p>

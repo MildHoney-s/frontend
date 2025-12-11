@@ -1,51 +1,95 @@
-// src/pages/LandingPage.tsx
+import { chapterOneAssets, chapterTwoAssets } from '@/assets'
+import chapterThreeAssets from '@/assets/chapterThreeAssets'
+import versusComponentAssets from '@/assets/versusComponentAssets'
 import { LandingScreen } from '@/sections/landing-screen'
-import { useCallback } from 'react'
+import { cacheAssets } from '@/utils/cacheAssets'
+import { extractImagePaths } from '@/utils/extractImagePaths'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 
-const storyAssets = import.meta.glob(
-  '/assets/background/**/*.{png,jpg,jpeg,webp,gif,mp3}',
-  {
-    eager: true,
-    as: 'url',
-  },
-)
+const NAV_WAIT_TIMEOUT = 60000 // 60s
 
-const STORY_ASSETS = Object.values(storyAssets) as string[]
-
-// ✅ 2. preload function
-function preloadAssets(urls: string[]) {
-  return Promise.all(
-    urls.map(
-      (url) =>
-        new Promise<void>((resolve) => {
-          if (url.endsWith('.mp3')) {
-            const audio = new Audio()
-            audio.src = url
-            audio.oncanplaythrough = () => resolve()
-          } else {
-            const img = new Image()
-            img.src = url
-            img.onload = () => resolve()
-          }
-        }),
-    ),
+function timeout(ms: number) {
+  return new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('timeout')), ms),
   )
 }
 
-// ----------------------------------------------------------------------
+const CACHE_FLAG = 'mildr_assets_cached_v1'
 
 export default function LandingPage() {
   const navigate = useNavigate()
+  const [preloadDone, setPreloadDone] = useState(false)
+  const abortRef = useRef<AbortController | null>(null)
+  const preloadPromiseRef = useRef<Promise<void> | null>(null)
 
+  const allImages = [
+    ...extractImagePaths(chapterOneAssets),
+    ...chapterTwoAssets,
+    ...extractImagePaths(chapterThreeAssets),
+    ...extractImagePaths(versusComponentAssets),
+  ]
+  const uniqueImages = Array.from(new Set(allImages)).filter(Boolean)
+
+  // start caching on mount if not cached already
+  useEffect(() => {
+    if (preloadPromiseRef.current) return
+
+    // if already flagged as cached, we can short-circuit
+    if (localStorage.getItem(CACHE_FLAG) === '1') {
+      setPreloadDone(true)
+      return
+    }
+
+    const controller = new AbortController()
+    abortRef.current = controller
+
+    const p = (async () => {
+      try {
+        await cacheAssets(uniqueImages, {
+          signal: controller.signal,
+        })
+        // mark done in localStorage so future visits skip caching step
+        localStorage.setItem(CACHE_FLAG, '1')
+        setPreloadDone(true)
+      } catch (err) {
+        if ((err as DOMException)?.name === 'AbortError') {
+          console.log('caching aborted')
+        } else {
+          console.warn('caching failed', err)
+        }
+        // still mark done so UX is not blocked
+        setPreloadDone(true)
+      }
+    })()
+
+    preloadPromiseRef.current = p
+    return () => {
+      controller.abort()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // mount once
+
+  // handleStart: wait for cache (with timeout)
   const handleStart = useCallback(async () => {
-    await preloadAssets(STORY_ASSETS)
-    navigate('/story')
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    })
-  }, [navigate])
+    try {
+      if (preloadPromiseRef.current && !preloadDone) {
+        await Promise.race([
+          preloadPromiseRef.current,
+          timeout(NAV_WAIT_TIMEOUT),
+        ])
+      }
+    } catch (err) {
+      console.log('Cache & preload timeout or error, aborting remaining loads')
+      abortRef.current?.abort()
+    } finally {
+      navigate('/story')
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+    }
+  }, [navigate, preloadDone])
 
   return (
     <>
@@ -58,6 +102,8 @@ export default function LandingPage() {
         backCoverSrc="/assets/book/book-back-cover.png"
         pageSrc="/assets/book/paper.png"
         onStart={handleStart}
+        // keep for backward compatibility (if LandingScreen still uses extraPreload)
+        extraPreload={uniqueImages}
       />
     </>
   )

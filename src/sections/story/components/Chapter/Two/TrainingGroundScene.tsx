@@ -1,3 +1,4 @@
+import { trainingGroundAssets } from '@/assets/chapterTwoAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -225,7 +226,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         )
         .to(
           '.mild-group',
-          { scale: 0.5, transformOrigin: 'bottom center', duration: 1.5 },
+          { scale: 0.5, y: 50, transformOrigin: 'center', duration: 1.5 },
           '<',
         )
 
@@ -233,8 +234,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           '.group-students',
           {
             scale: 0.5,
-            y: 50,
-            transformOrigin: 'bottom center',
+            transformOrigin: 'center',
             duration: 1.5,
           },
           '<',
@@ -254,14 +254,18 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         .to('.honey-text-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
         // 5.2 Honey เดินไปกลาง (x: 0 -> 350)
-        .to('.honey-group', { x: '35vw', duration: 2, ease: 'linear' }, '>1')
+        .to('.honey-group', { x: '350px', duration: 2, ease: 'linear' }, '>1')
         .to('.honey-text-1', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-scare', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 1, duration: 0.3 }, '<')
         .to('.honey-text-2', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
         // 5.3 Honey เดินออกขวา (x: 350 -> 1000)
-        .to('.honey-group', { x: '120vw', duration: 2.5, ease: 'linear' }, '>1')
+        .to(
+          '.honey-group',
+          { x: '1000px', duration: 2.5, ease: 'linear' },
+          '>1',
+        )
         .to('.honey-text-2', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-normal', { autoAlpha: 1, duration: 0.3 }, '<')
@@ -288,7 +292,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         {/* Background */}
         <div
           className="arena-bg absolute inset-0 origin-bottom transform-gpu bg-cover bg-center will-change-transform"
-          style={{ backgroundImage: "url('/assets/Part2/arena.png')" }}
+          style={{ backgroundImage: `url('${trainingGroundAssets.bg_arena}')` }}
         >
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
@@ -304,7 +308,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         <div className="absolute inset-0 z-20 flex items-end justify-center pb-[10vh]">
           {/* 1. เพื่อนนักเรียน */}
           <img
-            src="/assets/Part2/group_students.png"
+            src={trainingGroundAssets.group_students}
             className="group-students absolute bottom-[10%] left-1/2 z-10 w-[85%] -translate-x-1/2 object-contain md:w-[50%]"
             alt="Group"
           />
@@ -313,22 +317,22 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           <div className="mild-group relative z-20 h-[400px] w-[250px] will-change-transform md:h-[480px] md:w-[320px]">
             <div className="mild-body-img relative h-full w-full">
               <img
-                src="/assets/Part2/Mild/Body/Hair.PNG"
+                src={trainingGroundAssets.mild.hair}
                 className="absolute left-0 top-0 z-0 h-full w-full object-contain"
                 alt="Back Hair"
               />
               <img
-                src="/assets/Part2/Mild/Body/Body_1.PNG"
+                src={trainingGroundAssets.mild.body}
                 className="absolute left-0 top-0 z-10 h-full w-full object-contain"
                 alt="Body"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_4_L.PNG"
+                src={trainingGroundAssets.mild.arm_l}
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Left Arm"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_4_R.PNG"
+                src={trainingGroundAssets.mild.arm_r}
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Right Arm"
               />
@@ -336,17 +340,17 @@ export default function TrainingGroundScene({ onComplete }: Props) {
               {/* Faces */}
               <div className="absolute left-0 top-[1%] z-30 h-auto w-full">
                 <img
-                  src="/assets/Part2/Mild/Face/Face_08_หน้าจริงจัง.PNG"
+                  src={trainingGroundAssets.mild.face_serious}
                   className="mild-face-serious w-full object-contain"
                   alt="Serious"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_03_หน้าตกใจ.PNG"
+                  src={trainingGroundAssets.mild.face_shock}
                   className="mild-face-shock absolute left-0 top-0 w-full object-contain"
                   alt="Shock"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_05_หน้าเศร้า.PNG"
+                  src={trainingGroundAssets.mild.face_sad}
                   className="mild-face-sad absolute left-0 top-0 w-full object-contain"
                   alt="Sad"
                 />
@@ -423,24 +427,24 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           <div className="relative h-full w-full">
             {/* Added class honey-body-img for scaleY animation */}
             <img
-              src="/assets/Part2/Honey/Body.PNG"
+              src={trainingGroundAssets.honey.body}
               className="honey-body-img absolute bottom-0 left-0 w-full object-contain"
               alt="Honey Body"
             />
 
             {/* Faces */}
             <img
-              src="/assets/Part2/Honey/Scare_Face.PNG"
+              src={trainingGroundAssets.honey.face_scare}
               className="honey-face-scare absolute left-1/2 top-[115px] w-[320px] -translate-x-1/2 object-contain"
               alt="Scare"
             />
             <img
-              src="/assets/Part2/Honey/Worry_Face.PNG"
+              src={trainingGroundAssets.honey.face_worry}
               className="honey-face-worry absolute left-1/2 top-[115px] w-[320px] -translate-x-1/2 object-contain"
               alt="Worry"
             />
             <img
-              src="/assets/Part2/Honey/Normal_Face.PNG"
+              src={trainingGroundAssets.honey.face_normal}
               className="honey-face-normal absolute left-1/2 top-[115px] w-[320px] -translate-x-1/2 object-contain"
               alt="Normal"
             />

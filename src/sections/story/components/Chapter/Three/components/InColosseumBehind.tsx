@@ -1,3 +1,4 @@
+import { inColosseumBehindAssets } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -64,7 +65,7 @@ export default function InColosseumBehind({ onComplete }: Props) {
 
       // Phase 1: Camera Zoom to Honey (Left Bottom)
       tl.to('.colosseum-in-bg', {
-        scale: 1.6,
+        scale: 1.4,
         xPercent: 15,
         yPercent: 10,
         duration: 1.5,
@@ -146,35 +147,36 @@ export default function InColosseumBehind({ onComplete }: Props) {
         <div
           className="colosseum-in-bg absolute inset-0 bg-cover bg-center will-change-transform"
           style={{
-            backgroundImage: "url('/assets/part3/BG/bg_colosseum_in.png')",
+            backgroundImage: `url('${inColosseumBehindAssets.bgImg}')`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
 
           {/* --- HONEY GROUP (ซ้ายล่าง) --- */}
           <div className="pointer-events-none absolute inset-0 z-10">
-            <div className="honey-group absolute bottom-[-5%] left-[-5%] z-20 h-[500px] w-[280px] will-change-transform md:left-[5%] md:h-[600px] md:w-[350px]">
+            <div className="honey-group absolute bottom-[-25%] left-[15%] z-20 h-[500px] w-[280px] will-change-transform md:left-[15%] md:h-[600px] md:w-[3จ0px]">
               <div className="honey-body-img relative h-full w-full">
                 {/* Honey Assets */}
                 {/* หน้าที่ 1 (Frieren) - ใช้ class Honey-Face-1 */}
                 <img
-                  src="/assets/Part2/Honey/frieren.PNG"
+                  src={inColosseumBehindAssets.honeyFace_1}
                   className="Honey-Face-1 absolute left-0 top-0 z-20 w-full"
                   alt="Face-1"
                 />
                 {/* หน้าที่ 2 (ตกใจ) - ใช้ class Honey-Face-2 */}
                 <img
-                  src="/assets/Part2/Honey/Scare_Face.PNG"
+                  src={inColosseumBehindAssets.honeyFace_2}
                   className="Honey-Face-2 absolute left-0 top-0 z-20 w-full"
                   alt="Face-2"
                 />
                 <img
-                  src="/assets/Part2/Honey/Body.PNG"
+                  src={inColosseumBehindAssets.honeyBody}
                   className="absolute left-0 top-0 z-10 w-full"
                   alt="Body"
                 />
 
                 {/* Honey Thought Bubble (ความคิด) */}
+                <div className="overlay pointer-events-none absolute inset-0 z-[100]"></div>
                 <div className="honey-thought-bubble absolute left-[80%] top-[20%] z-50 w-[200px] origin-bottom-left rounded-2xl bg-white p-4 text-black shadow-xl md:w-[280px]">
                   {/* หาง Bubble แบบความคิด (จุดๆ) */}
                   <div className="absolute bottom-[-10px] left-[-20px] flex space-x-1">
@@ -192,37 +194,37 @@ export default function InColosseumBehind({ onComplete }: Props) {
 
           {/* --- MILD GROUP (ขวาล่าง - Animation วิ่งมาจากไกล) --- */}
           <div className="pointer-events-none absolute inset-0 z-20">
-            <div className="mild-group absolute bottom-[-2%] right-[-5%] z-20 h-[500px] w-[280px] will-change-transform md:right-[5%] md:h-[600px] md:w-[350px]">
+            <div className="mild-group absolute bottom-[-8%] right-[3%] z-20 h-[500px] w-[280px] will-change-transform md:right-[5%] md:h-[600px] md:w-[300px]">
               <div className="mild-body-img relative h-full w-full">
                 {/* Mild Assets */}
                 <img
-                  src="/assets/Part2/Mild/Assets/giff.png"
+                  src={inColosseumBehindAssets.mildGiff}
                   className="absolute left-0 top-0 z-50 w-full"
                   alt="Hair Prop"
                 />
                 <img
-                  src="/assets/Part2/Mild/Body/Hair.PNG"
+                  src={inColosseumBehindAssets.mildHair}
                   className="absolute left-0 top-0 z-0 w-full"
                   alt="Hair"
                 />
                 <img
-                  src="/assets/Part2/Mild/Body/Body_1.PNG"
+                  src={inColosseumBehindAssets.mildBody}
                   className="absolute left-0 top-0 z-10 w-full"
                   alt="Body"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_05_หน้าเศร้า.PNG"
+                  src={inColosseumBehindAssets.mildSadFace}
                   className="absolute left-0 top-0 z-30 w-full"
                   alt="Face"
                 />
                 {/* Arms (ท่าวิ่ง/ทักทาย) */}
                 <img
-                  src="/assets/Part2/Mild/Arms/Arm_2_L.PNG"
+                  src={inColosseumBehindAssets.mildArmL}
                   className="absolute left-0 top-0 z-20 w-full"
                   alt="Arm L"
                 />
                 <img
-                  src="/assets/Part2/Mild/Arms/Arm_1_R.PNG"
+                  src={inColosseumBehindAssets.mildArmR}
                   className="absolute left-0 top-0 z-20 w-full"
                   alt="Arm R"
                 />

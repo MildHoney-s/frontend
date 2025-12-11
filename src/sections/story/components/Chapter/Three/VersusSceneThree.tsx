@@ -1,5 +1,3 @@
-import React from 'react'
-
 import BattleComponentThree from './components/BattleComponentThree'
 import VersusComponent from './components/VersusComponent'
 
@@ -58,7 +56,7 @@ export default function VersusSceneThree({ onComplete }: SceneProps) {
         playerA={{
           name: 'Mild-R',
           alias: 'สาวน้อย Introvert ผู้ชื่นชอบชานม',
-          src: 'assets/part3/Character/Versus/Mild-R/',
+          src: 'assets/part3/model/Versus/Mild-R/',
           file: 'Mild',
           text: `สวัสดีค่ะทุกคน... มายด์ คะ 
                  ฝากตัวด้วยนะคะ...
@@ -68,7 +66,7 @@ export default function VersusSceneThree({ onComplete }: SceneProps) {
           name: 'H.R.K.',
           alias: 'ผู้มัวเมาในยามรัตติกาล 100% คาเฟอีน',
           text: 'ผู้ลุ่มหลงในค่ำคืนราวกับต้องมนตร์ คาเฟอีนไหลเวียนแทนเลือดในกาย ทำให้หัวใจเต้นแรงดุจพายุกลางดึก สายตาที่พร่าเลือนด้วยความง่วง กลับทอประกายแปลกประหลาดในแสงจันทร์ เขาถูกค่ำคืนกลืนกิน… และพร้อมกันนั้น เขาก็กลืนกินค่ำคืนกลับไป!!',
-          src: 'assets/part3/Character/Versus/Haruki/',
+          src: 'assets/part3/model/Versus/Haruki/',
           file: 'Haruki',
         }}
       />
