@@ -309,7 +309,7 @@ export default function HouseScene({ onComplete }: Props) {
             alt="Face"
           />
 
-          <div className="honey-bubble-think absolute -right-[70%] -top-[50%] z-50 w-[130%] rounded-[2cqw] border-2 border-gray-200 bg-white p-[8%] shadow-xl">
+          <div className="honey-bubble-think absolute -right-[10%] bottom-[90%] z-50 rounded-[2cqw] border-2 border-gray-200 bg-white p-[8%] shadow-xl">
             <p className="text-center text-[1.1cqw] font-bold leading-snug tracking-wider text-gray-700">
               "ใช่หลังนี้มั้ยนะ? <br />
               <span className="text-blue-500">ลองเคาะดูละกัน...</span>"

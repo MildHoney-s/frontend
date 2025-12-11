@@ -53,9 +53,7 @@ export default function LandingPage() {
 
     const p = preloadImagesWithProgress(
       uniqueImages,
-      (loaded, total) => {
-        console.log({ loaded, total })
-      },
+      undefined,
       controller.signal,
     )
       .then(() => {

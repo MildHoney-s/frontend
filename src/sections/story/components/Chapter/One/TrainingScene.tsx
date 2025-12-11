@@ -9,6 +9,7 @@ interface Props {
   onComplete: () => void
 }
 
+// ✅ UPDATED: SplitText แบบแก้สระลอย (Smart Split)
 const SplitText = ({
   children,
   className,
@@ -16,13 +17,30 @@ const SplitText = ({
   children: string
   className?: string
 }) => {
+  const chars: string[] = []
+  // Regex จับตัวที่ต้องเกาะ (ไม้หันอากาศ, สระอิ-อู, วรรณยุกต์)
+  const regex = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/
+
+  for (const char of children) {
+    if (regex.test(char) && chars.length > 0) {
+      // ถ้าเจอตัวเกาะ ให้รวมร่างกับตัวก่อนหน้า
+      chars[chars.length - 1] += char
+    } else {
+      chars.push(char)
+    }
+  }
+
   return (
     <span className={className} aria-label={children}>
-      {children.split('').map((char, index) => (
+      {chars.map((char, index) => (
         <span
           key={index}
+          // คง class 'char-reveal' ไว้เพื่อให้ GSAP หาเจอ
           className="char-reveal inline-block translate-y-4 opacity-0"
-          style={{ minWidth: char === ' ' ? '0.3em' : 'auto' }}
+          style={{
+            minWidth: char === ' ' ? '0.3em' : 'auto',
+            willChange: 'transform, opacity',
+          }}
         >
           {char === ' ' ? '\u00A0' : char}
         </span>
@@ -677,11 +695,11 @@ export default function TrainingScene({ onComplete }: Props) {
           {/* กล่องข้อความตรงกลาง */}
           <div className="relative z-10 px-[4cqw] py-[3cqw] text-center">
             <div className="carry-title mb-[1cqw] text-[2cqw] font-extrabold text-white drop-shadow-lg">
-              <SplitText>ด้วยที่บุคคลปริศนาสลบไป</SplitText>
+              <SplitText>หลังจากบุคคลปริศนาสลบไป</SplitText>
             </div>
             <div className="carry-desc text-[1.4cqw] leading-snug text-white/90">
               <SplitText className="space-y-1">
-                เพราะเหตุนี้มายด์จึงต้องลากบุคคลปริศนากลับบ้าน
+                มายด์จึงจำเป็นต้องลากบุคคลปริศนากลับบ้านด้วย
               </SplitText>
             </div>
           </div>
@@ -858,11 +876,11 @@ export default function TrainingScene({ onComplete }: Props) {
 
           {/* ===== Honey Magic Text ===== */}
           <div className="bubble-honey absolute right-[150px] top-[50px] z-50 flex w-[320px] flex-col items-end text-right">
-            <div className="text-h-1 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-1 text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <SplitText>เป็นอะไรไหม?</SplitText>
             </div>
 
-            <div className="text-h-2 space-y-1 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-2 space-y-1 text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <p>
                 <SplitText>งั้นหรอ...</SplitText>
               </p>
@@ -871,7 +889,7 @@ export default function TrainingScene({ onComplete }: Props) {
               </p>
             </div>
 
-            <div className="text-h-3 relative -top-[2.5cqw] text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
+            <div className="text-h-3 relative -top-[2.5cqw] text-[1.5cqw] font-bold text-blue-700 drop-shadow-lg">
               <SplitText>เอ่อ…</SplitText>
             </div>
           </div>

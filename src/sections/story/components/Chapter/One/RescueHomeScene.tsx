@@ -9,6 +9,7 @@ interface Props {
   onComplete: () => void
 }
 
+// ✅ UPDATED: SplitText แบบแก้สระลอย (Smart Split)
 const SplitText = ({
   children,
   className,
@@ -16,13 +17,30 @@ const SplitText = ({
   children: string
   className?: string
 }) => {
+  const chars: string[] = []
+  // Regex จับตัวที่ต้องเกาะ (ไม้หันอากาศ, สระอิ-อู, วรรณยุกต์)
+  const regex = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/
+
+  for (const char of children) {
+    if (regex.test(char) && chars.length > 0) {
+      // ถ้าเจอตัวเกาะ ให้รวมร่างกับตัวก่อนหน้า
+      chars[chars.length - 1] += char
+    } else {
+      chars.push(char)
+    }
+  }
+
   return (
     <span className={className} aria-label={children}>
-      {children.split('').map((char, index) => (
+      {chars.map((char, index) => (
         <span
           key={index}
+          // คง class 'char-reveal' ไว้เพื่อให้ GSAP หาเจอ
           className="char-reveal inline-block translate-y-4 opacity-0"
-          style={{ minWidth: char === ' ' ? '0.3em' : 'auto' }}
+          style={{
+            minWidth: char === ' ' ? '0.3em' : 'auto',
+            willChange: 'transform, opacity',
+          }}
         >
           {char === ' ' ? '\u00A0' : char}
         </span>
@@ -680,6 +698,7 @@ export default function RescueHomeScene({ onComplete }: Props) {
             <div className="bubble-mind-1 absolute -top-[8%] right-[10%] z-40 w-[160%] rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
               <p className="text-[1.1cqw] leading-snug">
                 สงสัยเค้าคงไม่ได้กินไรแน่ๆเลย ท้องร้องดังขนาดนี้
+                <br />
                 คงต้องทำอะไรให้เค้ากินสักหน่อยแล้ว เอาเป็น “ข้าวห่อไข่” ดีกว่า
               </p>
               <div className="absolute -bottom-[12%] left-[52%] h-[1.3cqw] w-[1.3cqw] rounded-full bg-white" />
@@ -834,7 +853,7 @@ export default function RescueHomeScene({ onComplete }: Props) {
             {/* Bubble ฮันนี่ */}
             <div className="bubble-honey-1 absolute left-[15%] top-[10%] z-40 w-full rounded-3xl bg-white/95 p-[5%] text-black shadow-xl">
               <p className="text-[1.05cqw] leading-snug">
-                (นึกในใจ) เอ๋ นี่มันกลิ่นอะไรอ่ะหอมเชียว
+                เอ๋ นี่มันกลิ่นอะไรอ่ะหอมเชียว
                 <br />
                 ว่าแต่ที่นี่ที่ไหนเนี่ยเรามาอยู่ที่นี่ได้ยังไงกัน
               </p>
@@ -854,10 +873,11 @@ export default function RescueHomeScene({ onComplete }: Props) {
             <div className="bubble-honey-3 absolute left-[15%] top-[3%] z-40 w-[180%] p-[5%]">
               <p className="text-h-2 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
                 <SplitText>
-                  ฉันก็ไม่ค่อยรู้หรอกแต่คนอื่นก็มักจะเรียกฉันแบบนั้น
+                  ฉันก็ไม่ค่อยรู้หรอกแต่คนอื่นมักเรียกฉันแบบนั้น
                 </SplitText>
-                <SplitText>เล่นเอาเขินตลอดเลยเวลาที่มีคนเรียกแบบนั้น</SplitText>
-                <SplitText>เป็นไปได้เรียกฉันว่า “ฮันนี่” จะดีกว่า</SplitText>
+                <SplitText>
+                  เป็นไปได้ฉันอยากให้เรียกว่า “ฮันนี่” จะดีกว่า
+                </SplitText>
               </p>
             </div>
 
@@ -869,15 +889,25 @@ export default function RescueHomeScene({ onComplete }: Props) {
               </p>
             </div>
 
-            <div className="bubble-honey-5 absolute -top-[5%] left-[15%] z-40 w-[170%] p-[5%]">
-              <p className="text-h-4 text-[1.5cqw] font-bold text-yellow-300 drop-shadow-lg">
-                <SplitText>
-                  ฉันเข้าใจเธอนะ เมื่อก่อนฉันเองก็เป็นแบบเธอเหมือนกัน
-                </SplitText>
+            <div className="bubble-honey-5 absolute -top-[10%] left-[15%] z-40 w-[170%] p-[5%]">
+              <p className="text-h-4 text-[1.5cqw] font-bold leading-snug text-yellow-300 drop-shadow-lg">
+                {/* ประโยค 1 */}
+                <SplitText>ฉันเข้าใจเธอนะ</SplitText>
+                <br />
+                <SplitText>เมื่อก่อนฉันเองก็เป็นแบบเธอเหมือนกัน</SplitText>
+
+                {/* เว้นบรรทัดนิดนึง */}
+                <span className="block h-[0.5cqw]" />
+
+                {/* ประโยค 2 */}
                 <SplitText>แต่เรื่องให้เป็นอาจารย์ฉันว่าคงไม่ไหว</SplitText>
-                <SplitText>
-                  ฉันคิดว่าตัวเองคงสอนใครไม่ได้หรอกเพราะฉันเองก็ยังไม่กล้าแม้แต่จะพูดเลย
-                </SplitText>
+
+                <span className="block h-[0.5cqw]" />
+
+                {/* ประโยค 3 */}
+                <SplitText>ฉันคิดว่าตัวเองคงสอนใครไม่ได้หรอก</SplitText>
+                <br />
+                <SplitText>เพราะฉันเองก็ยังไม่กล้าแม้แต่จะพูดเลย</SplitText>
               </p>
             </div>
 

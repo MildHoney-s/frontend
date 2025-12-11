@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 
 // ----------------------------------------------------------------------
 
+const hashtag_name = 'แฮชแท็กที่ใช้'
+
 export default function Footer() {
   return (
     <footer className="bg-[#0f1720] text-gray-400">
@@ -14,11 +16,15 @@ export default function Footer() {
             <Link to="/credits" className="transition-colors hover:text-white">
               Credits
             </Link>
-            {/* <span className="opacity-40">|</span>
+            <span className="opacity-40">|</span>
 
-            <Link to="/privacy" className="transition-colors hover:text-white">
-              Privacy
-            </Link> */}
+            <Link
+              to={`https://x.com/search?q=%23${hashtag_name}&src=typeahead_click`}
+              target="_blank"
+              className="transition-colors hover:text-white"
+            >
+              {`#${hashtag_name}`}
+            </Link>
             {/* <span className="opacity-40">|</span>
 
             <Link

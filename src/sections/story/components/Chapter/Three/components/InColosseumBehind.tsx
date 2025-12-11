@@ -176,6 +176,7 @@ export default function InColosseumBehind({ onComplete }: Props) {
                 />
 
                 {/* Honey Thought Bubble (ความคิด) */}
+                <div className="overlay pointer-events-none absolute inset-0 z-[100]"></div>
                 <div className="honey-thought-bubble absolute left-[80%] top-[20%] z-50 w-[200px] origin-bottom-left rounded-2xl bg-white p-4 text-black shadow-xl md:w-[280px]">
                   {/* หาง Bubble แบบความคิด (จุดๆ) */}
                   <div className="absolute bottom-[-10px] left-[-20px] flex space-x-1">

@@ -256,11 +256,11 @@ export default function ClassroomScene({ onComplete }: Props) {
 
               {/* ประโยคย่อย 3 */}
               <div className="final-line final-line-3 absolute left-0 top-0 flex w-full flex-col justify-center text-center">
-                <p className="text-sm text-gray-800 md:text-base">
-                  “เอาล่ะ บทเรียนวันนี้จบแล้ว อีก 4 เดือนจะมีงานแข่ง...”
+                <p className="text-sm leading-relaxed text-gray-800 md:text-base">
+                  “ก่อนพวกเธอจะแยกย้ายกันกลับบ้านครูมีเรื่องจะบอก อีก 4 เดือน
                 </p>
-                <p className="text-md mt-2 font-bold text-red-500">
-                  “เพราะงั้นแยกย้ายกลับบ้านกันได้แล้ว!”
+                <p className="text-sm leading-relaxed text-red-500">
+                  จะมีการจัดงานแข่งขึ้นหากใครสนใจเตรียมตัวสมัครได้เลย”
                 </p>
               </div>
             </div>
@@ -273,10 +273,10 @@ export default function ClassroomScene({ onComplete }: Props) {
         {/* STUDENT BUBBLE */}
         <div
           className="bubble-student absolute left-[25%] top-[5%] w-[300px]
-                     origin-bottom-left rounded-2xl bg-white p-6 text-black shadow-xl
-                     after:absolute after:bottom-[-20px] after:right-10 after:border-[15px]
-                     after:border-transparent after:border-t-white after:content-['']
-                     md:left-[20%] md:w-[450px]"
+           origin-bottom-left rounded-2xl bg-white p-6 text-black shadow-xl
+           after:absolute after:right-[-30px] after:top-10 after:border-[15px]
+           after:border-transparent after:border-l-white after:content-['']
+           md:left-[20%] md:w-[450px]"
         >
           <p className="text-sm leading-relaxed text-gray-700 md:text-base">
             “อาจารย์คะ แบบนี้ถ้าคนที่แม้แต่พูดปกติยังพูดให้ชัดไม่ได้เลย

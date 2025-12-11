@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import ScrollHint from '@/components/ScrollDownAnimation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { ChapterOne, ChapterThree, ChapterTwo } from './components'
 
@@ -27,6 +29,18 @@ export default function StoryPageView() {
     })
   }, [chapterTwoDone])
 
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const isProd =
+      (typeof import.meta !== 'undefined' && (import.meta as any).env?.PROD) ||
+      process.env.NODE_ENV === 'production'
+
+    if (isProd) {
+      window.scrollTo(0, 0)
+    }
+  }, [])
+
   return (
     <div
       className="min-h-screen"
@@ -52,6 +66,7 @@ export default function StoryPageView() {
         )}
         {chapterTwoDone && <ChapterThree />}
       </div>
+      <ScrollHint />
     </div>
   )
 }

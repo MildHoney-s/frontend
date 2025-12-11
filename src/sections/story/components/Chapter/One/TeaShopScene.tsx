@@ -392,9 +392,6 @@ export default function TeasShopScene({ onComplete }: Props) {
                p-[5%] text-black opacity-0 shadow-xl"
           >
             <p className="text-[1.1cqw] leading-snug">
-              <span className="block text-[0.9cqw] text-gray-500">
-                (คิดในใจ)
-              </span>
               หาอะไรหวานๆกินก่อนไปซ้อมดีกว่า
               <br />
               ว่าแต่วันนี้กินอะไรดีนะ?
@@ -410,9 +407,6 @@ export default function TeasShopScene({ onComplete }: Props) {
                p-[5%] text-black opacity-0 shadow-xl"
           >
             <p className="text-[1.1cqw] leading-snug">
-              <span className="block text-[0.9cqw] text-gray-500">
-                (คิดในใจ)
-              </span>
               อุ้ย! ชานมก็น่าสนใจนะ…
               <br />
               ไปซื้อสักแก้วดีกว่า
@@ -550,7 +544,6 @@ export default function TeasShopScene({ onComplete }: Props) {
                      origin-bottom-left rounded-3xl bg-white p-[1.8%] text-black shadow-xl"
         >
           <p className="text-[1.1cqw] leading-snug">
-            <span className="block text-[0.9cqw] text-gray-500">(คิดในใจ)</span>
             หวานกำลังดีเลย… <br />
             แบบนี้มีแรงไปซ้อมต่อแน่นอน♪
           </p>

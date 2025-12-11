@@ -226,7 +226,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         )
         .to(
           '.mild-group',
-          { scale: 0.5, transformOrigin: 'bottom center', duration: 1.5 },
+          { scale: 0.5, y: 50, transformOrigin: 'center', duration: 1.5 },
           '<',
         )
 
@@ -234,8 +234,7 @@ export default function TrainingGroundScene({ onComplete }: Props) {
           '.group-students',
           {
             scale: 0.5,
-            y: 50,
-            transformOrigin: 'bottom center',
+            transformOrigin: 'center',
             duration: 1.5,
           },
           '<',
@@ -255,14 +254,18 @@ export default function TrainingGroundScene({ onComplete }: Props) {
         .to('.honey-text-1', { autoAlpha: 1, duration: 0.5 }, '<')
 
         // 5.2 Honey เดินไปกลาง (x: 0 -> 350)
-        .to('.honey-group', { x: '35vw', duration: 2, ease: 'linear' }, '>1')
+        .to('.honey-group', { x: '350px', duration: 2, ease: 'linear' }, '>1')
         .to('.honey-text-1', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-scare', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 1, duration: 0.3 }, '<')
         .to('.honey-text-2', { autoAlpha: 1, duration: 0.3 }, '>0.1')
 
         // 5.3 Honey เดินออกขวา (x: 350 -> 1000)
-        .to('.honey-group', { x: '120vw', duration: 2.5, ease: 'linear' }, '>1')
+        .to(
+          '.honey-group',
+          { x: '1000px', duration: 2.5, ease: 'linear' },
+          '>1',
+        )
         .to('.honey-text-2', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-worry', { autoAlpha: 0, duration: 0.3 }, '<')
         .to('.honey-face-normal', { autoAlpha: 1, duration: 0.3 }, '<')

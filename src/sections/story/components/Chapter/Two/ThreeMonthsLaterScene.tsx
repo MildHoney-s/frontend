@@ -9,6 +9,7 @@ interface Props {
   onComplete: () => void
 }
 
+// ✅ UPDATED: SplitText แบบแก้สระลอย (Smart Split)
 const SplitText = ({
   children,
   className,
@@ -16,13 +17,30 @@ const SplitText = ({
   children: string
   className?: string
 }) => {
+  const chars: string[] = []
+  // Regex จับตัวที่ต้องเกาะ (ไม้หันอากาศ, สระอิ-อู, วรรณยุกต์)
+  const regex = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/
+
+  for (const char of children) {
+    if (regex.test(char) && chars.length > 0) {
+      // ถ้าเจอตัวเกาะ ให้รวมร่างกับตัวก่อนหน้า
+      chars[chars.length - 1] += char
+    } else {
+      chars.push(char)
+    }
+  }
+
   return (
     <span className={className} aria-label={children}>
-      {children.split('').map((char, index) => (
+      {chars.map((char, index) => (
         <span
           key={index}
+          // คง class 'char-reveal' ไว้เพื่อให้ GSAP หาเจอ
           className="char-reveal inline-block translate-y-4 opacity-0"
-          style={{ minWidth: char === ' ' ? '0.3em' : 'auto' }}
+          style={{
+            minWidth: char === ' ' ? '0.3em' : 'auto',
+            willChange: 'transform, opacity',
+          }}
         >
           {char === ' ' ? '\u00A0' : char}
         </span>
@@ -257,7 +275,10 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
       )
 
       // ✅ สลับแขน: ซ่อน Arm 2 -> โชว์ Arm 1 (กิน)
-      tl.to(['.mild-arm-2-l', '.mild-arm-2-r'], { autoAlpha: 0, duration: 0.1 })
+      tl.to(['.mild-arm-2-l', '.mild-arm-2-r'], {
+        autoAlpha: 0,
+        duration: 0.1,
+      })
       tl.to(
         ['.mild-arm-1-l', '.mild-arm-milktea-r'],
         { autoAlpha: 1, duration: 0.1 },
@@ -419,33 +440,41 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
             </div>
 
             {/* Honey Magic Text */}
-            <div className="bubble-honey absolute -right-[20px] -top-[100px] z-50 flex min-h-[120px] w-[320px] origin-bottom-left flex-col items-end justify-center text-right">
-              <div className="text-sm font-medium leading-relaxed text-yellow-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] md:text-base">
-                <div className="text-h-1">
-                  <SplitText>ทำหน้าแบบนั้น...</SplitText>
-                  <br />
-                  <span className="text-lg font-bold">
+            <div className="bubble-honey absolute -right-[80px] -top-[100px] z-50 flex min-h-[120px] w-[500px] origin-bottom-left flex-col items-end justify-center text-right">
+              <div className="text-[1.5cqw] font-medium leading-relaxed text-yellow-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] md:text-base">
+                {/* ชุดที่ 1 */}
+                <div className="text-h-1 space-y-3">
+                  <p className="text-[1.5cqw] font-bold text-yellow-300">
+                    <SplitText>ทำหน้าแบบนั้น...</SplitText>
+                  </p>
+                  {/* เปลี่ยน span เป็น p เพื่อให้ space-y ทำงาน */}
+                  <p className="text-[1.5cqw] font-bold">
                     <SplitText>กำลังกดดันตัวเองอยู่สินะ</SplitText>
-                  </span>
+                  </p>
                 </div>
-                <div className="text-h-2 space-y-2">
-                  <p>
+
+                {/* ชุดที่ 2 */}
+                <div className="text-h-2 space-y-3">
+                  <p className="text-[1.5cqw] font-bold text-yellow-300">
                     <SplitText>อย่ากดดันสิ...</SplitText>
                   </p>
-                  <p>
+                  <p className="text-[1.5cqw] font-bold text-yellow-300">
                     <SplitText>ฉันเห็นความพยายามของเธอตลอดนะ</SplitText>
                   </p>
-                  <p className="text-lg font-bold text-yellow-300">
+                  <p className="text-[1.8cqw] font-bold text-yellow-300">
                     <SplitText>มั่นใจในตัวเองเข้าไว้สิ!</SplitText>
                   </p>
                 </div>
 
-                <div className="text-h-3">
-                  <SplitText>งั้นพักการฝึกก่อน...</SplitText>
-                  <br />
-                  <span className="text-xl font-bold text-pink-300 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]">
+                {/* ชุดที่ 3 */}
+                <div className="text-h-3 space-y-3">
+                  <p className="text-[1.5cqw] font-bold text-yellow-300">
+                    <SplitText>งั้นพักการฝึกก่อน...</SplitText>
+                  </p>
+                  {/* แก้ text-1.5cqw] เป็น text-[1.5cqw] และเปลี่ยนเป็น p */}
+                  <p className="text-[1.5cqw] font-bold text-pink-300 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]">
                     <SplitText>ไปหาไรอร่อยๆ กินกัน!</SplitText>
-                  </span>
+                  </p>
                 </div>
               </div>
             </div>
