@@ -8,7 +8,7 @@ export default function StoryPage() {
   return (
     <>
       <Helmet>
-        <title>Story | Mild-R HBD 2025</title>
+        <title>เนื้อเรื่อง | Mild-R HBD 2025</title>
       </Helmet>
 
       <StoryPageView />

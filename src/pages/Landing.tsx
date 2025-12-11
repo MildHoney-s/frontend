@@ -16,7 +16,7 @@ function timeout(ms: number) {
   )
 }
 
-const CACHE_FLAG = 'mildr_assets_cached_v1'
+const CACHE_FLAG = 'mild-r-hdb-project-2025-assets-v3'
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -94,7 +94,7 @@ export default function LandingPage() {
   return (
     <>
       <Helmet>
-        <title>เปิดหนังสือ | Mild-R HBD 2025</title>
+        <title>หน้าเปิด | Mild-R HBD 2025</title>
       </Helmet>
 
       <LandingScreen

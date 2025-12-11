@@ -7,7 +7,7 @@ export default function CreditPage() {
   return (
     <>
       <Helmet>
-        <title>Credits | Mild-R HBD 2025</title>
+        <title>เครดิต | Mild-R HBD 2025</title>
       </Helmet>
 
       <CreditPageView />
