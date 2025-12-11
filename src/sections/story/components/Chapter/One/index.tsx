@@ -1,4 +1,4 @@
-export { default as BookOpenScene } from './BookOpenScence'
+export { default as BookOpenScene } from './BookOpenScene'
 export { default as ClassroomScene } from './ClassroomScene'
 export { default as TeaShopScene } from './TeaShopScene'
 export { default as TrainingScene } from './TrainingScene'

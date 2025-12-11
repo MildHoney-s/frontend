@@ -1,3 +1,5 @@
+// BookOpenScene.tsx
+import { normalize } from '@/utils/normalize'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -12,23 +14,29 @@ export default function BookOpenScene({ onComplete }: Props) {
   const rootRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+
     const ctx = gsap.context(() => {
-      const root = rootRef.current
-      if (!root) return
+      const q = gsap.utils.selector(root)
 
-      gsap.set('.black-overlay', { autoAlpha: 1 })
+      // set overlay visible
+      gsap.set(normalize(q('.black-overlay')), { autoAlpha: 1 })
 
-      // ----- เตรียม span ทีละตัวอักษร -----
-      const textEl = root.querySelector('.page-text') as HTMLElement | null
+      // ----- เตรียม span ทีละตัวอักษร (DocumentFragment เพื่อประสิทธิภาพ) -----
+      const textEls = normalize(q('.page-text')) as HTMLElement[]
+      const textEl = textEls[0] ?? null
       if (textEl && !textEl.dataset.split) {
         const full = textEl.textContent || ''
         textEl.textContent = ''
-        full.split('').forEach((ch) => {
+        const frag = document.createDocumentFragment()
+        for (const ch of full.split('')) {
           const span = document.createElement('span')
           span.textContent = ch
           span.style.opacity = '0'
-          textEl.appendChild(span)
-        })
+          frag.appendChild(span)
+        }
+        textEl.appendChild(frag)
         textEl.dataset.split = 'true'
       }
 
@@ -37,7 +45,7 @@ export default function BookOpenScene({ onComplete }: Props) {
         scrollTrigger: {
           trigger: root,
           start: 'top top',
-          end: '+=3500', // ปรับความยาวฉากได้ ตัวอักษรจะไหลช้าหรือเร็วตามระยะนี้
+          end: '+=3500',
           scrub: 1,
           pin: true,
           // markers: true,
@@ -47,58 +55,64 @@ export default function BookOpenScene({ onComplete }: Props) {
         },
       })
 
-      tl.to('.black-overlay', { autoAlpha: 0, duration: 1.5 })
+      // Fade out overlay
+      tl.to(normalize(q('.black-overlay')), { autoAlpha: 0, duration: 1.5 })
 
-      // fade-in ฉาก
-      // tl.fromTo(
-      //   root,
-      //   { autoAlpha: 0, scale: 1.05 },
-      //   { autoAlpha: 1, scale: 1, duration: 0.6 },
-      //   0,
-      // )
-
-      // หนังสือลอยขึ้น
-      tl.fromTo(
-        '.page',
-        { y: 40, autoAlpha: 0 },
-        { y: 0, autoAlpha: 1, duration: 0.8 },
-        '<', // เริ่มพร้อมกับ root
-      )
+      // หนังสือลอยขึ้น (ใช้ element ตัวแรกของ selector)
+      const pageEls = normalize(q('.page')) as HTMLElement[]
+      const pageEl = pageEls[0] ?? null
+      if (pageEl) {
+        tl.fromTo(
+          pageEl,
+          { y: 40, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.8 },
+          '<',
+        )
+      }
 
       // label สำหรับช่วงเริ่มโชว์ตัวอักษร
       tl.add('text')
 
       // ตัวอักษรไต่ขึ้นทีละตัวตาม scroll
-      tl.to(
-        '.page-text span',
-        {
-          opacity: 1,
-          stagger: 0.03,
-          duration: 0.03,
-        },
-        'text',
+      const rawSpans = normalize(q('.page-text span'))
+      const spans = rawSpans.filter(
+        (el): el is HTMLSpanElement => el instanceof HTMLSpanElement,
       )
+      if (spans.length) {
+        tl.to(
+          spans,
+          {
+            opacity: 1,
+            stagger: 0.03,
+            duration: 0.03,
+          },
+          'text',
+        )
+      }
 
       // เปลี่ยน BG 2 เมื่อ scroll เลยช่วงหนึ่งไป
-      tl.to(
-        '.page-bg-2',
-        { autoAlpha: 1, duration: 0.8 },
-        'text+=4', // เลื่อนจุดเปลี่ยน BG ได้ตามจังหวะที่อยากให้เกิด
-      )
+      const bg2 = normalize(q('.page-bg-2'))[0] ?? null
+      if (bg2) tl.to(bg2, { autoAlpha: 1, duration: 0.8 }, 'text+=4')
 
       // เปลี่ยน BG 3 ช่วงท้าย ๆ ของข้อความ
+      const bg3 = normalize(q('.page-bg-3'))[0] ?? null
+      if (bg3) tl.to(bg3, { autoAlpha: 1, duration: 0.8 }, 'text+=8')
+
+      // ปิดฉากด้วย fade to black
       tl.to(
-        '.page-bg-3',
-        { autoAlpha: 1, duration: 0.8 },
-        'text+=8', // ขยับตัวเลขให้ตรงกับจังหวะที่ชอบ
+        normalize(q('.black-overlay')),
+        { autoAlpha: 1, duration: 1.2 },
+        '+=1',
       )
-
-      // 9) ปิดฉากด้วย fade to black
-      tl.to('.black-overlay', { autoAlpha: 1, duration: 1.2 }, '+=1')
       tl.to({}, { duration: 0.5 }) // เว้นจังหวะนิดนึงก่อนเปลี่ยนฉาก
-    }, rootRef)
 
-    return () => ctx.revert()
+      // ถ้าต้องการให้ ScrollTrigger คำนวณซ้ำ (layout เปลี่ยน)
+      ScrollTrigger.refresh()
+    }, root)
+
+    return () => {
+      ctx.revert()
+    }
   }, [onComplete])
 
   return (

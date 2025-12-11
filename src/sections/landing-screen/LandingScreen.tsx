@@ -1,4 +1,6 @@
+// src/components/LandingScreenGSAP.tsx
 import useKeyPress from '@/hooks/useKeyPress'
+import { preloadImagesWithProgress } from '@/utils/preloadImages'
 import gsap from 'gsap'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -9,6 +11,8 @@ interface LandingScreenProps {
   pageSrc?: string
   flipSfxSrc?: string
   tagSrc?: string
+  /** ถ้ามีรูปอื่นๆ ที่ต้อง preload ทั้งหมด ให้ส่ง array มาที่นี่ */
+  extraPreload?: string[]
 }
 
 // ----------------------------------------------------------------------
@@ -20,11 +24,17 @@ export default function LandingScreenGSAP({
   pageSrc = '/assets/book/paper.png',
   flipSfxSrc,
   tagSrc,
+  extraPreload = [],
 }: LandingScreenProps) {
   // ---------- state & refs ----------
   const [visible, setVisible] = useState(true)
   const [opening, setOpening] = useState(false)
   const [currentCoverSrc, setCurrentCoverSrc] = useState<string>(coverSrc)
+
+  const [preloadProgress, setPreloadProgress] = useState(0) // 0..100
+  const [preloaded, setPreloaded] = useState(false)
+  const [isPreloading, setIsPreloading] = useState(false)
+  const preloadAbortRef = useRef<AbortController | null>(null)
 
   const rootRef = useRef<HTMLDivElement | null>(null)
   const bookRef = useRef<HTMLDivElement | null>(null)
@@ -43,13 +53,6 @@ export default function LandingScreenGSAP({
   const bookWidth = 380
   const bookHeight = 560
 
-  // ---------- preload utility ----------
-  const preload = useCallback((src?: string) => {
-    if (!src) return
-    const img = new Image()
-    img.src = src
-  }, [])
-
   // ---------- audio ----------
   useEffect(() => {
     if (!flipSfxSrc) return
@@ -57,7 +60,6 @@ export default function LandingScreenGSAP({
     audio.preload = 'auto'
     sfxRef.current = audio
     return () => {
-      // stop & cleanup
       audio.pause()
       sfxRef.current = null
     }
@@ -87,7 +89,7 @@ export default function LandingScreenGSAP({
     handleOpen()
   })
 
-  // ---------- open animation ----------
+  // ---------- helper: finishAndStart (zoom/fade then onStart) ----------
   const finishAndStart = useCallback(() => {
     if (startedRef.current) return
     startedRef.current = true
@@ -98,7 +100,6 @@ export default function LandingScreenGSAP({
     const isDesktop = window.innerWidth >= 1024
 
     if (!bookEl || !rootEl) {
-      // fallback: ถ้าไม่เจอ element ก็ fade อย่างเดียว
       gsap.to(rootEl, {
         autoAlpha: 0,
         duration: 0.6,
@@ -124,24 +125,16 @@ export default function LandingScreenGSAP({
       return
     }
 
-    // ====== เฉพาะ Desktop เท่านั้นถึงจะเข้า zoom ======
-
-    // 1) หาตำแหน่งของหนังสือใน viewport
     const rect = bookEl.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
-
-    // 2) หาตำแหน่งกลางของหน้าจอ
     const viewportX = window.innerWidth / 2
     const viewportY = window.innerHeight / 2
-
-    // 3) คำนวน offset ที่ root ต้องเลื่อนไปให้หนังสืออยู่กลางจอขณะซูม
     const offsetX = viewportX - centerX
     const offsetY = viewportY - centerY
 
     const tl = gsap.timeline()
 
-    // --- Zoom-in + move (Desktop เท่านั้น) ---
     tl.to(rootEl, {
       scale: 1.4,
       x: offsetX,
@@ -150,7 +143,6 @@ export default function LandingScreenGSAP({
       ease: 'power3.inOut',
     })
 
-    // --- Fade out ---
     tl.to(rootEl, {
       autoAlpha: 0,
       duration: 0.5,
@@ -162,17 +154,9 @@ export default function LandingScreenGSAP({
     })
   }, [onStart])
 
-  // main handler: builds timeline and runs
-  const handleOpen = useCallback(() => {
-    if (opening) return
-    setOpening(true)
-    playSfx()
-
-    // ensure preload of new cover/back images to reduce flicker
-    preload(backCoverSrc)
-    preload('/assets/book/book-back-cover.png') // example - adapt if different
-
-    // prepare 3D and will-change
+  // ---------- play open animation (timeline) ----------
+  const playOpenAnimation = useCallback(() => {
+    // prepare elements
     const els = [
       coverRef.current,
       backCoverRef.current,
@@ -203,7 +187,6 @@ export default function LandingScreenGSAP({
       transformOrigin: 'left center',
     })
 
-    // kill previous tl if exists
     tlRef.current?.kill()
 
     if (isDesktop) {
@@ -214,14 +197,12 @@ export default function LandingScreenGSAP({
 
     const tl = gsap.timeline({
       onComplete: () => {
-        // optionally finish after a short wait; here we call finishAndStart to proceed
-        // you may choose to call finishAndStart at a different position in timeline
         finishAndStart()
       },
     })
     tlRef.current = tl
 
-    // 0: small press
+    // timeline (same as original)
     tl.to(coverRef.current, {
       scale: 0.987,
       duration: 0.06,
@@ -229,7 +210,6 @@ export default function LandingScreenGSAP({
       repeat: 1,
     })
 
-    // 1: start cover rotate deeply (open wide)
     tl.to(
       coverRef.current,
       {
@@ -245,28 +225,21 @@ export default function LandingScreenGSAP({
       0.02,
     )
 
-    // switch cover image mid-animation and flip inner image to correct mirrored face
     tl.call(
       () => {
-        // เปลี่ยนภาพผ่าน state (หรือ gsap.set เพื่อไม่ให้เกิด re-render)
         setCurrentCoverSrc('/assets/book/book-back-cover.png')
       },
       undefined,
       0.6,
     )
 
-    // 2: animate cover shadow while opening (grows then fades)
     tl.to(coverShadowRef.current, { autoAlpha: 0.9, duration: 0.25 }, 0.12)
     tl.to(coverShadowRef.current, { autoAlpha: 0.4, duration: 0.8 }, 0.4)
-
-    // 3: move back cover slightly to emphasize thickness
     tl.to(
       backCoverRef.current,
       { x: -180, duration: 0.9, ease: 'power2.out' },
       0.06,
     )
-
-    // 4: reveal inner page with strong curl: surface comes from high rotation to flat
     tl.to(innerPageRef.current, { autoAlpha: 1, duration: 0.02 }, 0.22)
     tl.to(
       innerPageSurfaceRef.current,
@@ -279,8 +252,6 @@ export default function LandingScreenGSAP({
       },
       0.28,
     )
-
-    // 5: fold overlay moves to simulate curl and then relax
     tl.to(
       innerPageFoldRef.current,
       {
@@ -291,12 +262,8 @@ export default function LandingScreenGSAP({
       },
       0.32,
     )
-
-    // 6: page shadow follows the curl
     tl.to(pageShadowRef.current, { autoAlpha: 0.7, duration: 0.36 }, 0.34)
     tl.to(pageShadowRef.current, { autoAlpha: 0.2, duration: 0.9 }, 0.72)
-
-    // 7: subtle wobble
     tl.to(
       innerPageRef.current,
       {
@@ -308,20 +275,77 @@ export default function LandingScreenGSAP({
       },
       '>-0.05',
     )
-
-    // 8: slide cover a little left to settle
     tl.to(
       coverRef.current,
       { x: 30, duration: 0.46, ease: 'power2.out' },
       '-=0.35',
     )
-
-    // play extra sfx near the end
     tl.call(() => playSfx(0.02))
 
-    // don't forget to return tl (not required but useful in debugging)
     return tl
-  }, [opening, backCoverSrc, playSfx, preload, finishAndStart])
+  }, [finishAndStart, playSfx])
+
+  // ---------- main handler: start preload then play animation ----------
+  // Note: clicking while preloading/animating is guarded
+  const handleOpen = useCallback(() => {
+    if (opening) return
+    setOpening(true)
+    playSfx()
+
+    // start preloading
+    setIsPreloading(true)
+    setPreloadProgress(0)
+    setPreloaded(false)
+
+    const controller = new AbortController()
+    preloadAbortRef.current = controller
+
+    const allToPreload = [
+      coverSrc,
+      backCoverSrc,
+      pageSrc,
+      tagSrc,
+      '/assets/book/book-back-cover.png',
+      ...extraPreload,
+    ].filter(Boolean) as string[]
+
+    preloadImagesWithProgress(
+      allToPreload,
+      (loaded, total) => {
+        const pct = Math.round((loaded / Math.max(total, 1)) * 100)
+        setPreloadProgress(pct)
+      },
+      controller.signal,
+    )
+      .then(() => {
+        setPreloaded(true)
+        setIsPreloading(false)
+        // when preload finished -> play open animation (then finishAndStart will redirect)
+        playOpenAnimation()
+      })
+      .catch((err) => {
+        if ((err as DOMException)?.name === 'AbortError') {
+          // aborted -> just reset flags (or keep as aborted)
+          setIsPreloading(false)
+          setOpening(false)
+          return
+        }
+        console.error('preload error', err)
+        // even on error, proceed to animation (to avoid blocking UX)
+        setPreloaded(true)
+        setIsPreloading(false)
+        playOpenAnimation()
+      })
+  }, [
+    opening,
+    playSfx,
+    coverSrc,
+    backCoverSrc,
+    pageSrc,
+    tagSrc,
+    extraPreload,
+    playOpenAnimation,
+  ])
 
   // cleanup on unmount
   useEffect(() => {
@@ -329,12 +353,13 @@ export default function LandingScreenGSAP({
       tlRef.current?.kill()
       tlRef.current = null
       sfxRef.current?.pause()
+      preloadAbortRef.current?.abort()
     }
   }, [])
 
+  // ---------- render ----------
   if (!visible) return null
 
-  // ---------- JSX ----------
   return (
     <div
       ref={rootRef}
@@ -473,7 +498,6 @@ export default function LandingScreenGSAP({
                   boxShadow:
                     '0 40px 100px rgba(2,6,23,0.6), inset 0 -6px 18px rgba(0,0,0,0.12)',
                   border: '1px solid rgba(0,0,0,0.12)',
-                  // keep a neutral background while coverImage handles visible image
                   backgroundColor: 'transparent',
                 }}
               >
@@ -550,7 +574,13 @@ export default function LandingScreenGSAP({
             <h1 className="text-2xl md:text-5xl">
               จงเปิดออก… แล้วเรื่องราวจะตื่นขึ้น
             </h1>
-            <p className="mt-2 text-gray-300">กดหนังสือเพื่อเริ่มเรื่อง</p>
+            <p className="mt-2 text-gray-300">
+              {isPreloading
+                ? `กำลังเตรียมเรื่องราว… ${preloadProgress}%`
+                : preloaded
+                  ? 'เตรียมเรื่องราวพร้อมแล้ว กำลังเปิด…'
+                  : 'กดหนังสือเพื่อเริ่มเรื่อง'}
+            </p>
           </div>
 
           <p className="mt-4 text-xs text-gray-400">
