@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 // ----------------------------------------------------------------------
 
-const hashtag_name = 'แฮชแท็กที่ใช้'
+const hashtag_name = 'MildRBirthdayProject2025'
 
 export default function Footer() {
   return (
