@@ -1,3 +1,4 @@
+import { houseSceneAssets } from '@/assets/chapterTwoAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -20,13 +21,8 @@ export default function HouseScene({ onComplete }: Props) {
   const sceneRef = useRef<HTMLDivElement>(null)
   const doorPanelRef = useRef<HTMLDivElement>(null)
 
-  // Asset Paths
-  const openDoorImg = '/assets/Part2/House_1.png'
-  const closedDoorImg = '/assets/Part2/House_0.png'
-
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // --- INITIAL SETUP ---
       gsap.set('.black-overlay', { autoAlpha: 1 })
       gsap.set('.honey-group', { x: 0, autoAlpha: 1 })
       gsap.set('.honey-bubble-think', {
@@ -55,7 +51,6 @@ export default function HouseScene({ onComplete }: Props) {
         { autoAlpha: 0 },
       )
 
-      // --- TIMELINE ---
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -70,7 +65,6 @@ export default function HouseScene({ onComplete }: Props) {
         },
       })
 
-      // ... (Animation Steps เดิมของคุณ ใส่ตรงนี้ได้เลยครับ) ...
       tl.to('.black-overlay', { autoAlpha: 0, duration: 2 })
       tl.to('.honey-bubble-think', {
         scale: 1,
@@ -214,7 +208,7 @@ export default function HouseScene({ onComplete }: Props) {
         {/* BACKGROUND */}
         <div className="absolute inset-0 z-0">
           <img
-            src={openDoorImg}
+            src={houseSceneAssets.bg_door_open}
             className="h-full w-full object-cover"
             alt="bg"
           />
@@ -237,39 +231,39 @@ export default function HouseScene({ onComplete }: Props) {
             <div className="mild-body-img relative h-full w-full">
               {/* Body Parts */}
               <img
-                src="/assets/Part2/Mild/Body/Hair.PNG"
+                src={houseSceneAssets.mild_hair}
                 className="absolute left-0 top-0 z-0 h-full w-full object-contain"
                 alt="Back Hair"
               />
               <img
-                src="/assets/Part2/Mild/Body/Body_1.PNG"
+                src={houseSceneAssets.mild_body}
                 className="absolute left-0 top-0 z-10 h-full w-full object-contain"
                 alt="Body"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src={houseSceneAssets.mild_arm_l}
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Left Arm"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_R.PNG"
+                src={houseSceneAssets.mild_arm_r}
                 className="absolute left-0 top-0 z-20 h-full w-full object-contain"
                 alt="Right Arm"
               />
 
               <div className="absolute left-0 top-20 z-30 h-auto w-full">
                 <img
-                  src="/assets/Part2/Mild/Face/Face_01_หน้าปกติ.PNG"
+                  src={houseSceneAssets.mild_face_normal}
                   className="mild-face-normal w-full object-contain"
                   alt="Normal"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_03_หน้าตกใจ.PNG"
+                  src={houseSceneAssets.mild_face_surprise}
                   className="mild-face-surprise absolute left-0 top-0 w-full object-contain"
                   alt="Shock"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_02_หน้ายิ้ม.PNG"
+                  src={houseSceneAssets.mild_face_happy}
                   className="mild-face-happy absolute left-0 top-0 w-full object-contain"
                   alt="Happy"
                 />
@@ -283,7 +277,7 @@ export default function HouseScene({ onComplete }: Props) {
           <div
             className="h-full w-full bg-cover bg-center"
             style={{
-              backgroundImage: `url('${openDoorImg}')`,
+              backgroundImage: `url('${houseSceneAssets.bg_door_open}')`,
               clipPath: 'polygon(0% 0%, 42.55% 0%, 42.55% 100%, 0% 100%)',
             }}
           />
@@ -292,7 +286,7 @@ export default function HouseScene({ onComplete }: Props) {
         {/* LAYER 3: DOOR PANEL */}
         <div ref={doorPanelRef} className="absolute inset-0 z-30">
           <img
-            src={closedDoorImg}
+            src={houseSceneAssets.bg_door_closed}
             className="h-full w-full object-cover"
             alt="door"
           />
@@ -305,12 +299,12 @@ export default function HouseScene({ onComplete }: Props) {
         {/* LAYER 4: HONEY */}
         <div className="honey-group absolute bottom-[0%] left-[45%] z-40 w-[25%]">
           <img
-            src="/assets/Part2/Honey/Body.PNG"
+            src={houseSceneAssets.honey_body}
             className="relative w-full drop-shadow-2xl"
             alt="Honey"
           />
           <img
-            src="/assets/Part2/Honey/Normal_Face.PNG"
+            src={houseSceneAssets.honey_face}
             className="absolute left-0 top-[1%] w-full"
             alt="Face"
           />

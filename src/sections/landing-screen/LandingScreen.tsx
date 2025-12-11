@@ -1,5 +1,6 @@
 // src/components/LandingScreenGSAP.tsx
 import useKeyPress from '@/hooks/useKeyPress'
+import { cacheAssetsViaSW } from '@/registerServiceWorker'
 import { preloadImagesWithProgress } from '@/utils/preloadImages'
 import gsap from 'gsap'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -297,9 +298,6 @@ export default function LandingScreenGSAP({
     setPreloadProgress(0)
     setPreloaded(false)
 
-    const controller = new AbortController()
-    preloadAbortRef.current = controller
-
     const allToPreload = [
       coverSrc,
       backCoverSrc,
@@ -309,32 +307,37 @@ export default function LandingScreenGSAP({
       ...extraPreload,
     ].filter(Boolean) as string[]
 
-    preloadImagesWithProgress(
-      allToPreload,
-      (loaded, total) => {
-        const pct = Math.round((loaded / Math.max(total, 1)) * 100)
-        setPreloadProgress(pct)
-      },
-      controller.signal,
-    )
+    cacheAssetsViaSW(allToPreload, (loaded, total) => {
+      setPreloadProgress(Math.round((loaded / Math.max(total, 1)) * 100))
+    })
       .then(() => {
         setPreloaded(true)
         setIsPreloading(false)
-        // when preload finished -> play open animation (then finishAndStart will redirect)
         playOpenAnimation()
       })
-      .catch((err) => {
-        if ((err as DOMException)?.name === 'AbortError') {
-          // aborted -> just reset flags (or keep as aborted)
-          setIsPreloading(false)
-          setOpening(false)
-          return
-        }
-        console.error('preload error', err)
-        // even on error, proceed to animation (to avoid blocking UX)
-        setPreloaded(true)
-        setIsPreloading(false)
-        playOpenAnimation()
+      .catch((swErr) => {
+        console.warn('SW caching failed/fallback', swErr)
+        // fallback to JS preloader with progress
+        const controller = new AbortController()
+        preloadAbortRef.current = controller
+        preloadImagesWithProgress(
+          allToPreload,
+          (loaded, total) => {
+            setPreloadProgress(Math.round((loaded / Math.max(total, 1)) * 100))
+          },
+          controller.signal,
+        )
+          .then(() => {
+            setPreloaded(true)
+            setIsPreloading(false)
+            playOpenAnimation()
+          })
+          .catch((err) => {
+            console.error('fallback preload error', err)
+            setPreloaded(true)
+            setIsPreloading(false)
+            playOpenAnimation()
+          })
       })
   }, [
     opening,

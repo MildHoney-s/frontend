@@ -1,6 +1,4 @@
 import SimpleLayout from '@/layouts/simple'
-import ChapterThreeTest from '@/pages/ChapterThreeTest'
-import ChapterTwoTestPage from '@/pages/ChapterTwoTest'
 import CreditPage from '@/pages/Credits'
 import LandingPage from '@/pages/Landing'
 import StoryPage from '@/pages/Story'
@@ -21,8 +19,6 @@ export default function Router() {
         { index: true, element: <LandingPage /> },
         { path: 'story', element: <StoryPage /> },
         { path: 'credits', element: <CreditPage /> },
-        { path: 'part2', element: <ChapterTwoTestPage /> },
-        { path: 'part3', element: <ChapterThreeTest /> },
       ],
     },
     {

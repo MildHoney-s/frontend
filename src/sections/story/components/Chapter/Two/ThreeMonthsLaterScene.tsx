@@ -1,3 +1,4 @@
+import { threeMonthsAssets } from '@/assets/chapterTwoAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -8,7 +9,6 @@ interface Props {
   onComplete: () => void
 }
 
-// Helper: SplitText (ใช้เฉพาะของ Honey)
 const SplitText = ({
   children,
   className,
@@ -34,8 +34,7 @@ const SplitText = ({
 export default function ThreeMonthsLaterScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Asset Paths
-  const bgImg = '/assets/Part2/field.png'
+  const bgImg = threeMonthsAssets.bg_field
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -335,36 +334,36 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
             <div className="mild-body-img relative h-full w-full">
               {/* Body Base */}
               <img
-                src="/assets/Part2/Mild/Body/Hair.PNG"
+                src={threeMonthsAssets.mild.hair}
                 className="absolute left-0 top-0 z-0 w-full"
                 alt="Hair"
               />
               <img
-                src="/assets/Part2/Mild/Body/Body_1.PNG"
+                src={threeMonthsAssets.mild.body}
                 className="absolute left-0 top-0 z-10 w-full"
                 alt="Body"
               />
 
               {/* ✅ ชุดแขนที่ 1 (Arm 2 - ใช้ตอนคุย) */}
               <img
-                src="/assets/Part2/Mild/Arms/Arm_2_L.PNG"
+                src={threeMonthsAssets.mild.arm_talk_l}
                 className="mild-arm-2-l absolute left-0 top-0 z-20 w-full"
                 alt="L Arm 2"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_2_R.PNG"
+                src={threeMonthsAssets.mild.arm_talk_r}
                 className="mild-arm-2-r absolute left-0 top-0 z-20 w-full"
                 alt="R Arm 2"
               />
 
               {/* ✅ ชุดแขนที่ 2 (Arm 1 + MilkTea - ใช้ตอนกิน) */}
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src={threeMonthsAssets.mild.arm_eat_l}
                 className="mild-arm-1-l absolute left-0 top-0 z-20 w-full opacity-0"
                 alt="L Arm 1"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_milktea_R.PNG"
+                src={threeMonthsAssets.mild.arm_milktea_r}
                 className="mild-arm-milktea-r absolute left-0 top-0 z-40 w-full opacity-0"
                 alt="R Arm MilkTea"
               />
@@ -372,12 +371,12 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
               {/* Face */}
               <div className="absolute left-0 top-[1%] z-30 w-full">
                 <img
-                  src="/assets/Part2/Mild/Face/Face_05_หน้าเศร้า.PNG"
+                  src={threeMonthsAssets.mild.face_worry}
                   className="mild-face-worry w-full object-contain"
                   alt="Worry"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_02_หน้ายิ้ม.PNG"
+                  src={threeMonthsAssets.mild.face_happy}
                   className="mild-face-happy absolute left-0 top-0 w-full object-contain opacity-0"
                   alt="Happy"
                 />
@@ -408,12 +407,12 @@ export default function ThreeMonthsLaterScene({ onComplete }: Props) {
           <div className="honey-group relative z-20 ml-[-20px] h-[400px] w-[260px] translate-y-40 md:h-[580px] md:w-[320px]">
             <div className="relative h-full w-full">
               <img
-                src="/assets/Part2/Honey/Body.PNG"
+                src={threeMonthsAssets.honey.body}
                 className="relative w-full"
                 alt="Honey Body"
               />
               <img
-                src="/assets/Part2/Honey/Normal_Face.PNG"
+                src={threeMonthsAssets.honey.face_normal}
                 className="absolute left-0 top-[2%] w-full"
                 alt="Honey Face"
               />

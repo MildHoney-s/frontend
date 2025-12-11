@@ -1,4 +1,5 @@
 // BookOpenScene.tsx
+import { bookOpenSceneAssets } from '@/assets/chapterOneAssets'
 import { normalize } from '@/utils/normalize'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -124,15 +125,21 @@ export default function BookOpenScene({ onComplete }: Props) {
         {/* BG 1–3 ซ้อนกันแล้วใช้ opacity สลับ */}
         <div
           className="page-bg-1 absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/Part1/Prologue_1.png')" }}
+          style={{
+            backgroundImage: `url('${bookOpenSceneAssets.prologue_1}')`,
+          }}
         />
         <div
           className="page-bg-2 absolute inset-0 bg-cover bg-center opacity-0"
-          style={{ backgroundImage: "url('/assets/Part1/Prologue_2.png')" }}
+          style={{
+            backgroundImage: `url('${bookOpenSceneAssets.prologue_2}')`,
+          }}
         />
         <div
           className="page-bg-3 absolute inset-0 bg-cover bg-center opacity-0"
-          style={{ backgroundImage: "url('/assets/Part1/Prologue_3.png')" }}
+          style={{
+            backgroundImage: `url('${bookOpenSceneAssets.prologue_3}')`,
+          }}
         />
 
         {/* content ด้านบนรูป */}

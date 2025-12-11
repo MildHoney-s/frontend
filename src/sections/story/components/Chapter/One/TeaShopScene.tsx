@@ -1,3 +1,4 @@
+import { teashopSceneAssets } from '@/assets/chapterOneAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -18,9 +19,6 @@ export default function TeasShopScene({ onComplete }: Props) {
   const sceneRef = useRef<HTMLDivElement | null>(null)
 
   // แก้ path ให้ตรงกับไฟล์จริง
-  const marketBgImg = '/assets/Part1/teashop/market.png'
-  const shopBgImg = '/assets/Part1/teashop/milk_tea_shop.png'
-  const closeUpBgImg = '/assets/Part1/teashop/close_up.png'
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -365,21 +363,21 @@ export default function TeasShopScene({ onComplete }: Props) {
         {/* ================= BG LAYER ================= */}
         <div className="bg-market absolute inset-0 z-0">
           <img
-            src={marketBgImg}
+            src={teashopSceneAssets.marketBgImg}
             className="h-full w-full object-cover"
             alt="Market"
           />
         </div>
         <div className="bg-shop absolute inset-0 z-0 opacity-0">
           <img
-            src={shopBgImg}
+            src={teashopSceneAssets.shopBgImg}
             className="h-full w-full object-cover"
             alt="Tea Shop Front"
           />
         </div>
         <div className="bg-close-up absolute inset-0 z-0 opacity-0">
           <img
-            src={closeUpBgImg}
+            src={teashopSceneAssets.closeUpBgImg}
             alt="Close Up Drink"
             className="h-full w-full object-cover"
           />
@@ -427,35 +425,35 @@ export default function TeasShopScene({ onComplete }: Props) {
             <div className="mild-body-img relative h-full w-full">
               {/* Body parts */}
               <img
-                src="/assets/Part2/Mild/Body/Hair.PNG"
+                src={teashopSceneAssets.mildHair}
                 className="absolute left-0 top-0 z-0 h-full w-full object-contain"
                 alt="Back Hair"
               />
               <img
-                src="/assets/Part2/Mild/Body/Body_1.PNG"
+                src={teashopSceneAssets.mildBody}
                 className="absolute left-0 top-0 z-10 h-full w-full object-contain"
                 alt="Body"
               />
               {/* ✅ ชุดแขนที่ 1 (Arm 2 - ใช้ตอนคุย) */}
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src={teashopSceneAssets.mildArmLNormal}
                 className="mild-arm-2-l absolute left-0 top-[5%] z-20 w-full"
                 alt="L Arm 2"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_R.PNG"
+                src={teashopSceneAssets.mildArmRNormal}
                 className="mild-arm-2-r absolute left-0 top-[5%] z-20 w-full"
                 alt="R Arm 2"
               />
 
               {/* ✅ ชุดแขนที่ 2 (Arm 1 + MilkTea - ใช้ตอนกิน) */}
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src={teashopSceneAssets.mildArmLNormal}
                 className="mild-arm-1-l absolute left-0 top-[5%] z-20 w-full opacity-0"
                 alt="L Arm 1"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_milktea_R.PNG"
+                src={teashopSceneAssets.mildArmRMilkTea}
                 className="mild-arm-milktea-r absolute left-0 top-[5%] z-40 w-full opacity-0"
                 alt="R Arm MilkTea"
               />
@@ -471,19 +469,19 @@ export default function TeasShopScene({ onComplete }: Props) {
                 }}
               >
                 <img
-                  src="/assets/Part2/Mild/Face/Face_01_หน้าปกติ.PNG"
+                  src={teashopSceneAssets.mildFaceNormal}
                   className="mild-face-normal w-full object-contain"
                   alt="Normal"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_07_หน้ายิ้ม2.PNG"
+                  src={teashopSceneAssets.mildFaceSmile_1}
                   className="mild-face-smile absolute left-0 top-0 w-full object-contain"
-                  alt="Surprise"
+                  alt="Smile 1"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_02_หน้ายิ้ม.PNG"
+                  src={teashopSceneAssets.mildFaceSmile_2}
                   className="mild-face-happy absolute left-0 top-0 w-full object-contain"
-                  alt="Happy"
+                  alt="Smile 2"
                 />
               </div>
             </div>

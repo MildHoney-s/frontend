@@ -1,5 +1,3 @@
-import React from 'react'
-
 import CutSceneOne from './components/CutSceneOne'
 import CutSceneTwo from './components/CutSceneTwo'
 import InColosseumBehind from './components/InColosseumBehind'

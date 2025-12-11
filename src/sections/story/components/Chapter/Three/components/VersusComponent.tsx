@@ -1,3 +1,4 @@
+import versusComponentAssets from '@/assets/versusComponentAssets'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -255,7 +256,7 @@ export default function VersusComponent({
       <div
         className="bg-versus relative h-full w-full"
         style={{
-          backgroundImage: "url('/assets/part3/BG/versus_bg/bg.png')",
+          backgroundImage: `url('${versusComponentAssets.bgImg}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -263,17 +264,17 @@ export default function VersusComponent({
         <div className="layers-container pointer-events-none absolute inset-0 overflow-hidden">
           <img
             className="versus-abs layer-01 absolute left-1/2 top-[45%] z-0 h-auto w-[120vh] opacity-80"
-            src="/assets/part3/BG/versus_bg/01.png"
+            src={versusComponentAssets.effect.circle}
             alt="effect 01"
           />
           <img
             className="versus-abs layer-02 absolute left-1/2 top-[45%] z-10 h-auto w-[110%] opacity-60 mix-blend-screen"
-            src="/assets/part3/BG/versus_bg/02.png"
+            src={versusComponentAssets.effect.ring}
             alt="ring"
           />
           <img
             className="versus-abs layer-vs absolute left-1/2 top-[45%] z-30 w-80 md:w-[800px]"
-            src="/assets/part3/BG/versus_bg/vs.png"
+            src={versusComponentAssets.effect.text}
             alt="VS"
           />
         </div>
@@ -304,7 +305,7 @@ export default function VersusComponent({
           {/* PLAYER A IMAGES */}
           <img
             className="card-vs-a absolute bottom-[65px] left-[-3%] z-20 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
-            src="/assets/part3/BG/versus_bg/card.png"
+            src={versusComponentAssets.card}
             alt="card"
           />
 
@@ -346,7 +347,7 @@ export default function VersusComponent({
           {/* PLAYER B IMAGES */}
           <img
             className="card-vs-b absolute bottom-[60px] right-[-2%] z-20 h-[55vh] max-h-[550px] object-contain md:h-[80vh]"
-            src="/assets/part3/BG/versus_bg/card.png"
+            src={versusComponentAssets.card}
             alt="card2"
           />
           <img

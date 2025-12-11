@@ -1,5 +1,3 @@
-import React from 'react'
-
 import BattleComponentFour from './components/BattleComponentFour'
 import VersusComponent from './components/VersusComponent'
 

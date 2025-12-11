@@ -1,3 +1,4 @@
+import { inColosseumAssets } from '@/assets/chapterThreeAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -195,7 +196,7 @@ export default function InColosseum({ onComplete }: Props) {
         <div
           className="colosseum-in-bg absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/assets/part3/BG/bg_colosseum_in.png')",
+            backgroundImage: `url('${inColosseumAssets.bgImg}')`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
@@ -208,55 +209,55 @@ export default function InColosseum({ onComplete }: Props) {
               {/* Asset */}
 
               <img
-                src="/assets/Part2/Mild/Assets/giff.png"
+                src={inColosseumAssets.mildGiff}
                 className="absolute left-0 top-0 z-50 w-full"
                 alt="Hair"
               />
               <img
-                src="/assets/Part2/Mild/Assets/mimi.png"
+                src={inColosseumAssets.mildCatEar}
                 className="mild-asset-mimi absolute left-0 top-0 z-50 w-full"
                 alt="Hair"
               />
 
               {/* body */}
               <img
-                src="/assets/Part2/Mild/Body/Hair.PNG"
+                src={inColosseumAssets.mildHair}
                 className="absolute left-0 top-0 z-0 w-full"
                 alt="Hair"
               />
               <img
-                src="/assets/Part2/Mild/Body/Body_1.PNG"
+                src={inColosseumAssets.mildBody}
                 className="absolute left-0 top-0 z-10 w-full"
                 alt="Body"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_2_L.PNG"
+                src={inColosseumAssets.mildArmL_2}
                 className="mild-arm-2-l absolute left-0 top-0 z-20 w-full"
                 alt="L Arm 2"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_2_R.PNG"
+                src={inColosseumAssets.mildArmR_2}
                 className="mild-arm-2-r absolute left-0 top-0 z-20 w-full"
                 alt="R Arm 2"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_1_L.PNG"
+                src={inColosseumAssets.mildArmL_1}
                 className="mild-arm-1-l absolute left-0 top-0 z-20 w-full opacity-0"
                 alt="L Arm 1"
               />
               <img
-                src="/assets/Part2/Mild/Arms/Arm_milktea_R.PNG"
+                src={inColosseumAssets.mildArmR_MilkTea}
                 className="mild-arm-milktea-r absolute left-0 top-0 z-40 w-full opacity-0"
                 alt="R Arm MilkTea"
               />
               <div className="absolute left-0 top-[1%] z-30 w-full">
                 <img
-                  src="/assets/Part2/Mild/Face/Face_05_หน้าเศร้า.PNG"
+                  src={inColosseumAssets.mildSadFace}
                   className="mild-face-worry w-full object-contain"
                   alt="Worry"
                 />
                 <img
-                  src="/assets/Part2/Mild/Face/Face_02_หน้ายิ้ม.PNG"
+                  src={inColosseumAssets.mildSmileFace}
                   className="mild-face-happy absolute left-0 top-0 w-full object-contain opacity-0"
                   alt="Happy"
                 />
@@ -292,12 +293,12 @@ export default function InColosseum({ onComplete }: Props) {
           <div className="honey-group absolute bottom-[-18%] left-[0%] z-20 h-[500px] w-[280px] translate-y-10 will-change-transform md:left-[55%] md:h-[600px] md:w-[320px]">
             <div className="honey-body-img relative h-full w-full">
               <img
-                src="/assets/Part2/Honey/Normal_Face.PNG"
+                src={inColosseumAssets.honeyNormalFace}
                 className="absolute left-0 top-0 z-20 w-full"
                 alt="Face"
               />
               <img
-                src="/assets/Part2/Honey/Body.PNG"
+                src={inColosseumAssets.honeyBody}
                 className="absolute left-0 top-0 z-10 w-full"
                 alt="Body"
               />

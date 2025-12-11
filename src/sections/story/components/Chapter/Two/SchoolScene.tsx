@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { schoolSceneAssets } from '@/assets/chapterTwoAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -9,14 +10,11 @@ interface Props {
   onComplete: () => void
 }
 
-// ----------------------------------------------------------------------
-
 export default function SchoolScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // --- 1. INTRO SEQUENCE ---
       gsap.to('.intro-overlay', {
         autoAlpha: 0,
         ease: 'power1.inOut',
@@ -28,7 +26,6 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- 2. CHARACTER ENTRANCE ---
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -42,7 +39,6 @@ export default function SchoolScene({ onComplete }: Props) {
         { x: 0, opacity: 1, duration: 1.5, ease: 'power2.out' },
       )
 
-      // Setup
       gsap.set(['.bubble-1', '.bubble-middle', '.bubble-2'], {
         scale: 0,
         opacity: 0,
@@ -54,7 +50,6 @@ export default function SchoolScene({ onComplete }: Props) {
       gsap.set('.lost-text', { autoAlpha: 0, scale: 0.5 })
       gsap.set('.black-overlay', { autoAlpha: 0 })
 
-      // --- TRIGGER 1: WORRY ---
       ScrollTrigger.create({
         trigger: '.trigger-1',
         start: 'top 60%',
@@ -103,7 +98,6 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- TRIGGER MIDDLE ---
       ScrollTrigger.create({
         trigger: '.trigger-middle',
         start: 'top 60%',
@@ -166,7 +160,6 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- TRIGGER 2: SWEAT ---
       ScrollTrigger.create({
         trigger: '.trigger-2',
         start: 'top 60%',
@@ -233,7 +226,6 @@ export default function SchoolScene({ onComplete }: Props) {
         },
       })
 
-      // --- TRIGGER 3: WALKING LOST (เข้า Arena) ---
       ScrollTrigger.create({
         trigger: '.trigger-3',
         start: 'top 60%',
@@ -343,11 +335,11 @@ export default function SchoolScene({ onComplete }: Props) {
         <div className="school-img-container relative h-full w-full">
           <div
             className="school-bg-img absolute inset-0 origin-left scale-125 bg-cover bg-center"
-            style={{ backgroundImage: "url('/assets/Part2/Hall_School.png')" }}
+            style={{ backgroundImage: `url('${schoolSceneAssets.bg_school}')` }}
           />
           <div
             className="arena-bg-img absolute inset-0 origin-left scale-125 bg-cover bg-center"
-            style={{ backgroundImage: "url('/assets/Part2/arena.png')" }}
+            style={{ backgroundImage: `url('${schoolSceneAssets.bg_arena}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
         </div>
@@ -356,21 +348,21 @@ export default function SchoolScene({ onComplete }: Props) {
         <div className="honey-character-container absolute bottom-0 left-0 z-20 h-[500px] w-[300px] md:left-20">
           <div className="honey-character relative h-full w-full opacity-0">
             <img
-              src="/assets/Part2/Honey/Body.PNG"
+              src={schoolSceneAssets.honey_body}
               className="honey-body absolute bottom-0 left-0 w-full origin-bottom object-contain"
             />
 
             <div className="honey-face-group absolute left-1/2 top-[100px] w-[320px] origin-bottom -translate-x-1/2">
               <img
-                src="/assets/Part2/Honey/Normal_Face.PNG"
+                src={schoolSceneAssets.honey_face_normal}
                 className="face-normal absolute left-0 top-0 w-full object-contain"
               />
               <img
-                src="/assets/Part2/Honey/Worry_Face.PNG"
+                src={schoolSceneAssets.honey_face_worry}
                 className="face-worry absolute left-0 top-0 w-full object-contain opacity-0"
               />
               <img
-                src="/assets/Part2/Honey/Sweat_Face.PNG"
+                src={schoolSceneAssets.honey_face_sweat}
                 className="face-sweat absolute left-0 top-0 w-full object-contain opacity-0"
               />
             </div>

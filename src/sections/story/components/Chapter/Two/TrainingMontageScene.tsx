@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { trainingAssets } from '@/assets/chapterTwoAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useMemo, useRef } from 'react'
@@ -21,33 +22,17 @@ export default function TrainingMontageScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const hasCompleted = useRef(false)
 
-  const trainingSteps = [
-    {
-      images: [
-        '/assets/Part2/Training/Scene 13-01.PNG',
-        '/assets/Part2/Training/Scene 13-02.PNG',
-        '/assets/Part2/Training/Scene 13-03.PNG',
-      ],
-    },
-    {
-      images: [
-        '/assets/Part2/Training/Scene 14-01.PNG',
-        '/assets/Part2/Training/Scene 14-02.PNG',
-      ],
-    },
-    { images: ['/assets/Part2/Training/Scene 15-01.PNG'] },
-    {
-      images: [
-        '/assets/Part2/Training/Scene 16-01.PNG',
-        '/assets/Part2/Training/Scene 16-02.PNG',
-        '/assets/Part2/Training/Scene 16-03.PNG',
-      ],
-    },
-  ]
-  const allImages = useMemo(
-    () => trainingSteps.flatMap((step) => step.images),
-    [],
-  )
+  const allImages = useMemo(() => {
+    return [
+      ...trainingAssets.mental,
+      trainingAssets.theory.base,
+      trainingAssets.theory.overlay,
+      trainingAssets.combat,
+      trainingAssets.physical.base,
+      trainingAssets.physical.step1,
+      trainingAssets.physical.step2,
+    ].filter(Boolean)
+  }, [])
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {

@@ -1,3 +1,4 @@
+import { rescueHomeSceneAssets } from '@/assets/chapterOneAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -38,22 +39,6 @@ const ASPECT_RATIO = DESIGN_W / DESIGN_H
 export default function RescueHomeScene({ onComplete }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const sceneRef = useRef<HTMLDivElement | null>(null)
-
-  // ปรับ path ให้ตรง asset จริงของโปรเจกต์
-  const outsideHouseBg = '/assets/Part1/house/house_outside.png'
-  const insideHouseBg = '/assets/Part1/house/house_inside.png'
-  const closeUpBg = '/assets/Part1/house/mild_close_up.png'
-  const mildBody = '/assets/Part2/Mild/Body/Body_1.PNG'
-  const mildLeftArm = '/assets/Part2/Mild/Arms/Arm_1_L.PNG'
-  const mildRightArm = '/assets/Part2/Mild/Arms/Arm_1_R.PNG'
-  const mildHair = '/assets/Part2/Mild/Body/Hair.PNG'
-  const mildFaceNormal = '/assets/Part2/Mild/Face/Face_01_หน้าปกติ.PNG'
-  const mildFaceSmile = '/assets/Part2/Mild/Face/Face_07_หน้ายิ้ม2.PNG'
-  const mildFaceWorried = '/assets/Part2/Mild/Face/Face_05_หน้าเศร้า.PNG'
-  const honeyBody = '/assets/Part2/Honey/Body.PNG'
-  const honeyFaceHood = '/assets/Part2/Honey/Hood_face.png'
-  const honeyNormalFace = '/assets/Part2/Honey/Normal_Face.PNG'
-  const honeyWorryFace = '/assets/Part2/Honey/Worry_Face.PNG'
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -648,7 +633,7 @@ export default function RescueHomeScene({ onComplete }: Props) {
         {/* ===== BG ภายนอกบ้าน ===== */}
         <div className="bg-house-outside absolute inset-0 z-0">
           <img
-            src={outsideHouseBg}
+            src={rescueHomeSceneAssets.outsideHouseBg}
             className="h-full w-full object-cover"
             alt="Mild House Outside"
           />
@@ -657,7 +642,7 @@ export default function RescueHomeScene({ onComplete }: Props) {
         {/* ===== BG ภายในบ้าน ===== */}
         <div className="bg-house-inside absolute inset-0 z-0 opacity-0">
           <img
-            src={insideHouseBg}
+            src={rescueHomeSceneAssets.insideHouseBg}
             className="h-full w-full object-cover"
             alt="Mild House Inside"
           />
@@ -666,7 +651,7 @@ export default function RescueHomeScene({ onComplete }: Props) {
         {/* ===== BG close up ===== */}
         <div className="bg-close-up absolute inset-0 z-0">
           <img
-            src={closeUpBg}
+            src={rescueHomeSceneAssets.closeUpBg}
             className="h-full w-full object-cover"
             alt="Mild Close Up"
           />
@@ -809,26 +794,35 @@ export default function RescueHomeScene({ onComplete }: Props) {
 
             {/* Mild body */}
             <div className="mild-group relative h-full w-[90%]">
-              <img src={mildHair} className="absolute inset-0 z-0" />
-              <img src={mildBody} className="absolute inset-0 z-10" />
               <img
-                src={mildLeftArm}
+                src={rescueHomeSceneAssets.mildHair}
+                className="absolute inset-0 z-0"
+              />
+              <img
+                src={rescueHomeSceneAssets.mildBody}
+                className="absolute inset-0 z-10"
+              />
+              <img
+                src={rescueHomeSceneAssets.mildLeftArm}
                 className="absolute left-0 top-0 z-20 w-full"
                 alt="L Arm 2"
               />
               <img
-                src={mildRightArm}
+                src={rescueHomeSceneAssets.mildRightArm}
                 className="absolute left-0 top-0 z-20 w-full"
                 alt="R Arm 2"
               />
               <div className="absolute left-0 top-0 z-20 w-full">
-                <img src={mildFaceNormal} className="mild-face-normal w-full" />
                 <img
-                  src={mildFaceSmile}
+                  src={rescueHomeSceneAssets.mildFaceNormal}
+                  className="mild-face-normal w-full"
+                />
+                <img
+                  src={rescueHomeSceneAssets.mildFaceSmile}
                   className="mild-face-smile absolute inset-0 w-full"
                 />
                 <img
-                  src={mildFaceWorried}
+                  src={rescueHomeSceneAssets.mildFaceWorried}
                   className="mild-face-worried absolute inset-0 w-full"
                 />
               </div>
@@ -897,19 +891,22 @@ export default function RescueHomeScene({ onComplete }: Props) {
 
             {/* Honey body */}
             <div className="honey-group relative h-[80%] w-[80%]">
-              <img src={honeyBody} className="relative w-full" />
+              <img
+                src={rescueHomeSceneAssets.honeyBody}
+                className="relative w-full"
+              />
 
               {/* ใส่หน้าเป็นเลเยอร์ซ้อนกัน */}
               <img
-                src={honeyFaceHood}
+                src={rescueHomeSceneAssets.honeyFaceHood}
                 className="honey-face-hood absolute left-0 top-[2%] w-full"
               />
               <img
-                src={honeyNormalFace}
+                src={rescueHomeSceneAssets.honeyNormalFace}
                 className="honey-face-normal absolute left-0 top-[2%] w-full"
               />
               <img
-                src={honeyWorryFace}
+                src={rescueHomeSceneAssets.honeyWorryFace}
                 className="honey-face-worry absolute left-0 top-[2%] w-full"
               />
             </div>

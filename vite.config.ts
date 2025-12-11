@@ -22,6 +22,7 @@ export default ({ mode }) => {
     ],
     server: {
       port: +process.env.VITE_PORT,
+      host: true,
     },
     define: {
       'process.env': process.env,

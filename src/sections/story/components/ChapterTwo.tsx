@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import {
   MildHouseScene,
@@ -17,52 +17,14 @@ interface ChapterTwoProps {
 }
 
 export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
-  const [visibleScenes, setVisibleScenes] = useState<number[]>([0])
+  // Use Ref instead of State to prevent re-renders
   const completedStages = useRef(new Set<number>())
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  // Preload all scenes progressively as user scrolls
-  useLayoutEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight
-      const scrollTop = window.scrollY
-      const clientHeight = window.innerHeight
-      const scrollPercent = scrollTop / (scrollHeight - clientHeight)
-
-      // Progressively reveal scenes based on scroll position
-      if (scrollPercent > 0.15 && !visibleScenes.includes(1)) {
-        setVisibleScenes((prev) => [...prev, 1])
-      }
-      if (scrollPercent > 0.35 && !visibleScenes.includes(2)) {
-        setVisibleScenes((prev) => [...prev, 2])
-      }
-      if (scrollPercent > 0.55 && !visibleScenes.includes(3)) {
-        setVisibleScenes((prev) => [...prev, 3])
-      }
-      if (scrollPercent > 0.75 && !visibleScenes.includes(4)) {
-        setVisibleScenes((prev) => [...prev, 4])
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [visibleScenes])
-
-  // Gentle refresh only when new scenes are added
-  useLayoutEffect(() => {
-    if (visibleScenes.length > 1) {
-      const timer = setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 100)
-      return () => clearTimeout(timer)
-    }
-  }, [visibleScenes.length])
 
   const handleStageComplete = (stage: number) => {
     if (completedStages.current.has(stage)) return
     completedStages.current.add(stage)
 
-    // Final completion
+    // Trigger onComplete when the final scene (Stage 4) finishes
     if (stage === 4) {
       onComplete?.()
     }
@@ -70,32 +32,38 @@ export default function ChapterTwo({ onComplete }: ChapterTwoProps) {
 
   return (
     <div
-      ref={containerRef}
-      className="w-full bg-black text-white"
       id="chapter-two-root"
+      className="min-h-screen w-full bg-black text-white"
     >
-      {/* Scene 0: School - Always visible */}
-      <SchoolScene onComplete={() => handleStageComplete(0)} />
+      {/* Render all scenes immediately in the DOM.
+        GSAP ScrollTrigger will handle the pinning and logic 
+        without needing React conditional rendering.
+      */}
 
-      {/* Scene 1: Training Ground */}
-      {visibleScenes.includes(1) && (
+      {/* Stage 0 */}
+      <div className="relative z-10">
+        <SchoolScene onComplete={() => handleStageComplete(0)} />
+      </div>
+
+      {/* Stage 1 */}
+      <div className="relative z-10">
         <TrainingGroundScene onComplete={() => handleStageComplete(1)} />
-      )}
+      </div>
 
-      {/* Scene 2: Mild's House */}
-      {visibleScenes.includes(2) && (
+      {/* Stage 2 */}
+      <div className="relative z-10">
         <MildHouseScene onComplete={() => handleStageComplete(2)} />
-      )}
+      </div>
 
-      {/* Scene 3: Training Montage */}
-      {visibleScenes.includes(3) && (
+      {/* Stage 3 */}
+      <div className="relative z-10">
         <TrainingMontageScene onComplete={() => handleStageComplete(3)} />
-      )}
+      </div>
 
-      {/* Scene 4: Three Months Later */}
-      {visibleScenes.includes(4) && (
+      {/* Stage 4 (Final) */}
+      <div className="relative z-10">
         <ThreeMonthsLaterScene onComplete={() => handleStageComplete(4)} />
-      )}
+      </div>
     </div>
   )
 }

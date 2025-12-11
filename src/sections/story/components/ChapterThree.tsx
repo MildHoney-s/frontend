@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef } from 'react'
 
 import {
   BehindSceneColosseum,
@@ -9,70 +11,64 @@ import {
 } from './Chapter/Three'
 import OpenSceneColosseum from './Chapter/Three/OpenSceneColosseum'
 
-// เช็ค index.ts ของ folder ให้ export ครบนะครับ
+gsap.registerPlugin(ScrollTrigger)
 
-export default function ChapterThree() {
-  const [stage, setStage] = useState(0)
+interface ChapterThreeProps {
+  onComplete?: () => void
+}
+
+export default function ChapterThree({ onComplete }: ChapterThreeProps) {
+  // ใช้ useRef แทน State เพื่อไม่ให้ Re-render
+  const completedStages = useRef(new Set<number>())
+
+  const handleStageComplete = (stage: number) => {
+    if (completedStages.current.has(stage)) return
+    completedStages.current.add(stage)
+
+    // Scene สุดท้ายคือ 5 (BehindSceneColosseum)
+    if (stage === 5) {
+      onComplete?.()
+    }
+  }
 
   return (
-    <div className="min-h-screen w-full bg-black text-white">
-      {/* SCENE 0: Intro Parallax */}
-      <OpenSceneColosseum
-        onComplete={() => setStage((prev) => Math.max(prev, 1))}
-      />
+    <div
+      id="chapter-three-root"
+      className="min-h-screen w-full bg-black text-white"
+    >
+      {/* Render ทุก Scene ทิ้งไว้เลย เพื่อให้ GSAP คำนวณความสูงที่แท้จริงได้
+        ไม่ต้องมี visibleScenes เช็ค condition
+      */}
 
-      {/* SCENE 1: Versus 01 (Unlock เมื่อ Scene 0 จบ) */}
-      {stage >= 1 && (
-        <div className="animate-[fadeIn_1s_ease-in_forwards] opacity-0 transition-opacity duration-1000 ease-in">
-          <VersusSceneOne
-            onComplete={() => setStage((prev) => Math.max(prev, 2))}
-          />
-        </div>
-      )}
+      {/* SCENE 0 */}
+      <div className="relative z-50">
+        <OpenSceneColosseum onComplete={() => handleStageComplete(0)} />
+      </div>
 
-      {/* SCENE 2: Versus 02 (Unlock เมื่อ Scene 1 จบ) */}
-      {stage >= 2 && (
-        <div className="animate-[fadeIn_1s_ease-in_forwards] opacity-0 transition-opacity duration-1000 ease-in">
-          <VersusSceneTwo
-            onComplete={() => setStage((prev) => Math.max(prev, 3))}
-          />
-        </div>
-      )}
+      {/* SCENE 1 */}
+      <div className="relative z-40">
+        <VersusSceneOne onComplete={() => handleStageComplete(1)} />
+      </div>
 
-      {/* SCENE 3: Versus 03 (Unlock เมื่อ Scene 2 จบ) */}
-      {stage >= 3 && (
-        <div className="animate-[fadeIn_1s_ease-in_forwards] opacity-0 transition-opacity duration-1000 ease-in">
-          <VersusSceneThree
-            onComplete={() => setStage((prev) => Math.max(prev, 4))}
-          />
-        </div>
-      )}
+      {/* SCENE 2 */}
+      <div className="relative z-30">
+        <VersusSceneTwo onComplete={() => handleStageComplete(2)} />
+      </div>
 
-      {/* SCENE 4: Versus 04 (Unlock เมื่อ Scene 3 จบ) */}
-      {stage >= 4 && (
-        <div className="animate-[fadeIn_1s_ease-in_forwards] opacity-0 transition-opacity duration-1000 ease-in">
-          <VersusSceneFour
-            onComplete={() => setStage((prev) => Math.max(prev, 5))} // จบ Chapter หรือไปต่อ
-          />
-        </div>
-      )}
+      {/* SCENE 3 */}
+      <div className="relative z-20">
+        <VersusSceneThree onComplete={() => handleStageComplete(3)} />
+      </div>
 
-      {/* SCENE 5: Versus 05 (Unlock เมื่อ Scene 4 จบ) */}
-      {stage >= 5 && (
-        <div className="animate-[fadeIn_1s_ease-in_forwards] opacity-0 transition-opacity duration-1000 ease-in">
-          <BehindSceneColosseum
-            onComplete={() => setStage((prev) => Math.max(prev, 6))} // จบ Chapter หรือไปต่อ
-          />
-        </div>
-      )}
+      {/* SCENE 4 */}
+      <div className="relative z-10">
+        <VersusSceneFour onComplete={() => handleStageComplete(4)} />
+      </div>
 
-      {/* CSS Keyframes สำหรับ Fade In */}
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
+      {/* SCENE 5 */}
+      <div className="relative z-0">
+        <BehindSceneColosseum onComplete={() => handleStageComplete(5)} />
+      </div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { classroomSceneAssets } from '@/assets/chapterOneAssets'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLayoutEffect, useRef } from 'react'
@@ -190,14 +191,13 @@ export default function ClassroomScene({ onComplete }: Props) {
       <div
         className="bg-teacher will-change-opacity absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/assets/Part1/classroom/Classroom_2.png')",
+          backgroundImage: `url('${classroomSceneAssets.bg_1}')`,
         }}
       />
       <div
         className="bg-students will-change-opacity absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('/assets/Part1/classroom/Classroom_2_edit.png')",
+          backgroundImage: `url('${classroomSceneAssets.bg_2}')`,
         }}
       />
 
@@ -211,7 +211,7 @@ export default function ClassroomScene({ onComplete }: Props) {
       {/* TEACHER GROUP */}
       <div className="teacher-group absolute bottom-[10%] right-[5%] z-10 w-[280px] md:bottom-[38%] md:right-[10%] md:w-[350px]">
         <img
-          src="/assets/Part1/classroom/Xoneko_Sensei_open.png"
+          src={classroomSceneAssets.teacher}
           alt="teacher"
           className="w-full drop-shadow-2xl"
         />
@@ -270,22 +270,6 @@ export default function ClassroomScene({ onComplete }: Props) {
 
       {/* STUDENT GROUP */}
       <div className="student-group pointer-events-none absolute inset-0 z-10">
-        {/* <img
-          src="/assets/Part1/classroom/MildR_front.png"
-          className="absolute right-[23%] top-[37%] w-[200px] md:w-[280px]"
-          alt="mild"
-        />
-        <img
-          src="/assets/Part1/classroom/Elevene_front.png"
-          className="absolute left-[73%] top-[67%] z-20 w-[220px] md:w-[300px]"
-          alt="elevene"
-        />
-        <img
-          src="/assets/Part1/classroom/Elze_front.png"
-          className="absolute right-[15%] top-[2%] w-[210px] md:w-[290px]"
-          alt="elze"
-        /> */}
-
         {/* STUDENT BUBBLE */}
         <div
           className="bubble-student absolute left-[25%] top-[5%] w-[300px]
