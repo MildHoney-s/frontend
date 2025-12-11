@@ -280,7 +280,7 @@ export default function VersusComponent({
 
         <div className="content-container relative z-30 h-full w-full">
           {/* PLAYER A INFO */}
-          <div className="info-a absolute left-[5%] top-[15%] z-50 max-w-[40%] text-left md:top-[20%]">
+          <div className="info-a absolute left-[5%] top-[15%] z-50 max-w-[40%] text-left md:top-[15%]">
             <h2 className="font-serif text-4xl font-black uppercase italic tracking-wider text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] md:text-6xl">
               {playerA.name}
             </h2>
@@ -292,7 +292,7 @@ export default function VersusComponent({
             {playerA.text && (
               <div className="flavor-text-a pointer-events-auto mt-4 md:mt-8">
                 <p
-                  className="max-w-[300px] w-[340px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  className="max-w-[300px] w-[360px] text-left text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
                     __html: playerA.text.replace(/\n/g, '<br />'),
                   }}
@@ -320,7 +320,7 @@ export default function VersusComponent({
           />
 
           {/* PLAYER B INFO */}
-          <div className="info-b absolute right-[5%] top-[15%] z-50 flex max-w-[45%] flex-col items-end text-right md:top-[20%]">
+          <div className="info-b absolute right-[5%] top-[15%] z-50 flex max-w-[45%] flex-col items-end text-right md:top-[15%]">
             <h2 className="font-serif text-4xl font-black uppercase italic tracking-wider text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] md:text-6xl">
               {playerB.name}
             </h2>
@@ -334,7 +334,7 @@ export default function VersusComponent({
             {playerB.text && (
               <div className="flavor-text-b pointer-events-auto mt-4 md:mt-8">
                 <p
-                  className="max-w-[300px] w-[340px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
+                  className="max-w-[300px] w-[350px] text-right text-sm font-semibold leading-relaxed tracking-wide text-white drop-shadow-[0_2px_2px_rgba(0,0,0,1)] md:max-w-lg md:text-lg"
                   dangerouslySetInnerHTML={{
                     __html: playerB.text.replace(/\n/g, '<br />'),
                   }}

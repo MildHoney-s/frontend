@@ -71,42 +71,42 @@ export default function CutSceneOne() {
         const isMagic = item.note === '(เวทตัวอักษร)'
 
         // --- Camera Logic: คำนวณ Scale/X/Y ตามโจทย์ ---
-        
+
         let targetScale = 2.0 // ค่า Default (Zoom กลางๆ)
-        let targetX = 0       
-        let targetY = 0       
+        let targetX = 0
+        let targetY = 0
 
         if (index === 0) {
-           // เริ่มต้น: Zoom ไปที่มายด์ (ขวาสุด)
-           targetScale = 1.6; targetX = -30; targetY = 0;
+          // เริ่มต้น: Zoom ไปที่มายด์ (ขวาสุด)
+          targetScale = 1.6; targetX = -30; targetY = 0;
         } else if (item.id >= 5) {
-           // ตอนจบ: Zoom Out (เห็นเต็มจอ)
-           targetScale = 1; targetX = 0; targetY = 0;
+          // ตอนจบ: Zoom Out (เห็นเต็มจอ)
+          targetScale = 1; targetX = 0; targetY = 0;
         } else {
-           // ระหว่างคุยกัน
-           if (isMild) {
-             // มายด์ (ขวา): "ซูมไปขวาบนเพิ่ม"
-             targetScale = 2.4 // Zoom ลึกเข้าไป
-             targetX = -45;     // Pan ไปซ้ายเยอะๆ เพื่อให้เห็นขวา
-             targetY = 15;      // Pan ลง เพื่อให้เห็นด้านบน (ขวา-บน)
-           } else {
-             // ฮันนี่ (ซ้าย): "ซูมเข้าเพิ่มไปซ้ายกลาง"
-             targetScale = 2.3; // Zoom ลึกเข้าไป
-             targetX = 60;      // Pan ไปขวาเยอะๆ เพื่อให้เห็นซ้าย
-             targetY = 0;       // กลางๆ (ซ้าย-กลาง)
-           }
+          // ระหว่างคุยกัน
+          if (isMild) {
+            // มายด์ (ขวา): "ซูมไปขวาบนเพิ่ม"
+            targetScale = 2.4 // Zoom ลึกเข้าไป
+            targetX = -45;     // Pan ไปซ้ายเยอะๆ เพื่อให้เห็นขวา
+            targetY = 15;      // Pan ลง เพื่อให้เห็นด้านบน (ขวา-บน)
+          } else {
+            // ฮันนี่ (ซ้าย): "ซูมเข้าเพิ่มไปซ้ายกลาง"
+            targetScale = 2.3; // Zoom ลึกเข้าไป
+            targetX = 60;      // Pan ไปขวาเยอะๆ เพื่อให้เห็นซ้าย
+            targetY = 0;       // กลางๆ (ซ้าย-กลาง)
+          }
         }
 
         // --- Step พิเศษ: Transition (การถอยกล้องก่อนเปลี่ยนมุม) ---
         // ถ้ามีการเปลี่ยนคนพูด (เช่น จากฮันนี่ -> มายด์) ให้ถอยกล้องออกมาก่อนนิดนึง
-        if (index > 0 && DIALOGUES[index-1].speaker !== item.speaker && item.id < 5) {
-            tl.to(imageWrapperRef.current, {
-                scale: 1.6, // ถอยมาที่ค่ากลาง
-                xPercent: (targetX + (isMild ? 25 : -25)) / 2, // ขยับไปครึ่งทาง
-                yPercent: 0,
-                duration: 1,
-                ease: 'power1.inOut'
-            }, 'transit-' + index)
+        if (index > 0 && DIALOGUES[index - 1].speaker !== item.speaker && item.id < 5) {
+          tl.to(imageWrapperRef.current, {
+            scale: 1.6, // ถอยมาที่ค่ากลาง
+            xPercent: (targetX + (isMild ? 25 : -25)) / 2, // ขยับไปครึ่งทาง
+            yPercent: 0,
+            duration: 1,
+            ease: 'power1.inOut'
+          }, 'transit-' + index)
         }
 
 
@@ -119,12 +119,12 @@ export default function CutSceneOne() {
           ease: 'power2.inOut'
         }, 'start-' + index) // เริ่มหลังจาก Transition (ถ้ามี) หรือต่อจากเดิม
 
-        // 2. Show Box
-        .fromTo(selector,
-          { autoAlpha: 0, y: 30 },
-          { autoAlpha: 1, y: 0, duration: 1, ease: 'back.out(1.2)' },
-          '<+=0.8' // รอให้กล้องขยับไปได้สักพักค่อยขึ้นข้อความ
-        )
+          // 2. Show Box
+          .fromTo(selector,
+            { autoAlpha: 0, y: 30 },
+            { autoAlpha: 1, y: 0, duration: 1, ease: 'back.out(1.2)' },
+            '<+=0.8' // รอให้กล้องขยับไปได้สักพักค่อยขึ้นข้อความ
+          )
 
         // 3. Magic Text Animation
         if (isMagic) {
@@ -194,7 +194,7 @@ export default function CutSceneOne() {
                   {item.note && <p className="text-gray-300 text-sm italic mb-1">{item.note}</p>}
                   <div className={`text-base md:text-xl leading-relaxed ${item.isFinal ? 'font-semibold text-yellow-100' : 'text-white'}`}>
                     {isMagic ? (
-                      <SmartSplitText className={`magic-text-${index}`}>
+                      <SmartSplitText className={`magic-text-${index} italic`}>
                         {item.text}
                       </SmartSplitText>
                     ) : (
