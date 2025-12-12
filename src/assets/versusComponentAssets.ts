@@ -51,6 +51,21 @@ export const versusComponentRaw: VersusRaw = {
       src: '/assets/part3/model/Versus/Dr_Gamer/',
       file: 'Dr_Gamer',
     },
+    Zayzhik: {
+      name: 'Zayzhik',
+      src: '/assets/part3/model/Versus/Zayzhik/',
+      file: 'Zayzhik',
+    },
+    Haruki: {
+      name: 'Haruki',
+      src: '/assets/part3/model/Versus/Haruki/',
+      file: 'Haruki',
+    },
+    Debirun: {
+      name: 'Debirun',
+      src: '/assets/part3/model/Versus/Debirun/',
+      file: 'Debirun',
+    },
   },
 }
 

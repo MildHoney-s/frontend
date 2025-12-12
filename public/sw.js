@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v3'
+const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v4'
 const FALLBACK_HTML = '/offline.html' // ถ้ามีหน้า offline
 
 self.addEventListener('install', (event) => {
