@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type ProgressCb = (loaded: number, total: number) => void
 
-const DEFAULT_SW_CACHE_NAME = 'mild-r-hdb-project-2025-assets-v4'
+const DEFAULT_SW_CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5'
 const SW_MESSAGE_TIMEOUT = 8000 // ms: ถ้า SW ไม่ตอบภายในเวลานี้ ให้ fallback
 
 export async function registerSW() {

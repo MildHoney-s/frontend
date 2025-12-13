@@ -65,7 +65,7 @@ const TEAM: Member[] = [
     name: 'gGameyy',
     roles: ['Artist'],
     avatar: '/assets/team/gGameyy.png',
-    bio: 'ออกแบบฉากเมือง ห้องเรียน และตัวประกอบอื่นๆ',
+    bio: 'ออกแบบฉากเมือง ห้องเรียน',
     scores: { Artist: 16.1 },
     twitterUrl: 'https://x.com/gGameyy',
     gallery: [
@@ -82,9 +82,9 @@ const TEAM: Member[] = [
     avatar: '/assets/team/pMorhNeung.png',
     roleBios: {
       'Main Writer': 'เขียนบทหลัก วางโครงเรื่อง และพัฒนาเนื้อเรื่องของโปรเจกต์',
-      Artist: 'วาดภาพซีนต่อสู้ทั้งหมด',
+      Artist: 'ออกตัวประกอบต่างๆภายในห้องเรียน และ วาดภาพซีนต่อสู้ทั้งหมด',
     },
-    scores: { 'Main Writer': 100, Artist: 12.9 },
+    scores: { 'Main Writer': 100, Artist: 33.9 },
     twitterUrl: 'https://x.com/DoctorGamer_1',
     gallery: [
       '/assets/pMorhNeung/Versus_1_full_version.png',
@@ -255,11 +255,8 @@ const TEAM: Member[] = [
     bio: 'ออกแบบมอนสเตอร์',
     scores: { Artist: 7.9 },
     twitterUrl: 'https://x.com/Yuki_Himevayn',
-    gallery: [
-      '/assets/Yuki/Nekoyokai.png',
-    ],
+    gallery: ['/assets/Yuki/Nekoyokai.png'],
   },
-
 ]
 
 export { ROLES, type Role, type Member, TEAM }

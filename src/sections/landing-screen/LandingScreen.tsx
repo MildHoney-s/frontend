@@ -48,7 +48,7 @@ export default function LandingScreenGSAP({
   extraPreload = [],
 }: LandingScreenProps) {
   // ---------- state & refs ----------
-  const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v4' // ต้องตรงกับชื่อที่ใช้ตอน cacheAssets
+  const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5' // ต้องตรงกับชื่อที่ใช้ตอน cacheAssets
   const [visible, setVisible] = useState(true)
   const [opening, setOpening] = useState(false)
 

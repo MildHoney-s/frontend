@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v4'
-const FALLBACK_HTML = '/offline.html' // ถ้ามีหน้า offline
+const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5'
+const FALLBACK_HTML = '/index.html' // ถ้ามีหน้า offline
 
 self.addEventListener('install', (event) => {
   // ถ้าต้องการ precache บางไฟล์คงใส่ที่นี่

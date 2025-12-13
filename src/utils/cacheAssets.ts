@@ -1,6 +1,6 @@
 export type ProgressCb = (done: number, total: number, url?: string) => void
 
-const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v4' // เปลี่ยนเวอร์ชันเมื่อ assets เปลี่ยนเพื่อลบ/รี-cache
+const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5' // เปลี่ยนเวอร์ชันเมื่อ assets เปลี่ยนเพื่อลบ/รี-cache
 
 export async function cacheAssets(
   urls: string[],
