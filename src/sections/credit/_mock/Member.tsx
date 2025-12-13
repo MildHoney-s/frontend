@@ -226,6 +226,7 @@ const TEAM: Member[] = [
     id: '14',
     name: 'NUT-R',
     roles: ['Main Writer', 'Project Manager'],
+    avatar: '/assets/team/NUT-R.jpg',
     roleBios: {
       'Main Writer': 'เขียนบทหลัก วางโครงเรื่อง และพัฒนาเนื้อเรื่องของโปรเจกต์',
       'Project Manager': 'ดูแลภาพรวมโปรเจกต์และประสานงานทีม',

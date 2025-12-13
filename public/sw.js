@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5'
+const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v6'
 const ASSET_EXT = ['png', 'jpg', 'jpeg', 'webp', 'gif']
 
 self.addEventListener('install', (event) => {

@@ -16,7 +16,7 @@ function timeout(ms: number) {
   )
 }
 
-const CACHE_FLAG = 'mild-r-hdb-project-2025-assets-v5'
+const CACHE_FLAG = 'mild-r-hdb-project-2025-assets-v6'
 
 export default function LandingPage() {
   const navigate = useNavigate()
