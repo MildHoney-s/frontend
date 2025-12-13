@@ -251,6 +251,7 @@ const TEAM: Member[] = [
     id: '17',
     name: 'Yuki',
     roles: ['Artist'],
+    avatar: '/assets/team/Yuki.jpg',
     bio: 'ออกแบบมอนสเตอร์',
     scores: { Artist: 7.9 },
     twitterUrl: 'https://x.com/Yuki_Himevayn',
