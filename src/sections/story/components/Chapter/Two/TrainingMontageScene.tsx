@@ -186,6 +186,31 @@ export default function TrainingMontageScene({ onComplete }: Props) {
       })
     }, containerRef)
 
+    // refresh after GSAP init
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+    })
+
+    // refresh again after images loaded
+    const imgs = Array.from(document.images)
+    let done = 0
+    imgs.forEach((img) => {
+      if (img.complete) {
+        done++
+        if (done === imgs.length) ScrollTrigger.refresh(true)
+      } else {
+        img.onload = img.onerror = () => {
+          done++
+          if (done === imgs.length) ScrollTrigger.refresh(true)
+        }
+      }
+    })
+
+    // additional fallback refresh
+    setTimeout(() => {
+      ScrollTrigger.refresh(true)
+    }, 600)
+
     return () => ctx.revert()
   }, [onComplete, allImages])
 
