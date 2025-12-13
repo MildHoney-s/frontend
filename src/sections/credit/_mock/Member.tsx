@@ -69,18 +69,10 @@ const TEAM: Member[] = [
     scores: { Artist: 16.1 },
     twitterUrl: 'https://x.com/gGameyy',
     gallery: [
-      '/assets/gGameyy/Ami_behind.png',
-      '/assets/gGameyy/Ashy_behind.png',
       '/assets/gGameyy/Classroom_1.png',
       '/assets/gGameyy/Classroom_2.png',
-      '/assets/gGameyy/Elevene_front.png',
-      '/assets/gGameyy/Elze_front.png',
-      '/assets/gGameyy/Mewten_front.png',
-      '/assets/gGameyy/MildR_behind.png',
-      '/assets/gGameyy/MildR_front.png',
-      '/assets/gGameyy/Tsuru_behind.png',
-      '/assets/gGameyy/Tsuru_front.png',
-      '/assets/gGameyy/Xoneko_Sensei.png',
+      '/assets/gGameyy/ตลาด.png',
+      '/assets/gGameyy/ร้านชานม.png',
     ],
   },
   {
@@ -104,6 +96,17 @@ const TEAM: Member[] = [
       '/assets/pMorhNeung/Versus_4_full_version.png',
       '/assets/pMorhNeung/Versus_4_mild.png',
       '/assets/pMorhNeung/Versus_4_enemy.png',
+      '/assets/pMorhNeung/Ami_behind.png',
+      '/assets/pMorhNeung/Ashy_behind.png',
+      '/assets/pMorhNeung/Elevene_front.png',
+      '/assets/pMorhNeung/Elze_front.png',
+      '/assets/pMorhNeung/Mewten_front.png',
+      '/assets/pMorhNeung/MildR_behind.png',
+      '/assets/pMorhNeung/MildR_front.png',
+      '/assets/pMorhNeung/Tsuru_behind.png',
+      '/assets/pMorhNeung/Tsuru_front.png',
+      '/assets/pMorhNeung/Xoneko_Sensei.png',
+      '/assets/pMorhNeung/Dusterian.png',
     ],
   },
   {
@@ -176,6 +179,7 @@ const TEAM: Member[] = [
       '/assets/ZAYZHIK/Honey_1.png',
       '/assets/ZAYZHIK/Honey_2.png',
       '/assets/ZAYZHIK/Honey_3.png',
+      '/assets/ZAYZHIK/Cutscene_Mild-R.png',
     ],
   },
   {
@@ -243,6 +247,18 @@ const TEAM: Member[] = [
     bio: 'คิดไอเดีย คอนเซ็ปต์ และทิศทางความสร้างสรรค์ของเนื้อเรื่อง',
     scores: { Creative: 57.15 },
   },
+  {
+    id: '17',
+    name: 'Yuki',
+    roles: ['Artist'],
+    bio: 'ออกแบบมอนสเตอร์',
+    scores: { Artist: 7.9 },
+    twitterUrl: 'https://x.com/Yuki_Himevayn',
+    gallery: [
+      '/assets/Yuki/Nekoyokai.png',
+    ],
+  },
+
 ]
 
 export { ROLES, type Role, type Member, TEAM }
