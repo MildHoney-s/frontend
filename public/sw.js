@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const CACHE_NAME = 'mild-r-hdb-project-2025-assets-v5'
-const FALLBACK_HTML = '/index.html' // ถ้ามีหน้า offline
+const ASSET_EXT = ['png', 'jpg', 'jpeg', 'webp', 'gif']
 
 self.addEventListener('install', (event) => {
   // ถ้าต้องการ precache บางไฟล์คงใส่ที่นี่
@@ -18,35 +18,35 @@ self.addEventListener('fetch', (event) => {
   // เราจะเน้น assets ของเรา (images, css, js) หรือ request same-origin
   if (req.method !== 'GET') return
 
+  const url = new URL(req.url)
+  const ext = url.pathname.split('.').pop().toLowerCase()
+
+  // Only handle image files
+  const isImage = ASSET_EXT.includes(ext)
+
+  if (!isImage) {
+    // Let browser handle React bundles normally
+    return
+  }
+
   event.respondWith(
     caches.match(req).then((cached) => {
-      if (cached) {
-        return cached
-      }
+      if (cached) return cached
+
       // ถ้าไม่มีใน cache -> fetch จาก network, และเก็บลง cache แบบ runtime
       return fetch(req)
         .then((resp) => {
           // เก็บเฉพาะ response ที่เหมาะสม
-          if (!resp || resp.status !== 200 || resp.type === 'opaque') {
-            return resp
-          }
+          if (!resp || resp.status !== 200) return resp
+
           const respClone = resp.clone()
           caches.open(CACHE_NAME).then((cache) => {
-            try {
-              cache.put(req, respClone)
-            } catch (e) {
-              // ignore
-            }
+            cache.put(req, respClone).catch(() => {})
           })
+
           return resp
         })
-        .catch(() => {
-          // หากต้องการ fallback สุดท้าย เช่น html/page หรือ placeholder image
-          if (req.destination === 'document') {
-            return caches.match(FALLBACK_HTML)
-          }
-          return new Response(null, { status: 504 })
-        })
+        .catch(() => new Response(null, { status: 504 }))
     }),
   )
 })
